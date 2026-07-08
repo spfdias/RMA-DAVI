@@ -125,7 +125,7 @@ export default function RelatorioVisualizar() {
             .avoid-break { page-break-after: avoid; }
             #header-print { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; }
             #footer-print { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; }
-            #relatorio-print { padding-top: 180px; padding-bottom: 60px; }
+            #relatorio-print { padding-top: 90px; padding-bottom: 60px; }
             .tb th, .tb .section-title, .tb tr[style*="background"] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
           }
           @media screen {
