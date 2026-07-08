@@ -142,9 +142,13 @@ export default function RelatorioVisualizar() {
           @media print { .img-grid img { width: 170px; height: 170px; } }
         `}</style>
 
-        {/* ===== HEADER ===== */}
-        <div id="header-print" className="keep-together avoid-break" style={{ textAlign: 'center', marginBottom: 20, padding: '0 0 0', borderBottom: '2px solid #000', background: '#5B9BD5', color: '#fff' }}>
+        {/* ===== HEADER IMAGE (fixed on every page) ===== */}
+        <div id="header-print" style={{ textAlign: 'center' }}>
           <img src="/CabecalhoReport.jpg" alt="Cabeçalho" style={{ maxWidth: '100%', height: 'auto', display: 'block' }} />
+        </div>
+
+        {/* ===== HEADER TITLE (first page only) ===== */}
+        <div className="keep-together avoid-break" style={{ textAlign: 'center', marginBottom: 20, borderBottom: '2px solid #000', background: '#5B9BD5', color: '#fff' }}>
           <p style={{ fontSize: '13pt', fontWeight: 700, lineHeight: 1.4, padding: '12px 0 16px' }}>
             RELATÓRIO MENSAL DE ATENDIMENTO<br />
             PROTEÇÃO SOCIAL ESPECIAL – ALTA COMPLEXIDADE<br />
