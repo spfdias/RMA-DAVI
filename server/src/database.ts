@@ -259,7 +259,7 @@ async function initializeSchema(): Promise<void> {
 async function seedData(): Promise<void> {
   const bcrypt = require('bcryptjs');
   const userCount = await queryOne('SELECT COUNT(*) as total FROM users');
-  if (userCount && userCount.total === 0) {
+  if (userCount && Number(userCount.total) === 0) {
     const hash = bcrypt.hashSync('admin123', 10);
     await run(`
       INSERT INTO users (nome, email, password_hash, role, approved)
@@ -271,7 +271,7 @@ async function seedData(): Promise<void> {
   }
 
   const acolhidoCount = await queryOne('SELECT COUNT(*) as total FROM acolhidos');
-  if (acolhidoCount && acolhidoCount.total === 0) {
+  if (acolhidoCount && Number(acolhidoCount.total) === 0) {
     const acolhidos = [
       { nome: 'Ana Beatriz Souza Da Silva Matos', data_nascimento: '2014-06-01', data_acolhimento: '2025-08-25', sexo: 'Feminino' },
       { nome: 'Andressa Vitória Siqueira Quintana', data_nascimento: '2012-06-01', data_acolhimento: '2024-10-23', sexo: 'Feminino' },
@@ -310,7 +310,7 @@ async function seedData(): Promise<void> {
   }
 
   const catCount = await queryOne('SELECT COUNT(*) as total FROM categorias');
-  if (catCount && catCount.total === 0) {
+  if (catCount && Number(catCount.total) === 0) {
     const defaultCategorias = [
       { value: 'doacoes', label: 'Doações', icon: '🎁' },
       { value: 'contando_historias', label: 'Contando Histórias', icon: '📖' },

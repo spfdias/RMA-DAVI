@@ -42,7 +42,7 @@ router.delete('/:id', async (req: Request, res: Response) => {
     return;
   }
   const inUse = await queryOne('SELECT COUNT(*) as total FROM imagens_atividades WHERE categoria = ?', [existing.value]);
-  if (inUse && inUse.total > 0) {
+  if (inUse && Number(inUse.total) > 0) {
     res.status(400).json({ error: `Categoria em uso por ${inUse.total} imagem(ns). Remova as imagens primeiro.` });
     return;
   }

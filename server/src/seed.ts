@@ -20,7 +20,7 @@ async function main() {
   await initDatabase();
 
   const count = await queryOne('SELECT COUNT(*) as total FROM acolhidos');
-  if (count && count.total === 0) {
+  if (count && Number(count.total) === 0) {
     for (const a of acolhidos) {
       await runQuery(`
         INSERT INTO acolhidos (nome, data_nascimento, data_acolhimento, sexo)
@@ -31,7 +31,7 @@ async function main() {
   }
 
   const adminCount = await queryOne('SELECT COUNT(*) as total FROM users');
-  if (adminCount && adminCount.total === 0) {
+  if (adminCount && Number(adminCount.total) === 0) {
     const bcrypt = require('bcryptjs');
     const hash = bcrypt.hashSync('admin123', 10);
     await runQuery(`
