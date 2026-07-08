@@ -124,6 +124,7 @@ export default function RelatorioVisualizar() {
             .keep-together { page-break-inside: avoid; }
             .avoid-break { page-break-after: avoid; }
             #footer-print { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; }
+            #footer-print img { max-width: 200px; height: auto; display: block; margin: 0 auto; }
             #relatorio-print { padding-bottom: 60px; }
             .tb th, .tb .section-title, .tb tr[style*="background"] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
           }
@@ -599,7 +600,7 @@ export default function RelatorioVisualizar() {
 
         {/* ===== FOOTER ===== */}
         <div id="footer-print" style={{ textAlign: 'center', marginTop: 20 }}>
-          <img src="/RodapeReport.jpg" alt="Rodapé" style={{ maxWidth: '100%', height: 'auto', display: 'block', margin: '0 auto' }} />
+          <img src="/RodapeReport.jpg" alt="Rodapé" style={{ maxWidth: '200px', width: '100%', height: 'auto', display: 'block', margin: '0 auto' }} />
         </div>
       </div>
     </div>
