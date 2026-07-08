@@ -268,6 +268,7 @@ export default function RelatorioMensal() {
                 <th style={{ textAlign: 'left', padding: '6px 8px', fontSize: 12, color: '#666' }}>Nome</th>
                 <th style={{ textAlign: 'left', padding: '6px 8px', fontSize: 12, color: '#666' }}>Função</th>
                 <th style={{ textAlign: 'left', padding: '6px 8px', fontSize: 12, color: '#666' }}>Vínculo</th>
+                <th style={{ width: 40 }}></th>
               </tr></thead>
               <tbody>
                 {(dados as any)[campo].map((p: any, i: number) => (
@@ -275,10 +276,22 @@ export default function RelatorioMensal() {
                     <td style={{ padding: 4 }}><input value={p.nome} onChange={(e) => atualizar(`${campo}.${i}.nome`, e.target.value)} style={{ ...inputStyle, fontSize: 13 }} /></td>
                     <td style={{ padding: 4 }}><input value={p.funcao} onChange={(e) => atualizar(`${campo}.${i}.funcao`, e.target.value)} style={{ ...inputStyle, fontSize: 13 }} /></td>
                     <td style={{ padding: 4 }}><input value={p.vinculo} onChange={(e) => atualizar(`${campo}.${i}.vinculo`, e.target.value)} style={{ ...inputStyle, fontSize: 13 }} /></td>
+                    <td style={{ padding: 4 }}>
+                      <button onClick={() => {
+                        const novo = structuredClone(dados);
+                        (novo as any)[campo].splice(i, 1);
+                        setDados(novo);
+                      }} style={{ background: 'none', border: 'none', color: '#e53935', cursor: 'pointer', fontSize: 16, padding: '2px 6px' }} title="Remover">×</button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            <button onClick={() => {
+              const novo = structuredClone(dados);
+              (novo as any)[campo].push({ nome: '', funcao: '', vinculo: '' });
+              setDados(novo);
+            }} style={{ background: 'none', border: '1px dashed #bbb', borderRadius: 6, color: '#666', cursor: 'pointer', fontSize: 12, padding: '6px 16px', marginTop: 6 }}>+ Adicionar</button>
           </div>
         ))}
       </div>
@@ -677,6 +690,7 @@ export default function RelatorioMensal() {
               <thead><tr style={{ borderBottom: '2px solid #eee' }}>
                 <th style={{ textAlign: 'left', padding: '6px 8px', fontSize: 12, color: '#666' }}>Profissional</th>
                 <th style={{ textAlign: 'left', padding: '6px 8px', fontSize: 12, color: '#666' }}>Capacitação</th>
+                <th style={{ width: 40 }}></th>
               </tr></thead>
               <tbody>
                 {dados.blocoI.capacitacoes.map((cap, i) => (
@@ -689,10 +703,22 @@ export default function RelatorioMensal() {
                       <input value={cap.nome_capacitacao} onChange={(e) => atualizar(`blocoI.capacitacoes.${i}.nome_capacitacao`, e.target.value)}
                         style={{ ...inputStyle, fontSize: 13 }} />
                     </td>
+                    <td style={{ padding: 4 }}>
+                      <button onClick={() => {
+                        const novo = structuredClone(dados);
+                        novo.blocoI.capacitacoes.splice(i, 1);
+                        setDados(novo);
+                      }} style={{ background: 'none', border: 'none', color: '#e53935', cursor: 'pointer', fontSize: 16, padding: '2px 6px' }} title="Remover">×</button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            <button onClick={() => {
+              const novo = structuredClone(dados);
+              novo.blocoI.capacitacoes.push({ nome: '', nome_capacitacao: '' });
+              setDados(novo);
+            }} style={{ background: 'none', border: '1px dashed #bbb', borderRadius: 6, color: '#666', cursor: 'pointer', fontSize: 12, padding: '6px 16px', marginTop: 6 }}>+ Adicionar</button>
           </div>
         </div>
       </div>
