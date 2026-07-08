@@ -85,6 +85,8 @@ export const relatoriosApi = {
     api.delete(`/relatorios/${id}`),
   listarAudit: () =>
     api.get('/relatorios/audit').then((r) => r.data),
+  recover: () =>
+    api.post('/relatorios/recover').then((r) => r.data),
 };
 
 export const categoriasApi = {

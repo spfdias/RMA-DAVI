@@ -61,6 +61,8 @@ rma-davi/
 - `PUT /api/relatorios/imagens/:id/rotate` — Rotacionar imagem
 - `GET/POST/DELETE /api/categorias` — CRUD categorias (admin)
 - `GET /api/relatorios/audit` — Log de auditoria
+- `POST /api/relatorios/recover` — Recuperar imagens órfãs do disco
+- `GET /api/storage` — Status de armazenamento
 
 ## Alterações Realizadas
 1. Upload de imagens movido para `data/uploads/` (disco persistente)
@@ -76,6 +78,9 @@ rma-davi/
 11. Menu reorganizado: "Relatórios Mensais", "Novo Relatório Mensal", "Relatórios Anuais"
 12. Importação de 26 acolhidos da planilha "Acolhidos com tempo de acolhimento.xlsx"
 13. Cálculo automático de tempo de acolhimento e idade
+14. Nomenclatura de imagens com `R{relatorio}_{categoria}_{uuid}_ID{id}.ext` para recuperação
+15. Rota `POST /api/relatorios/recover` para reconstruir registros órfãos do disco
+16. Monitoramento de armazenamento com alerta em 90% (Dashboard)
 
 ## Para Desenvolver Local
 ```bash

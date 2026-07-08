@@ -17,9 +17,12 @@ const storage = multer.diskStorage({
   destination: (_req, _file, cb) => {
     cb(null, UPLOADS_DIR);
   },
-  filename: (_req, file, cb) => {
+  filename: (req, file, cb) => {
     const ext = path.extname(file.originalname);
-    cb(null, `${uuidv4()}${ext}`);
+    const relId = req.params.id || 'unknown';
+    const cat = (req.body && req.body.categoria) || 'unknown';
+    const safeCat = cat.replace(/[^a-z0-9_]/gi, '_');
+    cb(null, `R${relId}_${safeCat}_${uuidv4()}${ext}`);
   },
 });
 
@@ -142,7 +145,18 @@ router.post('/:id/imagens', upload.array('imagens', 20), async (req: Request, re
       INSERT INTO imagens_atividades (relatorio_id, categoria, filename, original_name)
       VALUES (?, ?, ?, ?)
     `, [req.params.id, categoria, file.filename, file.originalname]);
-    inserted.push(await queryOne('SELECT * FROM imagens_atividades WHERE id = ?', [result.lastInsertRowid]));
+    const imgId = result.lastInsertRowid;
+    // Rename file to include DB id for future recovery
+    const oldPath = file.path;
+    const ext = path.extname(file.filename);
+    const base = path.basename(file.filename, ext);
+    const newFilename = `${base}_ID${imgId}${ext}`;
+    const newPath = path.join(UPLOADS_DIR, newFilename);
+    try {
+      fs.renameSync(oldPath, newPath);
+      await runQuery('UPDATE imagens_atividades SET filename = ? WHERE id = ?', [newFilename, imgId]);
+    } catch {}
+    inserted.push(await queryOne('SELECT * FROM imagens_atividades WHERE id = ?', [imgId]));
   }
 
   res.status(201).json(inserted);
@@ -229,6 +243,61 @@ router.get('/imagens/:filename', (req: Request, res: Response) => {
     return;
   }
   res.sendFile(filePath);
+});
+
+// Recovery: scan uploads dir and reconstruct DB records from filenames
+router.post('/recover', async (req: Request, res: Response) => {
+  if (!req.user || req.user.role !== 'admin') {
+    res.status(403).json({ error: 'Apenas administradores' });
+    return;
+  }
+
+  const recovered: any[] = [];
+  const orphaned: string[] = [];
+
+  if (!fs.existsSync(UPLOADS_DIR)) {
+    res.json({ recovered: [], orphaned: [] });
+    return;
+  }
+
+  const files = fs.readdirSync(UPLOADS_DIR);
+  const filenamePattern = /^R(\d+)_([^_]+)_(.+)_ID(\d+)\.\w+$/;
+
+  for (const f of files) {
+    // Check if already in DB
+    const existing = await queryOne('SELECT id FROM imagens_atividades WHERE filename = ?', [f]);
+    if (existing) continue;
+
+    const match = f.match(filenamePattern);
+    if (!match) {
+      orphaned.push(f);
+      continue;
+    }
+
+    const relatorioId = parseInt(match[1]);
+    const categoria = match[2];
+    const originalName = f;
+
+    // Verify relatorio exists
+    const rel = await queryOne('SELECT id FROM relatorios WHERE id = ?', [relatorioId]);
+    if (!rel) {
+      orphaned.push(f);
+      continue;
+    }
+
+    // Check if categoria is valid
+    const cats = await queryAll('SELECT value FROM categorias');
+    const validCats = cats.map((c: any) => c.value);
+    const finalCat = validCats.includes(categoria) ? categoria : 'outros';
+
+    await runQuery(`
+      INSERT INTO imagens_atividades (relatorio_id, categoria, filename, original_name)
+      VALUES (?, ?, ?, ?)
+    `, [relatorioId, finalCat, f, originalName]);
+    recovered.push({ filename: f, relatorio_id: relatorioId, categoria: finalCat });
+  }
+
+  res.json({ recovered, orphaned });
 });
 
 export default router;
