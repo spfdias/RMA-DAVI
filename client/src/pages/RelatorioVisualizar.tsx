@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { relatoriosApi } from '../api';
+import { relatoriosApi, categoriasApi } from '../api';
 import { useAuth } from '../contexts/AuthContext';
 
 const API_URL = import.meta.env.VITE_API_URL || '';
@@ -31,10 +31,7 @@ const labelsBlocoG: Record<string, string> = {
   G5: 'Documentos/Relatórios para Fórum e MP', G6: 'Outros',
 };
 
-const categoriasImagem: Record<string, string> = {
-  doacoes: 'Doações', contando_historias: 'Contando Histórias', passeios: 'Passeios',
-  oficinas: 'Oficinas/Palestras', eventoss: 'Eventos', visitas: 'Visitas', outros: 'Outros',
-};
+
 
 export default function RelatorioVisualizar() {
   const { mes: mesParam, ano: anoParam } = useParams();
@@ -44,7 +41,14 @@ export default function RelatorioVisualizar() {
   const [relatorioId, setRelatorioId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [categorias, setCategorias] = useState<any[]>([]);
   const { user } = useAuth();
+
+  useEffect(() => {
+    categoriasApi.listar().then((data) => {
+      if (Array.isArray(data)) setCategorias(data);
+    });
+  }, []);
 
   useEffect(() => {
     if (!mesParam || !anoParam) return;
@@ -328,13 +332,13 @@ export default function RelatorioVisualizar() {
           {imagens.length > 0 && (
             <div>
               <p style={{ ...S.labelSec, marginTop: 16 }}>Registro fotográfico por categoria</p>
-              {Object.entries(categoriasImagem).map(([cat, catLabel]) => {
-                const catImgs = imagens.filter((i) => i.categoria === cat);
+              {categorias.map((cat) => {
+                const catImgs = imagens.filter((i) => i.categoria === cat.value);
                 if (catImgs.length === 0) return null;
                 return (
-                  <div key={cat} className="keep-together" style={{ marginBottom: 12 }}>
+                  <div key={cat.value} className="keep-together" style={{ marginBottom: 12 }}>
                     <p style={{ fontWeight: 600, fontSize: 10.5, margin: '0 0 4px', color: '#333' }}>
-                      {catLabel} <span style={{ fontWeight: 400, color: '#999' }}>({catImgs.length})</span>
+                      {cat.icon} {cat.label} <span style={{ fontWeight: 400, color: '#999' }}>({catImgs.length})</span>
                     </p>
                     <div className="img-grid">
                       {catImgs.map((img: any) => (

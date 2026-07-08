@@ -8,10 +8,12 @@ import RelatorioMensal from './pages/RelatorioMensal';
 import RelatorioLista from './pages/RelatorioLista';
 import RelatorioVisualizar from './pages/RelatorioVisualizar';
 import RelatorioAcolhidos from './pages/RelatorioAcolhidos';
+import RelatoriosAnuais from './pages/RelatoriosAnuais';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import AdminUsers from './pages/AdminUsers';
 import AuditLog from './pages/AuditLog';
+import AdminCategorias from './pages/AdminCategorias';
 
 function ProtectedLayout({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -53,6 +55,7 @@ function AppRoutes() {
           <Route path="/acolhidos/lista" element={<AcolhidosLista />} />
           <Route path="/relatorios" element={<RelatorioLista />} />
           <Route path="/relatorios/acolhidos" element={<RelatorioAcolhidos />} />
+          <Route path="/relatorios/anual" element={<RelatoriosAnuais />} />
           <Route path="/relatorios/novo" element={<RelatorioMensal />} />
           <Route path="/relatorios/:mes/:ano" element={<RelatorioMensal />} />
           <Route path="/relatorios/:mes/:ano/visualizar" element={<RelatorioVisualizar />} />
@@ -60,6 +63,7 @@ function AppRoutes() {
             <>
               <Route path="/admin/usuarios" element={<AdminUsers />} />
               <Route path="/admin/auditoria" element={<AuditLog />} />
+              <Route path="/admin/categorias" element={<AdminCategorias />} />
             </>
           )}
           <Route path="*" element={<Navigate to="/" />} />

@@ -5,6 +5,7 @@ import multer from 'multer';
 import acolhidosRouter from './routes/acolhidos';
 import relatoriosRouter from './routes/relatorios';
 import authRouter from './routes/auth';
+import categoriasRouter from './routes/categorias';
 import { authMiddleware } from './middleware/auth';
 import { initDatabase, getDbInfo } from './database';
 import fs from 'fs';
@@ -27,6 +28,7 @@ if (!fs.existsSync(UPLOADS_DIR)) {
 app.use('/api/auth', authRouter);
 app.use('/api/acolhidos', authMiddleware, acolhidosRouter);
 app.use('/api/relatorios', authMiddleware, relatoriosRouter);
+app.use('/api/categorias', authMiddleware, categoriasRouter);
 app.use('/uploads', express.static(UPLOADS_DIR));
 
 app.get('/api/health', (_req, res) => {

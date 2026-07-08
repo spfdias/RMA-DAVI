@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { relatoriosApi } from '../api';
+import { relatoriosApi, categoriasApi } from '../api';
 import { useAuth } from '../contexts/AuthContext';
 
 const API_URL = import.meta.env.VITE_API_URL || '';
@@ -9,15 +9,7 @@ const IMG_BASE = API_URL + '/uploads';
 
 const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 
-const categoriasImagem = [
-  { value: 'doacoes', label: 'Doações', icon: '🎁' },
-  { value: 'contando_historias', label: 'Contando Histórias', icon: '📖' },
-  { value: 'passeios', label: 'Passeios', icon: '🚌' },
-  { value: 'oficinas', label: 'Oficinas/Palestras', icon: '🎨' },
-  { value: 'eventos', label: 'Eventos/Datas Comemorativas', icon: '🎉' },
-  { value: 'visitas', label: 'Visitas', icon: '🤝' },
-  { value: 'outros', label: 'Outros', icon: '📎' },
-];
+
 
 function Notification({ type, message, onClose }: { type: 'success' | 'error'; message: string; onClose: () => void }) {
   useEffect(() => {
@@ -92,6 +84,7 @@ export default function RelatorioMensal() {
   const [dados, setDados] = useState<DadosRMA>(dadosVazios);
   const [relatorioId, setRelatorioId] = useState<number | null>(null);
   const [imagens, setImagens] = useState<any[]>([]);
+  const [categorias, setCategorias] = useState<{ value: string; label: string; icon: string }[]>([]);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState<string | null>(null);
   const [notify, setNotify] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
@@ -110,6 +103,12 @@ export default function RelatorioMensal() {
   function triggerFilePicker(categoria: string) {
     fileInputRefs.current[categoria]?.click();
   }
+
+  useEffect(() => {
+    categoriasApi.listar().then((data) => {
+      if (Array.isArray(data)) setCategorias(data);
+    });
+  }, []);
 
   useEffect(() => {
     if (mesParam && anoParam) {
@@ -173,7 +172,7 @@ export default function RelatorioMensal() {
     try {
       const novas = await relatoriosApi.uploadImagens(relatorioId, categoria, filesArray);
       setImagens((prev) => [...prev, ...novas]);
-      showNotify('success', `${files.length} imagem(ns) adicionada(s) em "${categoriasImagem.find(c => c.value === categoria)?.label}"`);
+      showNotify('success', `${files.length} imagem(ns) adicionada(s) em "${categorias.find(c => c.value === categoria)?.label}"`);
     } catch (err: any) {
       const msg = err.response?.data?.error || 'Erro ao enviar imagens';
       showNotify('error', msg);
@@ -519,7 +518,7 @@ export default function RelatorioMensal() {
           )}
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 20 }}>
-            {categoriasImagem.map((cat) => {
+            {categorias.map((cat) => {
               const imagensCat = imagens.filter((i) => i.categoria === cat.value);
               return (
                 <div key={cat.value} style={{

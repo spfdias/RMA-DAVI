@@ -13,10 +13,12 @@ export default function Sidebar() {
     { path: '/', label: 'Dashboard', icon: '📊', adminOnly: false },
     { path: '/acolhidos/cadastro', label: 'Cadastrar Acolhido', icon: '➕', adminOnly: false },
     { path: '/acolhidos/lista', label: 'Listar Acolhidos', icon: '👥', adminOnly: false },
-    { path: '/relatorios/novo', label: 'Novo Relatório', icon: '📄', adminOnly: false },
-    { path: '/relatorios', label: 'Relatórios', icon: '📁', adminOnly: false },
+    { path: '/relatorios/novo', label: 'Novo Relatório Mensal', icon: '📄', adminOnly: false },
+    { path: '/relatorios', label: 'Relatórios Mensais', icon: '📁', adminOnly: false },
     { path: '/relatorios/acolhidos', label: 'Relatório Acolhidos', icon: '📋', adminOnly: false },
+    { path: '/relatorios/anual', label: 'Relatórios Anuais', icon: '📅', adminOnly: false },
     { path: '/admin/usuarios', label: 'Gerenciar Usuários', icon: '🔐', adminOnly: true },
+    { path: '/admin/categorias', label: 'Categorias', icon: '🏷️', adminOnly: true },
     { path: '/admin/auditoria', label: 'Auditoria', icon: '📋', adminOnly: true },
   ];
 

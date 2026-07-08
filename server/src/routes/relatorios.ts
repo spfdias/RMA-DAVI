@@ -147,9 +147,9 @@ router.post('/:id/imagens', upload.array('imagens', 20), (req: Request, res: Res
     return;
   }
 
-  const categoriasValidas = ['doacoes', 'contando_historias', 'passeios', 'oficinas', 'eventos', 'visitas', 'outros'];
+  const categoriasValidas = queryAll('SELECT value FROM categorias').map((c: any) => c.value);
   if (!categoriasValidas.includes(categoria)) {
-    res.status(400).json({ error: `Categoria inválida. Use: ${categoriasValidas.join(', ')}` });
+    res.status(400).json({ error: `Categoria inválida` });
     return;
   }
 

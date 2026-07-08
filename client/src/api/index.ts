@@ -87,4 +87,13 @@ export const relatoriosApi = {
     api.get('/relatorios/audit').then((r) => r.data),
 };
 
+export const categoriasApi = {
+  listar: () =>
+    api.get('/categorias').then((r) => r.data),
+  criar: (data: { value: string; label: string; icon?: string }) =>
+    api.post('/categorias', data).then((r) => r.data),
+  excluir: (id: number) =>
+    api.delete(`/categorias/${id}`),
+};
+
 export default api;

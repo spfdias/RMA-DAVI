@@ -81,6 +81,26 @@ function seedInitialData() {
     }
     console.log(`[seed] ${acolhidos.length} acolhidos importados`);
   }
+
+  const catCount = queryOne('SELECT COUNT(*) as total FROM categorias');
+  if (catCount && catCount.total === 0) {
+    const defaultCategorias = [
+      { value: 'doacoes', label: 'Doações', icon: '🎁' },
+      { value: 'contando_historias', label: 'Contando Histórias', icon: '📖' },
+      { value: 'passeios', label: 'Passeios', icon: '🚌' },
+      { value: 'oficinas', label: 'Oficinas/Palestras', icon: '🎨' },
+      { value: 'eventos', label: 'Eventos/Datas Comemorativas', icon: '🎉' },
+      { value: 'visitas', label: 'Visitas', icon: '🤝' },
+      { value: 'corte_cabelo', label: 'Corte de Cabelo', icon: '💇' },
+      { value: 'visita_igrejas', label: 'Visita de Igrejas', icon: '⛪' },
+      { value: 'visita_familiares', label: 'Visita de Familiares', icon: '👨‍👩‍👧‍👦' },
+      { value: 'outros', label: 'Outros', icon: '📎' },
+    ];
+    for (const c of defaultCategorias) {
+      runQuery('INSERT INTO categorias (value, label, icon) VALUES (?, ?, ?)', [c.value, c.label, c.icon]);
+    }
+    console.log(`[seed] ${defaultCategorias.length} categorias importadas`);
+  }
 }
 
 export async function initDatabase(): Promise<SqlJsDatabase> {
@@ -165,6 +185,14 @@ function initializeDatabase() {
       created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
       FOREIGN KEY (relatorio_id) REFERENCES relatorios(id),
       FOREIGN KEY (user_id) REFERENCES users(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS categorias (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      value TEXT NOT NULL UNIQUE,
+      label TEXT NOT NULL,
+      icon TEXT NOT NULL DEFAULT '📎',
+      created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
     );
   `);
 
