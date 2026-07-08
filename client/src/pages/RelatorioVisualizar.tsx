@@ -117,7 +117,7 @@ export default function RelatorioVisualizar() {
           body { font-family: Arial, 'Times New Roman', serif; }
           @page { margin: 20mm 15mm; size: A4; }
           @media print {
-            body { font-family: Arial, 'Times New Roman', serif; color: #000; background: #fff; }
+            body { font-family: Arial, 'Times New Roman', serif; color: #000; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             aside, .sidebar, nav[class*="sidebar"], header[class*="sidebar"] { display: none !important; }
             main { background: #fff !important; padding: 0 !important; margin: 0 !important; }
             .no-print { display: none !important; }
@@ -125,6 +125,7 @@ export default function RelatorioVisualizar() {
             .avoid-break { page-break-after: avoid; }
             #footer-print { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; }
             #relatorio-print { padding-bottom: 60px; }
+            .tb th, .tb .section-title, .tb tr[style*="background"] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
           }
           @media screen {
             #relatorio-print { background: #fff; padding: 20mm 15mm; border-radius: 4px; box-shadow: 0 1px 12px rgba(0,0,0,0.12); max-width: 210mm; margin: 0 auto; font-family: Arial, 'Times New Roman', serif; }
@@ -588,17 +589,17 @@ export default function RelatorioVisualizar() {
         </div>
 
         {/* ===== ASSINATURAS ===== */}
-        <div className="keep-together" style={{ marginTop: 30, paddingTop: 10 }}>
-          <p style={{ marginTop: 40, borderTop: '1px solid #000', paddingTop: 4, width: '60%', marginLeft: 0, marginRight: 'auto' }}>&nbsp;</p>
+        <div className="keep-together" style={{ marginTop: 30, paddingTop: 10, textAlign: 'center' }}>
+          <p style={{ marginTop: 40, borderTop: '1px solid #000', paddingTop: 4, width: '60%', marginLeft: 'auto', marginRight: 'auto' }}>&nbsp;</p>
           <p style={{ fontSize: '10pt', fontWeight: 700 }}>Técnica responsável</p>
 
-          <p style={{ marginTop: 40, borderTop: '1px solid #000', paddingTop: 4, width: '60%', marginLeft: 0, marginRight: 'auto' }}>&nbsp;</p>
+          <p style={{ marginTop: 40, borderTop: '1px solid #000', paddingTop: 4, width: '60%', marginLeft: 'auto', marginRight: 'auto' }}>&nbsp;</p>
           <p style={{ fontSize: '10pt', fontWeight: 700 }}>Coordenadora</p>
         </div>
 
         {/* ===== FOOTER ===== */}
         <div id="footer-print" style={{ textAlign: 'center', marginTop: 20 }}>
-          <img src="/RodapeReport.jpg" alt="Rodapé" style={{ maxWidth: '100%', height: 'auto', display: 'block' }} />
+          <img src="/RodapeReport.jpg" alt="Rodapé" style={{ maxWidth: '100%', height: 'auto', display: 'block', margin: '0 auto' }} />
         </div>
       </div>
     </div>
