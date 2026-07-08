@@ -4,33 +4,8 @@ import { relatoriosApi, categoriasApi } from '../api';
 import { useAuth } from '../contexts/AuthContext';
 
 const API_URL = import.meta.env.VITE_API_URL || '';
-const API_BASE = API_URL + '/api';
 const IMG_BASE = API_URL + '/uploads';
 const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-
-const labelsBlocoA: Record<string, string> = {
-  A1: 'Capacidade total da Unidade', A2: 'Total de usuários acolhidos',
-  A3: 'Total de usuários conveniados/SEMAS', A4: 'Total conveniados/SEMAS acolhidos',
-  A5: 'Novos usuários no mês', A6_familia_extensa: 'Família extensa',
-  A6_familia_origem: 'Família de origem', A6_familia_substituta: 'Família substituta',
-  A6_maioridade: 'Maioridade', A6_falecimento: 'Falecimento', A6_transferencia: 'Transferência',
-};
-
-const labelsBlocoF: Record<string, string> = {
-  F1: 'Atendimentos individualizados', F2: 'Atendimentos em grupo',
-  F3: 'Oficinas/palestras', F4: 'Passeios', F5: 'Datas comemorativas/Eventos',
-  F6: 'Visitas domiciliares', F7: 'Atendimentos aos familiares',
-  F8: 'Visitas dos familiares', F9: 'Reunião de equipe',
-  F10: 'Reunião com rede socioassistencial', F11: 'Participação em audiências',
-  F12: 'Atendimento remoto',
-};
-
-const labelsBlocoG: Record<string, string> = {
-  G1: 'Mercado de trabalho', G2: 'Cursos de qualificação',
-  G3: 'Outras políticas públicas', G4: 'Rede socioassistencial',
-  G5: 'Documentos/Relatórios para Fórum e MP', G6: 'Outros',
-};
-
 
 
 export default function RelatorioVisualizar() {
@@ -38,7 +13,7 @@ export default function RelatorioVisualizar() {
   const navigate = useNavigate();
   const [dados, setDados] = useState<any>(null);
   const [imagens, setImagens] = useState<any[]>([]);
-  const [relatorioId, setRelatorioId] = useState<string | null>(null);
+  const [relatorioId, setRelatorioId] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [categorias, setCategorias] = useState<any[]>([]);
@@ -68,8 +43,7 @@ export default function RelatorioVisualizar() {
 
   async function handleRemoverTodasImagens() {
     if (!relatorioId || imagens.length === 0) return;
-    const total = imagens.length;
-    if (!confirm(`Tem certeza que deseja remover TODAS as ${total} imagem(ns) deste relatório? Esta ação é irreversível e as imagens serão apagadas permanentemente.`)) return;
+    if (!confirm(`Tem certeza que deseja remover TODAS as ${imagens.length} imagem(ns)?`)) return;
     try {
       await relatoriosApi.removerTodasImagens(relatorioId);
       setImagens([]);
@@ -100,22 +74,20 @@ export default function RelatorioVisualizar() {
     return v;
   }
 
-  function filtrar(obj: any, labels: Record<string, string>) {
-    return Object.entries(obj || {}).filter(([k]) => labels[k]);
-  }
-
   const dataAtual = new Date().toLocaleDateString('pt-BR');
 
   const S = {
-    pg: { margin: 0, fontSize: 10, lineHeight: 1.6, color: '#1a1a2e', fontFamily: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif" },
-    tituloPrincipal: { fontSize: 22, fontWeight: 700, color: '#fff', textAlign: 'center' as const, margin: 0, letterSpacing: 0.5 },
-    tituloBloco: { fontSize: 14, fontWeight: 700, color: '#1a3a5c', borderBottom: '1px solid #1a3a5c', paddingBottom: 4, margin: '20px 0 10px', pageBreakAfter: 'avoid' as const },
-    labelSec: { fontWeight: 700, fontSize: 10, color: '#1a3a5c', margin: '12px 0 5px', pageBreakAfter: 'avoid' as const },
-    tabela: { width: '100%', borderCollapse: 'collapse' as const, margin: '10px 0 16px' },
-    th: { border: '1px solid #0f2a44', padding: '5px 8px', fontSize: 8, fontWeight: 700, background: '#1a3a5c', color: '#fff', textAlign: 'left' as const, letterSpacing: 0.3, textTransform: 'uppercase' as const },
-    td: { border: '1px solid #ddd', padding: '4px 8px', fontSize: 9, color: '#333' },
-    tdNum: { border: '1px solid #ddd', padding: '4px 8px', fontSize: 9, color: '#333', textAlign: 'center' as const, width: 50 },
-    textoJustificado: { textAlign: 'justify' as const, margin: '0 0 8px', fontSize: 10, lineHeight: 1.7, orphans: 3, widows: 3, color: '#333' },
+    section: { marginBottom: 18 },
+    label: { fontWeight: 700, fontSize: '10pt', margin: '14px 0 6px' },
+    obs: { fontSize: '9pt', margin: '6px 0 10px', fontStyle: 'italic' as const },
+  };
+
+  const labelBlocoA: Record<string, string> = {
+    A1: 'A.1. Capacidade total de usuários na Unidade',
+    A2: 'A.2. Total de usuários acolhidos na Unidade',
+    A3: 'A.3. Total de usuários conveniados /SEMAS',
+    A4: 'A.4. Total de usuários conveniados/SEMAS acolhidos na Unidade',
+    A5: 'A.5. Novos usuários inseridos no mês',
   };
 
   return (
@@ -123,163 +95,272 @@ export default function RelatorioVisualizar() {
       <div style={{ marginBottom: 16, display: 'flex', gap: 8, justifyContent: 'flex-end' }} className="no-print">
         <button onClick={() => window.print()}
           style={{ background: '#1a237e', color: '#fff', border: 'none', padding: '10px 24px', borderRadius: 8, cursor: 'pointer', fontSize: 13, fontWeight: 600 }}>
-          🖨️ Imprimir / Exportar PDF
+          Imprimir / Exportar PDF
         </button>
         <button onClick={() => navigate(`/relatorios/${mesParam}/${anoParam}`)}
           style={{ background: '#fff', color: '#1a237e', border: '1px solid #1a237e', padding: '10px 24px', borderRadius: 8, cursor: 'pointer', fontSize: 13, fontWeight: 600 }}>
-          ✏️ Editar
+          Editar
         </button>
         {user?.role === 'admin' && imagens.length > 0 && (
           <button onClick={handleRemoverTodasImagens}
             style={{ background: '#c62828', color: '#fff', border: 'none', padding: '10px 24px', borderRadius: 8, cursor: 'pointer', fontSize: 13, fontWeight: 600 }}>
-            🗑️ Limpar imagens ({imagens.length})
+            Limpar imagens ({imagens.length})
           </button>
         )}
       </div>
 
-      <div id="relatorio-print" style={S.pg}>
+      <div id="relatorio-print" style={{
+        fontSize: '10pt', lineHeight: 1.5, color: '#000',
+      }}>
         <style>{`
           * { margin: 0; padding: 0; box-sizing: border-box; }
-
+          body { font-family: Arial, 'Times New Roman', serif; }
+          @page { margin: 20mm 15mm; size: A4; }
           @media print {
-            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; margin: 0; padding: 0; color: #000; font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; display: flex; flex-direction: column; min-height: 100%; }
-            aside { display: none !important; }
-            main { background: #fff !important; padding: 0 !important; }
+            body { font-family: Arial, 'Times New Roman', serif; color: #000; }
             .no-print { display: none !important; }
-            @page { margin: 12mm 0 0; size: A4; }
-            @page :first { margin: 0; }
-            #relatorio-print { box-shadow: none !important; border-radius: 0 !important; padding: 0 !important; background: #fff !important; }
             .keep-together { page-break-inside: avoid; }
-            .avoid-break-after { page-break-after: avoid; }
-            p { orphans: 3; widows: 3; }
-            h2, h3, h4 { page-break-after: avoid; }
-            table { font-size: 9pt; }
-            th { background: #1a3a5c !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            img { max-width: 100% !important; }
-            p, li, td { color: #000; }
-            tr:nth-child(even) td { background: #f2f4f8 !important; }
-
+            .avoid-break { page-break-after: avoid; }
           }
           @media screen {
-            #relatorio-print { background: #fff; padding: 0; border-radius: 8px; box-shadow: 0 1px 12px rgba(0,0,0,0.12); max-width: 210mm; margin: 0 auto; font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; }
+            #relatorio-print { background: #fff; padding: 20mm 15mm; border-radius: 4px; box-shadow: 0 1px 12px rgba(0,0,0,0.12); max-width: 210mm; margin: 0 auto; font-family: Arial, 'Times New Roman', serif; }
           }
-          .tb { width: 100%; border-collapse: collapse; margin: 10px 0 16px; border: 1px solid #ccc; }
-          .tb th, .tb td { border: 1px solid #ddd; padding: 4px 8px; font-size: 9pt; vertical-align: top; }
-          .tb th { background: #1a3a5c; font-weight: 700; color: #fff; text-align: left; font-size: 8pt; text-transform: uppercase; letter-spacing: 0.3px; }
-          .tb td { color: #333; }
-          .tb .num { text-align: center; width: 45px; }
-          .tb.zebra tr:nth-child(even) td { background: #f7f9fc; }
+          .tb { width: 100%; border-collapse: collapse; margin: 8px 0 14px; }
+          .tb th, .tb td { border: 1px solid #000; padding: 5px 8px; font-size: 9pt; vertical-align: top; text-align: left; }
+          .tb th { font-weight: 700; text-align: center; }
+          .tb .num { text-align: center; width: 50px; }
+          .tb .num-sm { text-align: center; width: 40px; }
           .img-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
-          .img-grid img { width: 150px; height: 150px; object-fit: cover; border: 1px solid #aaa; }
+          .img-grid img { width: 150px; height: 150px; object-fit: cover; border: 1px solid #000; }
           @media print { .img-grid img { width: 170px; height: 170px; } }
-          .report-text { text-align: justify; margin: 0 0 8px; font-size: 10pt; line-height: 1.7; orphans: 3; widows: 3; color: #333; }
-          .meta-item + .meta-item { margin-left: 14px; }
-          .meta-item + .meta-item::before { content: "| "; color: #ccc; }
         `}</style>
 
         {/* ===== HEADER ===== */}
-        <div className="keep-together" style={{
-          background: 'linear-gradient(135deg, #0d1b2a 0%, #1b3a5c 50%, #1a5276 100%)',
-          color: '#fff', margin: '0 0 0', padding: '36px 10mm 28px',
-          textAlign: 'center',
-        }}>
-          <p style={{ fontSize: 10, fontWeight: 500, marginBottom: 2, opacity: 0.85, letterSpacing: 0.8 }}>GOVERNO DO ESTADO DE MATO GROSSO DO SUL</p>
-          <p style={{ fontSize: 10, fontWeight: 600, marginBottom: 4, letterSpacing: 0.4 }}>SECRETARIA DE ESTADO DE DIREITOS HUMANOS, ASSISTÊNCIA SOCIAL E TRABALHO</p>
-          <p style={{ fontSize: 10, fontWeight: 400, marginBottom: 16, opacity: 0.9 }}>Serviço de Acolhimento Institucional — <strong>Lar Ebenezer</strong></p>
-          <h1 style={S.tituloPrincipal}>Relatório Mensal de Atendimento</h1>
-          <p style={{ fontSize: 11, opacity: 0.85, fontWeight: 300, marginTop: 4 }}>Proteção Social Especial — Alta Complexidade</p>
-          <div style={{
-            display: 'inline-block', background: '#1a5276', color: '#fff',
-            padding: '4px 16px', marginTop: 14, fontSize: 9, fontWeight: 700,
-            letterSpacing: 1.5, textTransform: 'uppercase',
-          }}>
-            {meses[Number(mesParam) - 1]} / {anoParam}
-          </div>
+        <div className="keep-together avoid-break" style={{ textAlign: 'center', marginBottom: 20, padding: '20px 0 10px', borderBottom: '2px solid #000' }}>
+          <p style={{ fontSize: '13pt', fontWeight: 700, lineHeight: 1.4 }}>
+            RELATÓRIO MENSAL DE ATENDIMENTO<br />
+            PROTEÇÃO SOCIAL ESPECIAL – ALTA COMPLEXIDADE<br />
+            SERVIÇO DE ACOLHIMENTO INSTITUCIONAL<br />
+            LAR EBENEZER
+          </p>
         </div>
 
-        {/* ===== META BAR ===== */}
-        <div className="keep-together" style={{
-          background: '#f4f6f8', padding: '8px 10mm', margin: '0 0 14px',
-          borderBottom: '1px solid #e0e4e8', fontSize: 9, color: '#555', textAlign: 'center',
-        }}>
-          <span className="meta-item"><strong>Unidade:</strong> {val('identificacao.unidade') || 'Lar Ebenezer'}</span>
-          <span className="meta-item"><strong>Município:</strong> Dourados / MS</span>
-          <span className="meta-item"><strong>Emissão:</strong> {dataAtual}</span>
-        </div>
-
-        {/* IDENTIFICAÇÃO */}
-        <div className="keep-together avoid-break-after" style={{ marginBottom: 14 }}>
-          <table className="tb" style={{ fontSize: '9.5pt' }}>
+        {/* ===== IDENTIFICAÇÃO ===== */}
+        <div className="keep-together avoid-break" style={S.section}>
+          <table className="tb">
             <tbody>
-              <tr><td style={{ width: '22%', fontWeight: 600, background: '#f5f5f5', fontSize: '9.5pt' }}>Unidade</td><td style={{ fontSize: '9.5pt' }}>{val('identificacao.unidade') || 'Lar Ebenezer'}</td></tr>
-              <tr><td style={{ fontWeight: 600, background: '#f5f5f5', fontSize: '9.5pt' }}>Endereço</td><td style={{ fontSize: '9.5pt' }}>{val('identificacao.endereco') || '-'}</td></tr>
-              <tr><td style={{ fontWeight: 600, background: '#f5f5f5', fontSize: '9.5pt' }}>Telefone</td><td style={{ fontSize: '9.5pt' }}>{val('identificacao.telefone') || '-'}</td></tr>
-              <tr><td style={{ fontWeight: 600, background: '#f5f5f5', fontSize: '9.5pt' }}>E-mail</td><td style={{ fontSize: '9.5pt' }}>{val('identificacao.email') || '-'}</td></tr>
-              <tr><td style={{ fontWeight: 600, background: '#f5f5f5', fontSize: '9.5pt' }}>Município / UF</td><td style={{ fontSize: '9.5pt' }}>Dourados / MS</td></tr>
+              <tr>
+                <td style={{ width: '35%', fontWeight: 700, background: '#f0f0f0' }}>Mês e Ano de Referência:</td>
+                <td>{mesAnoLabel}</td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 700, background: '#f0f0f0' }}>Nome da Unidade:</td>
+                <td>{val('identificacao.unidade') || 'Lar Ebenezer'}</td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 700, background: '#f0f0f0' }}>Endereço:</td>
+                <td>{val('identificacao.endereco') || '-'}</td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 700, background: '#f0f0f0' }}>Telefone:</td>
+                <td>{val('identificacao.telefone') || '-'}</td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 700, background: '#f0f0f0' }}>Email:</td>
+                <td>{val('identificacao.email') || '-'}</td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 700, background: '#f0f0f0' }}>Município: DOURADOS</td>
+                <td>UF: MS</td>
+              </tr>
             </tbody>
           </table>
         </div>
 
-        {/* PROFISSIONAIS */}
-        {['profissionais', 'profissionaisVinculados', 'profissionaisDesvinculados'].map((campo) => {
-          const lista = d[campo]?.filter((p: any) => p?.nome) || [];
-          if (lista.length === 0) return null;
-          const titulo = campo === 'profissionais' ? 'Profissionais da Unidade'
-            : campo === 'profissionaisVinculados' ? 'Profissionais Vinculados no Mês' : 'Profissionais Desvinculados no Mês';
-          return (
-            <div key={campo} className="keep-together">
-              <p style={S.labelSec}>{titulo}</p>
-              <table className="tb">
-                <thead><tr><th>Nome</th><th>Função</th><th>Vínculo</th></tr></thead>
-                <tbody>{lista.map((p: any, i: number) => (
-                  <tr key={i}><td>{p.nome || '-'}</td><td>{p.funcao || '-'}</td><td>{p.vinculo || '-'}</td></tr>
-                ))}</tbody>
-              </table>
-            </div>
-          );
-        })}
-
-        {/* ===== BLOCO I ===== */}
-        <div>
-          <p style={S.tituloBloco}>Bloco I — Volume de Atendimentos</p>
-
-          <p style={S.labelSec}>A. Volume de usuários</p>
+        {/* ===== PROFISSIONAIS (merged table as in template) ===== */}
+        <div className="keep-together" style={S.section}>
           <table className="tb">
+            <thead>
+              <tr>
+                <th style={{ width: '40%' }}>NOME DO PROFISSIONAL</th>
+                <th style={{ width: '30%' }}>FUNÇÃO</th>
+                <th style={{ width: '30%' }}>TIPO DE VÍNCULO</th>
+              </tr>
+            </thead>
             <tbody>
-              {filtrar(d.blocoA, labelsBlocoA).map(([k, v]: any) => (
-                <tr key={k}><td>{labelsBlocoA[k]}</td><td className="num">{v ?? '-'}</td></tr>
+              {(d.profissionais?.filter((p: any) => p?.nome)?.length
+                ? d.profissionais.filter((p: any) => p?.nome)
+                : [{ nome: '', funcao: '', vinculo: '' }]
+              ).map((p: any, i: number) => (
+                <tr key={`p-${i}`}>
+                  <td>{p.nome || '-'}</td>
+                  <td>{p.funcao || '-'}</td>
+                  <td>{p.vinculo || '-'}</td>
+                </tr>
               ))}
-            </tbody>
-          </table>
 
-          <p style={S.labelSec}>B. Faixa etária</p>
-          <table className="tb">
-            <thead><tr><th>Faixa</th><th className="num">Masc.</th><th className="num">Fem.</th></tr></thead>
-            <tbody>
-              {[['0 a 6 anos','B1_M','B1_F'],['07 a 14 anos','B2_M','B2_F'],['15 a 17 anos','B3_M','B3_F']].map(([lbl,mk,fk]) => (
-                <tr key={lbl}><td>{lbl}</td><td className="num">{d.blocoB?.[mk] ?? '-'}</td><td className="num">{d.blocoB?.[fk] ?? '-'}</td></tr>
+              <tr style={{ background: '#e8e8e8' }}>
+                <td style={{ fontWeight: 700, border: '1px solid #000' }} colSpan={3}>
+                  NOME DO PROFISSIONAL VINCULADO NO MÊS
+                </td>
+              </tr>
+              {(d.profissionaisVinculados?.filter((p: any) => p?.nome)?.length
+                ? d.profissionaisVinculados.filter((p: any) => p?.nome)
+                : [{ nome: '', funcao: '', vinculo: '' }]
+              ).map((p: any, i: number) => (
+                <tr key={`pv-${i}`}>
+                  <td>{p.nome || '-'}</td>
+                  <td>{p.funcao || '-'}</td>
+                  <td>{p.vinculo || '-'}</td>
+                </tr>
               ))}
-            </tbody>
-          </table>
 
-          <p style={S.labelSec}>C. Deficiências</p>
-          <table className="tb">
-            <thead><tr><th>Tipo</th><th className="num">I</th><th className="num">II</th><th className="num">III</th></tr></thead>
-            <tbody>
-              {[['C1','Múltipla'],['C2','Visual'],['C3','Auditiva'],['C4','Física'],['C5','Mental/Psiquiátrico'],['C6','TEA']].map(([ck,lbl]) => (
-                <tr key={ck}><td>{lbl}</td>
-                  {['I','II','III'].map(g => <td key={g} className="num">{d.blocoC?.[ck]?.[g] ?? '-'}</td>)}
+              <tr style={{ background: '#e8e8e8' }}>
+                <td style={{ fontWeight: 700, border: '1px solid #000' }} colSpan={3}>
+                  NOME DO PROFISSIONAL DESVINCULADO NO MÊS
+                </td>
+              </tr>
+              {(d.profissionaisDesvinculados?.filter((p: any) => p?.nome)?.length
+                ? d.profissionaisDesvinculados.filter((p: any) => p?.nome)
+                : [{ nome: '', funcao: '', vinculo: '' }]
+              ).map((p: any, i: number) => (
+                <tr key={`pd-${i}`}>
+                  <td>{p.nome || '-'}</td>
+                  <td>{p.funcao || '-'}</td>
+                  <td>{p.vinculo || '-'}</td>
                 </tr>
               ))}
             </tbody>
           </table>
 
-          <p style={S.labelSec}>D. Cor / Raça</p>
+          <p style={S.obs}>
+            OBS: Quando o Profissional Vinculado no Mês é necessário em anexo a ficha do contendo as informações RH para cadastro no SISTEMA MDS/GSI (solicitar no DGSUAS a ficha com as informações necessária, caso não tenha.)
+          </p>
+        </div>
+
+        {/* ===== BLOCO I ===== */}
+        <div style={S.section}>
           <table className="tb">
-            <thead><tr><th></th><th className="num">Fem.</th><th className="num">Masc.</th></tr></thead>
             <tbody>
-              {[['D1','Branco'],['D2','Pardo'],['D3','Preto'],['D4','Amarelo'],['D5','Indígena'],['D6','Imigrantes']].map(([dk,lbl]) => (
-                <tr key={dk}><td>{lbl}</td>
+              <tr>
+                <td style={{ fontWeight: 700, textAlign: 'center', fontSize: '11pt', border: '1px solid #000' }} colSpan={2}>
+                  Bloco I – Volume de Atendimentos
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 700, width: '80%' }}>A. Volume de usuários</td>
+                <td style={{ fontWeight: 700, textAlign: 'center', width: '20%' }}>Total</td>
+              </tr>
+
+              {Object.entries(labelBlocoA).map(([k, lbl]) => (
+                <tr key={k}>
+                  <td>{lbl}</td>
+                  <td className="num">{d.blocoA?.[k] ?? '-'}</td>
+                </tr>
+              ))}
+
+              <tr>
+                <td>
+                  A.6. Total de usuários desligados<br />
+                  ( &nbsp; ) Família extensa &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(
+                  {d.blocoA?.A6_familia_extensa || 0})<br />
+                  ( &nbsp; ) Família de origem &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(
+                  {d.blocoA?.A6_familia_origem || 0})<br />
+                  ( &nbsp; ) Família substituta &nbsp;&nbsp;&nbsp;(
+                  {d.blocoA?.A6_familia_substituta || 0})<br />
+                  ( &nbsp; ) Maioridade &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(
+                  {d.blocoA?.A6_maioridade || 0})<br />
+                  ( &nbsp; ) Falecimento &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(
+                  {d.blocoA?.A6_falecimento || 0})<br />
+                  ( &nbsp; ) Transferida para outra unidade (
+                  {d.blocoA?.A6_transferencia || 0})
+                </td>
+                <td className="num">-</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p style={S.obs}>OBS: A.6. especificar entre parênteses a quantidade</p>
+
+          {/* B. Faixa etária */}
+          <table className="tb">
+            <tbody>
+              <tr>
+                <td style={{ fontWeight: 700, width: '60%' }} colSpan={2}>B. Faixa etária dos usuários conveniados/SEMAS</td>
+                <td style={{ fontWeight: 700, textAlign: 'center', width: '20%' }}>Total</td>
+              </tr>
+              {[
+                ['B1', 'B.1.  0 a 6 anos', 'B1_M', 'B1_F'],
+                ['B2', 'B.2.  07 a 14 anos', 'B2_M', 'B2_F'],
+                ['B3', 'B.3  15 a 17 anos', 'B3_M', 'B3_F'],
+              ].map(([id, lbl, mk, fk]) => (
+                <tr key={id}>
+                  <td style={{ paddingLeft: 20, width: '60%' }} colSpan={2}>{lbl}</td>
+                  <td className="num">{d.blocoB?.[fk] ?? '-'} / {d.blocoB?.[mk] ?? '-'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {/* C. Deficiências */}
+          <table className="tb">
+            <tbody>
+              <tr>
+                <td style={{ fontWeight: 700 }} rowSpan={2}>C. - Deficiências dos usuários conveniados/SEMAS</td>
+                <td style={{ fontWeight: 700, textAlign: 'center' }} colSpan={3}>Total / Grau de dependência</td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 700, textAlign: 'center', width: '12%' }}>I</td>
+                <td style={{ fontWeight: 700, textAlign: 'center', width: '12%' }}>II</td>
+                <td style={{ fontWeight: 700, textAlign: 'center', width: '12%' }}>III</td>
+              </tr>
+              {[
+                ['C1', 'C.1. Deficiência múltipla (uma ou mais deficiências)'],
+                ['C2', 'C.2. Deficiência visual'],
+                ['C3', 'C.3. Deficiência auditiva'],
+                ['C4', 'C.4. Deficiência física'],
+                ['C5', 'C.5. Transtorno mental e ou psiquiatrico'],
+                ['C6', 'C.6 TEA (Transtorno Espectro Autista)'],
+              ].map(([ck, lbl]) => (
+                <tr key={ck}>
+                  <td>{lbl}</td>
+                  {['I', 'II', 'III'].map(g => (
+                    <td key={g} className="num">{d.blocoC?.[ck]?.[g] ?? '-'}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <p style={S.obs}>OBS: Especificar a quantidade em cada grau de dependência</p>
+          <p style={{ fontSize: '9pt', margin: '4px 0' }}>
+            <strong>GRAU DE DEPENDÊNCIA I</strong> – Idosos independentes, mesmo que requeiram uso de equipamento de auto-ajuda
+          </p>
+          <p style={{ fontSize: '9pt', margin: '4px 0' }}>
+            <strong>GRAU DE DEPENDÊNCIA II</strong> – Idosos com dependência em até três atividades de autocuidado para a vida diária
+          </p>
+          <p style={{ fontSize: '9pt', margin: '4px 0 12px' }}>
+            <strong>GRAU DE DEPENDÊNCIA III</strong> – Idosos com dependência que requeiram assistência em todas as atividades de autocuidado para a vida diária e/ ou com comprometimento cognitivo
+          </p>
+
+          {/* D. Cor / Raça */}
+          <table className="tb">
+            <tbody>
+              <tr>
+                <td style={{ fontWeight: 700 }} rowSpan={2}>D. Cor ou raça/ nacionalidade dos usuários conveniados/SEMAS</td>
+                <td style={{ fontWeight: 700, textAlign: 'center' }}>Feminino</td>
+                <td style={{ fontWeight: 700, textAlign: 'center' }}>Masculino</td>
+              </tr>
+              {[
+                ['D1', 'D.1. Branco'],
+                ['D2', 'D.2. Pardo'],
+                ['D3', 'D.3. Preto'],
+                ['D4', 'D.4. Amarelo'],
+                ['D5', 'D.5. Indígena'],
+                ['D6', 'D.6. Imigrantes. Especifique a nacionalidade\nPaís:'],
+              ].map(([dk, lbl]) => (
+                <tr key={dk}>
+                  <td>{lbl}</td>
                   <td className="num">{d.blocoD?.[dk]?.feminino ?? '-'}</td>
                   <td className="num">{d.blocoD?.[dk]?.masculino ?? '-'}</td>
                 </tr>
@@ -287,65 +368,135 @@ export default function RelatorioVisualizar() {
             </tbody>
           </table>
 
-          <p style={S.labelSec}>E. Tempo de acolhimento</p>
+          {/* E. Tempo de acolhimento */}
+          <p style={{ ...S.label, pageBreakAfter: 'avoid' }}>E. Informe há quanto tempo os conveniados/SEMAS estão acolhidos na Unidade</p>
+          <table className="tb">
+            <thead>
+              <tr>
+                {[
+                  'Menos de 1 mês', '1 a 6 meses', '7 a 12 meses',
+                  '1 a 2 anos', '3 a 5 anos', '6 a 8 anos', 'Acima 9 anos',
+                ].map((lbl, i) => (
+                  <th key={i} style={{ fontSize: '8pt' }}>{lbl}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                {[
+                  'menos_1m', '1a6m', '7a12m', '1a2a', '3a5a', '6a8a', 'acima_9a',
+                ].map((ek) => (
+                  <td key={ek} className="num">{d.blocoE?.[ek] ?? '-'}</td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        {/* ===== BLOCO II – ATIVIDADES ===== */}
+        <div style={S.section}>
           <table className="tb">
             <tbody>
-              {[['menos_1m','< 1 mês'],['1a6m','1 a 6 meses'],['7a12m','7 a 12 meses'],['1a2a','1 a 2 anos'],['3a5a','3 a 5 anos'],['6a8a','6 a 8 anos'],['acima_9a','> 9 anos']].map(([ek,lbl]) => (
-                <tr key={ek}><td>{lbl}</td><td className="num">{d.blocoE?.[ek] ?? '-'}</td></tr>
+              <tr>
+                <td style={{ fontWeight: 700, textAlign: 'center', fontSize: '11pt', border: '1px solid #000' }} colSpan={2}>
+                  Bloco II – Atividades realizadas com os usuários conveniados/SEMAS
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 700, width: '80%' }}>F. Volume de atividades realizadas</td>
+                <td style={{ fontWeight: 700, textAlign: 'center', width: '20%' }}>Total</td>
+              </tr>
+              {[
+                ['F1', 'F.1. Total de atendimentos individualizados realizados pela equipe técnica'],
+                ['F2', 'F.2. Total de atendimentos em grupo realizados pela equipe técnica'],
+                ['F3', 'F.3. Oficinas/palestras com os usuários'],
+                ['F4', 'F.4. Passeios com os usuários'],
+                ['F5', 'F.5. Datas comemorativas/ Aniversariantes do mês/ Eventos'],
+                ['F6', 'F.6. Visitas domiciliares'],
+                ['F7', 'F.7. Total de atendimentos individualizados realizados pela equipe técnica aos familiares'],
+                ['F8', 'F.8. Visitas dos familiares na Unidade'],
+                ['F9', 'F.9. Reunião de equipe'],
+                ['F10', 'F.10. Reunião com a rede socioassistencial/intersetorial'],
+                ['F11', 'F.11. Participação em audiências'],
+                ['F12', 'F.12. Atendimento remoto'],
+              ].map(([fk, lbl]) => (
+                <tr key={fk}>
+                  <td>{lbl}</td>
+                  <td className="num">{d.blocoF?.[fk] ?? '-'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <p style={{ fontSize: '9pt', marginLeft: 20 }}>F.4. Quantidade de passeios</p>
+          <p style={{ fontSize: '9pt', marginLeft: 20, marginBottom: 14 }}>F.5 Quantidade de atividades realizadas</p>
+
+          <table className="tb">
+            <tbody>
+              <tr>
+                <td style={{ fontWeight: 700, textAlign: 'center', fontSize: '11pt', border: '1px solid #000' }} colSpan={2}>
+                  Bloco II – Encaminhamentos aos usuários conveniados/SEMAS
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 700, width: '80%' }}>G. Volume de encaminhamentos</td>
+                <td style={{ fontWeight: 700, textAlign: 'center', width: '20%' }}>Total</td>
+              </tr>
+              {[
+                ['G1', 'G.1. Encaminhamentos realizados para o mercado de trabalho'],
+                ['G2', 'G.2. Encaminhamentos realizados para cursos de qualificação'],
+                ['G3', 'G.3. Encaminhamentos realizados para outras políticas públicas (saúde, educação)'],
+                ['G4', 'G.4. Encaminhamentos realizados para a rede socioassistencial (famílias)'],
+                ['G5', 'G.5. Encaminhamentos de documentos e relatórios para Fórum e MP'],
+                ['G6', 'G.6. Outros. Especifique'],
+              ].map(([gk, lbl]) => (
+                <tr key={gk}>
+                  <td>{lbl}</td>
+                  <td className="num">{d.blocoG?.[gk] ?? '-'}</td>
+                </tr>
               ))}
             </tbody>
           </table>
         </div>
 
-        {/* ===== BLOCO II ===== */}
-        <div>
-          <p style={S.tituloBloco}>Bloco II — Atividades Realizadas</p>
-
-          <p style={S.labelSec}>F. Volume de atividades</p>
+        {/* ===== BLOCO III – DESCRIÇÃO ===== */}
+        <div className="keep-together" style={S.section}>
           <table className="tb">
             <tbody>
-              {filtrar(d.blocoF, labelsBlocoF).map(([k, v]: any) => (
-                <tr key={k}><td>{labelsBlocoF[k]}</td><td className="num">{v ?? '-'}</td></tr>
-              ))}
+              <tr>
+                <td style={{ fontWeight: 700, textAlign: 'center', fontSize: '11pt', border: '1px solid #000' }}>
+                  Bloco III – Descrição das atividades mensal realizadas com os usuários/SEMAS
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 700 }}>H. Descrição das atividades</td>
+              </tr>
+              <tr>
+                <td style={{ minHeight: 60, padding: '10px 8px', lineHeight: 1.6, textAlign: 'justify' }}>
+                  <p style={{ marginBottom: 6, fontWeight: 600 }}>H.1. Descreva quais atividades os usuários realizaram durante o mês (convivência, socioeducativa, passeios, visitas a outros locais, atendimento médico, atividades da vida diária, para independência, de auto cuidado, cursos, etc)</p>
+                  {d.blocoH?.descricao || 'N/A'}
+                </td>
+              </tr>
             </tbody>
           </table>
-
-          <p style={S.labelSec}>G. Encaminhamentos</p>
-          <table className="tb">
-            <tbody>
-              {filtrar(d.blocoG, labelsBlocoG).map(([k, v]: any) => (
-                <tr key={k}><td>{labelsBlocoG[k]}</td><td className="num">{v ?? '-'}</td></tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* ===== BLOCO III ===== */}
-        <div>
-          <p style={S.tituloBloco}>Bloco III — Descrição das Atividades</p>
-
-          <p style={S.labelSec}>H.1. Atividades realizadas no mês</p>
-          <p className="report-text" style={{ whiteSpace: 'pre-wrap' }}>
-            {d.blocoH?.descricao || 'N/A'}
-          </p>
 
           {imagens.length > 0 && (
             <div>
-              <p style={{ ...S.labelSec, marginTop: 16 }}>Registro fotográfico por categoria</p>
+              <p style={{ ...S.label, marginTop: 16 }}>Registro fotográfico</p>
               {categorias.map((cat) => {
                 const catImgs = imagens.filter((i) => i.categoria === cat.value);
                 if (catImgs.length === 0) return null;
                 return (
                   <div key={cat.value} className="keep-together" style={{ marginBottom: 12 }}>
-                    <p style={{ fontWeight: 600, fontSize: 10.5, margin: '0 0 4px', color: '#333' }}>
-                      {cat.icon} {cat.label} <span style={{ fontWeight: 400, color: '#999' }}>({catImgs.length})</span>
+                    <p style={{ fontWeight: 700, fontSize: '10pt', margin: '0 0 4px' }}>
+                      {cat.label} ({catImgs.length})
                     </p>
                     <div className="img-grid">
                       {catImgs.map((img: any) => (
                         <div key={img.id} style={{
                           width: 160, height: 160, overflow: 'hidden',
                           display: 'flex', alignItems: 'center', justifyContent: 'center',
-                          borderRadius: 6, border: '1px solid #bbb',
+                          border: '1px solid #000',
                         }}>
                           <img
                             src={img.url || `${IMG_BASE}/${img.filename}`}
@@ -367,71 +518,77 @@ export default function RelatorioVisualizar() {
         </div>
 
         {/* ===== BLOCO IV ===== */}
-        <div>
-          <p style={S.tituloBloco}>Bloco IV — Informações Complementares</p>
+        <div style={S.section}>
+          <table className="tb">
+            <tbody>
+              <tr>
+                <td style={{ fontWeight: 700, textAlign: 'center', fontSize: '11pt', border: '1px solid #000' }} colSpan={2}>
+                  Bloco IV – Informações complementares
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 700, textAlign: 'center', background: '#f0f0f0' }} colSpan={2}>
+                  I. Informações
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 700, width: '40%', verticalAlign: 'top' }}>I.1. Limites e dificuldades enfrentadas no mês:</td>
+                <td style={{ width: '60%', textAlign: 'justify' }}>{d.blocoI?.limites || 'N/A'}</td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 700, verticalAlign: 'top' }}>I.2. Avanços:</td>
+                <td style={{ textAlign: 'justify' }}>{d.blocoI?.avancos || 'N/A'}</td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 700, verticalAlign: 'top' }}>I.3. Aquisição do mês:</td>
+                <td style={{ textAlign: 'justify' }}>{d.blocoI?.aquisicao || 'N/A'}</td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 700, verticalAlign: 'top' }}>I.4. A equipe participou de alguma capacitação este mês:</td>
+                <td style={{ textAlign: 'justify' }}>
+                  {(d.blocoI?.capacitacoes?.filter((c: any) => c?.nome || c?.nome_capacitacao)?.length || 0) > 0
+                    ? d.blocoI.capacitacoes.filter((c: any) => c?.nome || c?.nome_capacitacao).map((c: any, i: number) => (
+                        <span key={i}>{c.nome || '-'} — {c.nome_capacitacao || '-'}{i < d.blocoI.capacitacoes.filter((cx: any) => cx?.nome || cx?.nome_capacitacao).length - 1 ? '; ' : ''}</span>
+                      ))
+                    : 'N/A'}
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
-          {[
-            ['limites', 'I.1. Limites e dificuldades enfrentadas no mês'],
-            ['avancos', 'I.2. Avanços'],
-            ['aquisicao', 'I.3. Aquisição do mês'],
-          ].map(([campo, titulo]) => (
-            <div key={campo} className="keep-together">
-              <p style={S.labelSec}>{titulo}</p>
-              {d.blocoI?.[campo] && d.blocoI[campo].length > 100
-                ? d.blocoI[campo].split('\n').filter((l: string) => l.trim()).map((par: string, i: number) => (
-                    <p key={i} className="report-text">{par}</p>
-                  ))
-                : <p className="report-text">{d.blocoI?.[campo] || 'N/A'}</p>
-              }
-            </div>
-          ))}
-
-          <div className="keep-together">
-            <p style={S.labelSec}>I.4. Capacitações da equipe</p>
-            {(d.blocoI?.capacitacoes?.filter((c: any) => c?.nome || c?.nome_capacitacao)?.length || 0) > 0 ? (
-              <table className="tb">
-                <thead><tr><th>Profissional</th><th>Capacitação</th></tr></thead>
-                <tbody>
-                  {d.blocoI.capacitacoes.filter((c: any) => c?.nome || c?.nome_capacitacao).map((c: any, i: number) => (
-                    <tr key={i}><td>{c.nome || '-'}</td><td>{c.nome_capacitacao || '-'}</td></tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : <p style={{ fontSize: 11, color: '#999' }}>N/A</p>}
-          </div>
+          {(d.blocoI?.capacitacoes?.filter((c: any) => c?.nome || c?.nome_capacitacao)?.length || 0) > 0 && (
+            <table className="tb" style={{ marginTop: 4 }}>
+              <thead>
+                <tr>
+                  <th style={{ width: '50%' }}>Nome do Profissional</th>
+                  <th style={{ width: '50%' }}>Nome da Capacitação</th>
+                </tr>
+              </thead>
+              <tbody>
+                {d.blocoI.capacitacoes.filter((c: any) => c?.nome || c?.nome_capacitacao).map((c: any, i: number) => (
+                  <tr key={i}>
+                    <td>{c.nome || '-'}</td>
+                    <td>{c.nome_capacitacao || '-'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
 
         {/* ===== ASSINATURAS ===== */}
-        <div className="keep-together" style={{
-          margin: '24px 0 0', padding: '20px 0', textAlign: 'center',
-          borderTop: '2px solid #1a3a5c', background: '#fafbfc',
-        }}>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 60 }}>
-            <div style={{ textAlign: 'center', minWidth: 200 }}>
-              <p style={{ margin: '30px 0 4px', borderTop: '1px solid #333', paddingTop: 6, width: '80%', marginLeft: 'auto', marginRight: 'auto' }}>&nbsp;</p>
-              <p style={{ fontSize: 11, fontWeight: 700, marginTop: 6 }}>Técnica Responsável</p>
-              <p style={{ fontSize: 9, color: '#666' }}>Serviço de Acolhimento</p>
-            </div>
-            <div style={{ textAlign: 'center', minWidth: 200 }}>
-              <p style={{ margin: '30px 0 4px', borderTop: '1px solid #333', paddingTop: 6, width: '80%', marginLeft: 'auto', marginRight: 'auto' }}>&nbsp;</p>
-              <p style={{ fontSize: 11, fontWeight: 700, marginTop: 6 }}>Coordenadora</p>
-              <p style={{ fontSize: 9, color: '#666' }}>Lar Ebenezer</p>
-            </div>
-          </div>
+        <div className="keep-together" style={{ marginTop: 30, paddingTop: 10 }}>
+          <p style={{ marginTop: 40, borderTop: '1px solid #000', paddingTop: 4, width: '60%', marginLeft: 0, marginRight: 'auto' }}>&nbsp;</p>
+          <p style={{ fontSize: '10pt', fontWeight: 700 }}>Técnica responsável</p>
+
+          <p style={{ marginTop: 40, borderTop: '1px solid #000', paddingTop: 4, width: '60%', marginLeft: 0, marginRight: 'auto' }}>&nbsp;</p>
+          <p style={{ fontSize: '10pt', fontWeight: 700 }}>Coordenadora</p>
         </div>
 
         {/* ===== FOOTER ===== */}
-        <div style={{
-          background: 'linear-gradient(135deg, #0d1b2a 0%, #1b3a5c 50%, #1a5276 100%)',
-          color: '#fff', padding: '14px 20mm', margin: '0',
-          textAlign: 'center', fontSize: 8, lineHeight: 1.6,
-        }}>
-          <p style={{ margin: 0, color: '#fff' }}>
-            Documento gerado em {dataAtual} — <strong>Sistema RMA</strong> — Lar Ebenezer
-          </p>
-          <p style={{ margin: '4px 0 0', color: '#fff', opacity: 0.7 }}>
-            Relatório Mensal de Atendimento — Proteção Social Especial — Alta Complexidade
-          </p>
+        <div style={{ textAlign: 'center', marginTop: 20, paddingTop: 10, borderTop: '1px solid #000', fontSize: '8pt' }}>
+          <p>Documento gerado em {dataAtual} — Sistema RMA — Lar Ebenezer</p>
+          <p style={{ marginTop: 2 }}>Relatório Mensal de Atendimento — Proteção Social Especial — Alta Complexidade</p>
         </div>
       </div>
     </div>
