@@ -123,9 +123,9 @@ export default function RelatorioVisualizar() {
             .no-print { display: none !important; }
             .keep-together { page-break-inside: avoid; }
             .avoid-break { page-break-after: avoid; }
-            #header-print { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; }
             #footer-print { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; }
-            #relatorio-print { padding-top: 90px; padding-bottom: 60px; }
+            #footer-print img { max-width: 80%; height: auto; }
+            #relatorio-print { padding-bottom: 50px; }
             .tb th, .tb .section-title, .tb tr[style*="background"] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
           }
           @media screen {
@@ -142,8 +142,8 @@ export default function RelatorioVisualizar() {
           @media print { .img-grid img { width: 170px; height: 170px; } }
         `}</style>
 
-        {/* ===== HEADER IMAGE (fixed on every page) ===== */}
-        <div id="header-print" style={{ textAlign: 'center' }}>
+        {/* ===== HEADER IMAGE ===== */}
+        <div style={{ textAlign: 'center' }}>
           <img src="/CabecalhoReport.jpg" alt="Cabeçalho" style={{ maxWidth: '100%', height: 'auto', display: 'block' }} />
         </div>
 
@@ -604,7 +604,7 @@ export default function RelatorioVisualizar() {
 
         {/* ===== FOOTER ===== */}
         <div id="footer-print" style={{ textAlign: 'center', marginTop: 20 }}>
-          <img src="/RodapeReport.jpg" alt="Rodapé" style={{ maxWidth: '100%', height: 'auto', display: 'block' }} />
+          <img src="/RodapeReport.jpg" alt="Rodapé" style={{ maxWidth: '80%', height: 'auto', display: 'block', margin: '0 auto' }} />
         </div>
       </div>
     </div>
