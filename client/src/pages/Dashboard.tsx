@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { acolhidosApi, relatoriosApi } from '../api';
 import { useAuth } from '../contexts/AuthContext';
+import StorageAlert from '../components/StorageAlert';
 
 const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 
@@ -47,6 +48,7 @@ export default function Dashboard() {
 
   return (
     <div>
+      <StorageAlert />
       <h2 style={{ margin: '0 0 24px', color: '#1a237e' }}>Dashboard</h2>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16, marginBottom: 32 }}>

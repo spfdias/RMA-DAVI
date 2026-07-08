@@ -96,4 +96,9 @@ export const categoriasApi = {
     api.delete(`/categorias/${id}`),
 };
 
+export const storageApi = {
+  status: () =>
+    api.get('/storage').then((r) => r.data),
+};
+
 export default api;
