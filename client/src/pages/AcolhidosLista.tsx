@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { acolhidosApi } from '../api';
+import { useAuth } from '../contexts/AuthContext';
 
 function calcularTempoAcolhimento(dataAcolhimento: string): string {
   const inicio = new Date(dataAcolhimento);
@@ -31,11 +32,15 @@ function calcularIdade(dataNascimento: string): string {
 
 export default function AcolhidosLista() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [acolhidos, setAcolhidos] = useState<any[]>([]);
   const [filtro, setFiltro] = useState('ativos');
   const [busca, setBusca] = useState('');
   const [ordenarPor, setOrdenarPor] = useState('nome');
   const [loading, setLoading] = useState(true);
+  const [confirmDelete, setConfirmDelete] = useState<number | null>(null);
+  const [desligarModal, setDesligarModal] = useState<any | null>(null);
+  const [desligarForm, setDesligarForm] = useState({ data_desligamento: '', motivo: '', observacoes: '' });
 
   function carregar() {
     setLoading(true);
@@ -60,6 +65,45 @@ export default function AcolhidosLista() {
   }
 
   useEffect(() => { carregar(); }, [filtro, ordenarPor]);
+
+  async function handleExcluir(id: number) {
+    try {
+      await acolhidosApi.excluir(id);
+      setConfirmDelete(null);
+      carregar();
+    } catch {
+      alert('Erro ao excluir acolhido');
+    }
+  }
+
+  async function handleDesligar(id: number) {
+    try {
+      await acolhidosApi.desligar(id, desligarForm);
+      setDesligarModal(null);
+      setDesligarForm({ data_desligamento: '', motivo: '', observacoes: '' });
+      carregar();
+    } catch (err: any) {
+      alert(err.response?.data?.error || 'Erro ao desligar acolhido');
+    }
+  }
+
+  async function handleReativar(id: number) {
+    try {
+      await acolhidosApi.atualizar(id, { ativo: true });
+      carregar();
+    } catch {
+      alert('Erro ao reativar acolhido');
+    }
+  }
+
+  function openDesligar(acolhido: any) {
+    setDesligarForm({
+      data_desligamento: new Date().toISOString().split('T')[0],
+      motivo: '',
+      observacoes: '',
+    });
+    setDesligarModal(acolhido);
+  }
 
   return (
     <div>
@@ -142,16 +186,115 @@ export default function AcolhidosLista() {
                     </span>
                   </td>
                   <td style={{ padding: '12px 16px' }}>
-                    <button onClick={() => navigate(`/acolhidos/cadastro/${a.id}`)} style={{
-                      background: 'transparent', border: '1px solid #1a237e',
-                      color: '#1a237e', padding: '4px 12px', borderRadius: 6,
-                      cursor: 'pointer', fontSize: 12,
-                    }}>Editar</button>
+                    <div style={{ display: 'flex', gap: 6, justifyContent: 'flex-end' }}>
+                      <button onClick={() => navigate(`/acolhidos/cadastro/${a.id}`)} style={{
+                        background: 'transparent', border: '1px solid #1a237e',
+                        color: '#1a237e', padding: '4px 12px', borderRadius: 6,
+                        cursor: 'pointer', fontSize: 12,
+                      }}>Editar</button>
+
+                      {a.ativo ? (
+                        <button onClick={() => openDesligar(a)} style={{
+                          background: '#fff3e0', border: '1px solid #ef6c00',
+                          color: '#ef6c00', padding: '4px 12px', borderRadius: 6,
+                          cursor: 'pointer', fontSize: 12,
+                        }}>Desligar</button>
+                      ) : user?.role === 'admin' && (
+                        <button onClick={() => handleReativar(a.id)} style={{
+                          background: '#e8f5e9', border: '1px solid #2e7d32',
+                          color: '#2e7d32', padding: '4px 12px', borderRadius: 6,
+                          cursor: 'pointer', fontSize: 12,
+                        }}>Reativar</button>
+                      )}
+
+                      {user?.role === 'admin' && (
+                        confirmDelete === a.id ? (
+                          <span style={{ display: 'flex', gap: 4 }}>
+                            <button onClick={() => handleExcluir(a.id)} style={{
+                              background: '#c62828', border: 'none', color: '#fff',
+                              padding: '4px 8px', borderRadius: 6, cursor: 'pointer', fontSize: 11,
+                            }}>Confirmar</button>
+                            <button onClick={() => setConfirmDelete(null)} style={{
+                              background: '#eee', border: 'none', color: '#333',
+                              padding: '4px 8px', borderRadius: 6, cursor: 'pointer', fontSize: 11,
+                            }}>Cancelar</button>
+                          </span>
+                        ) : (
+                          <button onClick={() => setConfirmDelete(a.id)} style={{
+                            background: 'transparent', border: '1px solid #e53935',
+                            color: '#e53935', padding: '4px 12px', borderRadius: 6,
+                            cursor: 'pointer', fontSize: 12,
+                          }}>Excluir</button>
+                        )
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {/* Modal de Desligamento */}
+      {desligarModal && (
+        <div style={{
+          position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000,
+        }} onClick={() => setDesligarModal(null)}>
+          <div style={{
+            background: '#fff', borderRadius: 12, padding: 32, maxWidth: 480, width: '90%',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.2)',
+          }} onClick={(e) => e.stopPropagation()}>
+            <h3 style={{ margin: '0 0 4px', color: '#1a237e' }}>Desligar Acolhido</h3>
+            <p style={{ margin: '0 0 20px', color: '#666', fontSize: 14 }}>
+              {desligarModal.nome}
+            </p>
+
+            <div style={{ marginBottom: 16 }}>
+              <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#444', marginBottom: 4 }}>Data de Desligamento *</label>
+              <input type="date" value={desligarForm.data_desligamento}
+                onChange={(e) => setDesligarForm({ ...desligarForm, data_desligamento: e.target.value })}
+                style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: 8, fontSize: 14, boxSizing: 'border-box' }} />
+            </div>
+
+            <div style={{ marginBottom: 16 }}>
+              <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#444', marginBottom: 4 }}>Motivo *</label>
+              <select value={desligarForm.motivo}
+                onChange={(e) => setDesligarForm({ ...desligarForm, motivo: e.target.value })}
+                style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: 8, fontSize: 14, boxSizing: 'border-box' }}>
+                <option value="">Selecione</option>
+                <option>Transferência</option>
+                <option>Falecimento</option>
+                <option>Desistência</option>
+                <option>Maioridade</option>
+                <option>Evadir</option>
+                <option>Outro</option>
+              </select>
+            </div>
+
+            <div style={{ marginBottom: 24 }}>
+              <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#444', marginBottom: 4 }}>Observações</label>
+              <textarea value={desligarForm.observacoes}
+                onChange={(e) => setDesligarForm({ ...desligarForm, observacoes: e.target.value })}
+                style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: 8, fontSize: 14, boxSizing: 'border-box', minHeight: 60, resize: 'vertical' }}
+                placeholder="Observações..." />
+            </div>
+
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
+              <button onClick={() => setDesligarModal(null)} style={{
+                background: 'transparent', border: '1px solid #ddd',
+                padding: '8px 20px', borderRadius: 8, cursor: 'pointer', fontSize: 14,
+              }}>Cancelar</button>
+              <button onClick={() => handleDesligar(desligarModal.id)}
+                disabled={!desligarForm.data_desligamento || !desligarForm.motivo}
+                style={{
+                  background: '#ef6c00', color: '#fff', border: 'none',
+                  padding: '8px 20px', borderRadius: 8, cursor: 'pointer', fontSize: 14, fontWeight: 600,
+                  opacity: (!desligarForm.data_desligamento || !desligarForm.motivo) ? 0.6 : 1,
+                }}>Confirmar Desligamento</button>
+            </div>
+          </div>
         </div>
       )}
     </div>
