@@ -249,3 +249,51 @@ docker run -p 3001:3001 rma-davi
 - Verificar `DATABASE_URL` nas variáveis de ambiente
 - Verificar se o serviço PostgreSQL está ativo no Render
 - Verificar logs do servidor
+
+---
+
+## Melhorias e Correções (Julho/2026)
+
+### Profissionais e Capacitações Dinâmicos
+- **Arquivo**: `client/src/pages/RelatorioMensal.tsx`
+- Botão **×** por linha para remover profissionais/capacitações
+- Botão **+ Adicionar** abaixo de cada tabela para inserir novas linhas
+- Três grupos: Profissionais da Unidade, Vinculados no Mês, Desvinculados no Mês
+
+### Visualização Fiel ao Modelo da Prefeitura
+- **Arquivo**: `client/src/pages/RelatorioVisualizar.tsx`
+- Reescrita completa para espelhar o documento Word oficial (`Modelo RMA Lar Ebenezer.docx`)
+- Cabeçalho exato: "RELATÓRIO MENSAL DE ATENDIMENTO / PROTEÇÃO SOCIAL ESPECIAL – ALTA COMPLEXIDADE / SERVIÇO DE ACOLHIMENTO INSTITUCIONAL / LAR EBENEZER"
+- Tabela de profissionais mesclada em seções (Profissional, Vinculado, Desvinculado) com OBS
+- Bloco A.6 formatado com parênteses para múltipla escolha
+- Bloco C com descrições dos Graus de Dependência (I, II, III)
+- Bloco E em tabela horizontal com 7 colunas
+- Notas F.4 e F.5 conforme modelo
+- Assinaturas: Técnica responsável e Coordenadora com linhas centralizadas
+- Rodapé com imagem `RodapeReport.jpg` fixa em todas as páginas (position: fixed)
+
+### Imagens (CabecalhoReport.jpg e RodapeReport.jpg)
+- `CabecalhoReport.jpg` — exibido no topo do relatório, antes do título
+- `RodapeReport.jpg` — exibido no rodapé em todas as páginas na impressão
+- Arquivos copiados para `client/public/` e referenciados como `/CabecalhoReport.jpg` e `/RodapeReport.jpg`
+
+### Estilo Visual (Cores e Layout)
+- **Cabeçalhos de tabela**: Fundo azul `#5B9BD5`, texto branco, caixa alta, negrito, centralizado
+- **Título do relatório**: Mesmo fundo azul com texto branco
+- **Identificação**: Fundo branco com bordas pretas (estilo formulário)
+- **Bordas**: Todas `1px solid #000` (grade preta)
+- **Fonte**: Arial / Times New Roman (padrão órgãos públicos)
+
+### Correção de Impressão (PDF)
+- Adicionado `-webkit-print-color-adjust: exact` e `print-color-adjust: exact` para manter cores azuis no PDF
+- Sidebar (`<aside>`) oculta na impressão
+- `main` com fundo branco no print
+- Rodapé e assinaturas centralizados
+
+### Imagens no Banco de Dados (Base64)
+- **Problema**: Imagens perdidas após deploy no Render (disco efêmero)
+- **Solução**: Imagens convertidas para base64 e armazenadas na coluna `data` da tabela `imagens_atividades` no PostgreSQL
+- **Arquivo**: `server/src/routes/relatorios.ts` — upload salva base64 no banco
+- **Arquivo**: `server/src/database.ts` — migration adiciona coluna `data TEXT`
+- **Frontend**: `img.data` como fonte primária, fallback para URL do arquivo
+- Imagens novas daqui em diante persistem no PostgreSQL independentemente de deploy
