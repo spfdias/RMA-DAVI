@@ -6,7 +6,7 @@ import acolhidosRouter from './routes/acolhidos';
 import relatoriosRouter from './routes/relatorios';
 import authRouter from './routes/auth';
 import { authMiddleware } from './middleware/auth';
-import { initDatabase } from './database';
+import { initDatabase, getDbInfo } from './database';
 import fs from 'fs';
 
 const app = express();
@@ -30,7 +30,8 @@ app.use('/api/relatorios', authMiddleware, relatoriosRouter);
 app.use('/uploads', express.static(UPLOADS_DIR));
 
 app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+  const info = getDbInfo();
+  res.json({ status: 'ok', timestamp: new Date().toISOString(), db: info });
 });
 
 // Serve client static files
@@ -60,6 +61,14 @@ app.use((err: any, _req: express.Request, res: express.Response, _next: express.
 });
 
 initDatabase().then(() => {
+  const info = getDbInfo();
+  console.log(`=== Diagnóstico do Banco ===`);
+  console.log(`DB_PATH:  ${info.path}`);
+  console.log(`DATA_DIR: ${info.dir}`);
+  console.log(`Existe:   ${info.exists}`);
+  console.log(`Tamanho:  ${info.size} bytes`);
+  console.log(`ENV DB_PATH: ${info.env_db_path}`);
+  console.log(`============================`);
   app.listen(PORT, () => {
     console.log(`Servidor Lar Ebenezer rodando em http://localhost:${PORT}`);
     console.log(`API disponível em http://localhost:${PORT}/api`);

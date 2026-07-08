@@ -5,6 +5,17 @@ import fs from 'fs';
 const DB_DIR = process.env.DB_PATH || path.join(__dirname, '..', 'data');
 const DB_PATH = path.join(DB_DIR, 'rma-davi.db');
 
+export function getDbInfo() {
+  const exists = fs.existsSync(DB_PATH);
+  return {
+    path: DB_PATH,
+    dir: DB_DIR,
+    exists,
+    size: exists ? fs.statSync(DB_PATH).size : 0,
+    env_db_path: process.env.DB_PATH || '(not set)',
+  };
+}
+
 let SQL: SqlJsStatic;
 let db: SqlJsDatabase;
 
