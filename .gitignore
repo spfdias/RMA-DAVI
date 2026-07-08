@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.env.local
+server/data/
+server/dist/
+server/src/uploads/
+*.db
+functions/dist/
+functions/tmp/
+client/dist/

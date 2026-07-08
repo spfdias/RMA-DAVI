@@ -1,0 +1,17 @@
+node_modules
+dist
+build
+.env
+*.log
+.git
+client/node_modules
+server/node_modules
+client/dist
+server/dist
+*.db
+*.sqlite
+data
+uploads
+.DS_Store
+*.md
+!README.md
