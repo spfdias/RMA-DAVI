@@ -124,8 +124,9 @@ export default function RelatorioVisualizar() {
             .keep-together { page-break-inside: avoid; }
             .avoid-break { page-break-after: avoid; }
             #header-print { position: fixed; top: 0; left: 0; right: 0; text-align: center; background: #fff; z-index: 1000; }
+            #header-print img { max-width: 140px; height: auto; }
             #footer-print { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; background: #fff; padding: 4px 15mm; border-top: 1px solid #999; font-size: 7.5pt; line-height: 1.6; z-index: 1000; }
-            #relatorio-print { padding-top: 100px; padding-bottom: 60px; }
+            #relatorio-print { padding-top: 30px; padding-bottom: 60px; }
             .tb th, .tb .section-title, .tb tr[style*="background"] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
           }
           @media screen {
@@ -144,7 +145,7 @@ export default function RelatorioVisualizar() {
 
         {/* ===== HEADER IMAGE (fixed on every page) ===== */}
         <div id="header-print">
-          <img src="/CabecalhoReport.jpg" alt="Cabeçalho" style={{ maxWidth: '100%', height: 'auto', display: 'block' }} />
+          <img src="/CabecalhoReport.jpg" alt="Cabeçalho" style={{ maxWidth: '140px', height: 'auto', display: 'block', margin: '0 auto' }} />
         </div>
 
         {/* ===== HEADER TITLE (first page only) ===== */}
