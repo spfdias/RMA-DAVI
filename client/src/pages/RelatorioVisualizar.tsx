@@ -123,9 +123,8 @@ export default function RelatorioVisualizar() {
             .no-print { display: none !important; }
             .keep-together { page-break-inside: avoid; }
             .avoid-break { page-break-after: avoid; }
-            #footer-print { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; }
-            #footer-print img { max-width: 80%; height: auto; }
-            #relatorio-print { padding-bottom: 50px; }
+            #footer-print { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; background: #fff; padding: 4px 15mm; border-top: 1px solid #999; font-size: 7.5pt; line-height: 1.6; }
+            #relatorio-print { padding-bottom: 60px; }
             .tb th, .tb .section-title, .tb tr[style*="background"] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
           }
           @media screen {
@@ -603,8 +602,13 @@ export default function RelatorioVisualizar() {
         </div>
 
         {/* ===== FOOTER ===== */}
-        <div id="footer-print" style={{ textAlign: 'center', marginTop: 20 }}>
-          <img src="/RodapeReport.jpg" alt="Rodapé" style={{ maxWidth: '80%', height: 'auto', display: 'block', margin: '0 auto' }} />
+        <div id="footer-print" style={{ textAlign: 'center', fontSize: '7.5pt', lineHeight: 1.6, padding: '4px 0', borderTop: '1px solid #999' }}>
+          <div style={{ color: '#1a3a6b', fontWeight: 600 }}>www.dourados.ms.gov.br/index.php/categoria/semas/</div>
+          <div style={{ color: '#2a2a2a' }}>Rua Coronel Ponciano, 1700 . Pq. do Jequitibás . Bloco Anexo . 79830-200 . Dourados-MS</div>
+          <div>
+            <span style={{ color: '#1a3a6b', fontWeight: 600 }}>67 3411-7710 / 3411-7746</span>
+            <span style={{ color: '#2a2a2a' }}> . semas@dourados.ms.gov.br</span>
+          </div>
         </div>
       </div>
     </div>
