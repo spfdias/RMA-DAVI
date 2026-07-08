@@ -103,15 +103,15 @@ export default function RelatorioVisualizar() {
   const dataAtual = new Date().toLocaleDateString('pt-BR');
 
   const S = {
-    pg: { margin: 0, fontSize: 11, lineHeight: 1.6, color: '#1a1a1a', fontFamily: '"Times New Roman", "Georgia", serif' },
-    tituloPrincipal: { fontSize: 16, fontWeight: 700, color: '#0d1b4a', textAlign: 'center' as const, margin: '0 0 4px', letterSpacing: 0.5 },
-    tituloBloco: { fontSize: 13, fontWeight: 700, color: '#0d1b4a', borderBottom: '1px solid #0d1b4a', paddingBottom: 3, margin: '28px 0 12px', pageBreakAfter: 'avoid' as const },
-    labelSec: { fontWeight: 600, fontSize: 11, color: '#1a1a1a', margin: '14px 0 6px', pageBreakAfter: 'avoid' as const },
-    tabela: { width: '100%', borderCollapse: 'collapse' as const, margin: '6px 0 14px' },
-    th: { border: '1px solid #999', padding: '5px 8px', fontSize: 10, fontWeight: 700, background: '#e8eaf6', color: '#0d1b4a', textAlign: 'left' as const },
-    td: { border: '1px solid #999', padding: '4px 8px', fontSize: 10.5 },
-    tdNum: { border: '1px solid #999', padding: '4px 8px', fontSize: 10.5, textAlign: 'center' as const, width: 55 },
-    textoJustificado: { textAlign: 'justify' as const, margin: '0 0 10px', fontSize: 10.5, lineHeight: 1.7, orphans: 3, widows: 3 },
+    pg: { margin: 0, fontSize: 10, lineHeight: 1.6, color: '#1a1a2e', fontFamily: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif" },
+    tituloPrincipal: { fontSize: 22, fontWeight: 700, color: '#fff', textAlign: 'center' as const, margin: 0, letterSpacing: 0.5 },
+    tituloBloco: { fontSize: 14, fontWeight: 700, color: '#1a3a5c', borderBottom: '1px solid #1a3a5c', paddingBottom: 4, margin: '20px 0 10px', pageBreakAfter: 'avoid' as const },
+    labelSec: { fontWeight: 700, fontSize: 10, color: '#1a3a5c', margin: '12px 0 5px', pageBreakAfter: 'avoid' as const },
+    tabela: { width: '100%', borderCollapse: 'collapse' as const, margin: '10px 0 16px' },
+    th: { border: '1px solid #0f2a44', padding: '5px 8px', fontSize: 8, fontWeight: 700, background: '#1a3a5c', color: '#fff', textAlign: 'left' as const, letterSpacing: 0.3, textTransform: 'uppercase' as const },
+    td: { border: '1px solid #ddd', padding: '4px 8px', fontSize: 9, color: '#333' },
+    tdNum: { border: '1px solid #ddd', padding: '4px 8px', fontSize: 9, color: '#333', textAlign: 'center' as const, width: 50 },
+    textoJustificado: { textAlign: 'justify' as const, margin: '0 0 8px', fontSize: 10, lineHeight: 1.7, orphans: 3, widows: 3, color: '#333' },
   };
 
   return (
@@ -135,66 +135,72 @@ export default function RelatorioVisualizar() {
 
       <div id="relatorio-print" style={S.pg}>
         <style>{`
+          * { margin: 0; padding: 0; box-sizing: border-box; }
+
           @media print {
-            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; margin: 0; padding: 0; font-family: "Times New Roman", Georgia, serif; }
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; margin: 0; padding: 0; color: #000; font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; display: flex; flex-direction: column; min-height: 100%; }
             aside { display: none !important; }
             main { background: #fff !important; padding: 0 !important; }
             .no-print { display: none !important; }
-            @page { margin: 0.75in 0.6in; size: A4; }
-            @page :first { margin-top: 0.5in; }
+            @page { margin: 12mm 0 0; size: A4; }
+            @page :first { margin: 0; }
             #relatorio-print { box-shadow: none !important; border-radius: 0 !important; padding: 0 !important; background: #fff !important; }
-            .page-break { page-break-before: always; }
             .keep-together { page-break-inside: avoid; }
             .avoid-break-after { page-break-after: avoid; }
             p { orphans: 3; widows: 3; }
             h2, h3, h4 { page-break-after: avoid; }
-            table { font-size: 10pt; }
-            th { background: #e8eaf6 !important; color: #0d1b4a !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            table { font-size: 9pt; }
+            th { background: #1a3a5c !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             img { max-width: 100% !important; }
+            p, li, td { color: #000; }
+            tr:nth-child(even) td { background: #f2f4f8 !important; }
+
           }
           @media screen {
-            #relatorio-print { background: #fff; padding: 40px 48px; border-radius: 8px; box-shadow: 0 1px 12px rgba(0,0,0,0.12); max-width: 210mm; margin: 0 auto; font-family: "Times New Roman", Georgia, serif; }
+            #relatorio-print { background: #fff; padding: 0; border-radius: 8px; box-shadow: 0 1px 12px rgba(0,0,0,0.12); max-width: 210mm; margin: 0 auto; font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; }
           }
-          .tb { width: 100%; border-collapse: collapse; margin: 6px 0 14px; }
-          .tb th, .tb td { border: 1px solid #999; padding: 4px 8px; font-size: 10pt; vertical-align: top; }
-          .tb th { background: #e8eaf6; font-weight: 700; color: #0d1b4a; text-align: left; }
-          .tb .num { text-align: center; width: 50px; }
+          .tb { width: 100%; border-collapse: collapse; margin: 10px 0 16px; border: 1px solid #ccc; }
+          .tb th, .tb td { border: 1px solid #ddd; padding: 4px 8px; font-size: 9pt; vertical-align: top; }
+          .tb th { background: #1a3a5c; font-weight: 700; color: #fff; text-align: left; font-size: 8pt; text-transform: uppercase; letter-spacing: 0.3px; }
+          .tb td { color: #333; }
+          .tb .num { text-align: center; width: 45px; }
+          .tb.zebra tr:nth-child(even) td { background: #f7f9fc; }
           .img-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
           .img-grid img { width: 150px; height: 150px; object-fit: cover; border: 1px solid #aaa; }
           @media print { .img-grid img { width: 170px; height: 170px; } }
-          .report-text { text-align: justify; margin: 0 0 10px; font-size: 10.5pt; line-height: 1.7; orphans: 3; widows: 3; }
+          .report-text { text-align: justify; margin: 0 0 8px; font-size: 10pt; line-height: 1.7; orphans: 3; widows: 3; color: #333; }
+          .meta-item + .meta-item { margin-left: 14px; }
+          .meta-item + .meta-item::before { content: "| "; color: #ccc; }
         `}</style>
 
-        {/* ===== CABEÇALHO EXECUTIVO ===== */}
+        {/* ===== HEADER ===== */}
         <div className="keep-together" style={{
-          background: 'linear-gradient(135deg, #0d1b4a 0%, #1a237e 50%, #283593 100%)',
-          color: '#fff', borderRadius: 6, padding: '14px 22px', marginBottom: 18,
-          display: 'flex', alignItems: 'center', gap: 16,
-          boxShadow: '0 2px 8px rgba(13,27,74,0.25)',
+          background: 'linear-gradient(135deg, #0d1b2a 0%, #1b3a5c 50%, #1a5276 100%)',
+          color: '#fff', margin: '0 0 0', padding: '36px 10mm 28px',
+          textAlign: 'center',
         }}>
-          <div style={{ flex: 1 }}>
-            <p style={{ fontSize: 9, fontWeight: 500, margin: 0, opacity: 0.85, letterSpacing: 0.8 }}>GOVERNO DO ESTADO DE MATO GROSSO DO SUL</p>
-            <p style={{ fontSize: 10, fontWeight: 600, margin: '2px 0', letterSpacing: 0.4 }}>SECRETARIA DE ESTADO DE DIREITOS HUMANOS, ASSISTÊNCIA SOCIAL E TRABALHO</p>
-            <p style={{ fontSize: 9, fontWeight: 400, margin: 0, opacity: 0.9 }}>Serviço de Acolhimento Institucional — <strong>Lar Ebenezer</strong></p>
-          </div>
-          <div style={{ textAlign: 'center', flexShrink: 0, padding: '6px 0 6px 14px', borderLeft: '1px solid rgba(255,255,255,0.25)' }}>
-            <p style={{ fontSize: 11, fontWeight: 500, margin: 0, opacity: 0.8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Mês</p>
-            <p style={{ fontSize: 15, fontWeight: 700, margin: '0px 0', lineHeight: 1.2 }}>{meses[Number(mesParam) - 1]}</p>
-            <p style={{ fontSize: 20, fontWeight: 800, margin: 0, lineHeight: 1.1 }}>{anoParam}</p>
+          <p style={{ fontSize: 10, fontWeight: 500, marginBottom: 2, opacity: 0.85, letterSpacing: 0.8 }}>GOVERNO DO ESTADO DE MATO GROSSO DO SUL</p>
+          <p style={{ fontSize: 10, fontWeight: 600, marginBottom: 4, letterSpacing: 0.4 }}>SECRETARIA DE ESTADO DE DIREITOS HUMANOS, ASSISTÊNCIA SOCIAL E TRABALHO</p>
+          <p style={{ fontSize: 10, fontWeight: 400, marginBottom: 16, opacity: 0.9 }}>Serviço de Acolhimento Institucional — <strong>Lar Ebenezer</strong></p>
+          <h1 style={S.tituloPrincipal}>Relatório Mensal de Atendimento</h1>
+          <p style={{ fontSize: 11, opacity: 0.85, fontWeight: 300, marginTop: 4 }}>Proteção Social Especial — Alta Complexidade</p>
+          <div style={{
+            display: 'inline-block', background: '#1a5276', color: '#fff',
+            padding: '4px 16px', marginTop: 14, fontSize: 9, fontWeight: 700,
+            letterSpacing: 1.5, textTransform: 'uppercase',
+          }}>
+            {meses[Number(mesParam) - 1]} / {anoParam}
           </div>
         </div>
 
-        {/* TÍTULO PRINCIPAL */}
-        <div className="keep-together avoid-break-after" style={{ textAlign: 'center', marginBottom: 18 }}>
-          <p style={S.tituloPrincipal}>
-            Relatório Mensal de Atendimento
-          </p>
-          <p style={{ fontSize: 10, color: '#555', margin: '2px 0 0', fontFamily: '"Times New Roman", serif', fontStyle: 'italic' }}>
-            Proteção Social Especial — Alta Complexidade
-          </p>
-          <p style={{ fontSize: 9, color: '#888', margin: '2px 0 0', fontFamily: '"Times New Roman", serif' }}>
-            Emissão: {dataAtual}
-          </p>
+        {/* ===== META BAR ===== */}
+        <div className="keep-together" style={{
+          background: '#f4f6f8', padding: '8px 10mm', margin: '0 0 14px',
+          borderBottom: '1px solid #e0e4e8', fontSize: 9, color: '#555', textAlign: 'center',
+        }}>
+          <span className="meta-item"><strong>Unidade:</strong> {val('identificacao.unidade') || 'Lar Ebenezer'}</span>
+          <span className="meta-item"><strong>Município:</strong> Dourados / MS</span>
+          <span className="meta-item"><strong>Emissão:</strong> {dataAtual}</span>
         </div>
 
         {/* IDENTIFICAÇÃO */}
@@ -392,22 +398,35 @@ export default function RelatorioVisualizar() {
         </div>
 
         {/* ===== ASSINATURAS ===== */}
-        <div className="keep-together" style={{ marginTop: 36, paddingTop: 20 }}>
-          <div style={{
-            borderTop: '2px solid #1a237e', width: '60%', margin: '0 auto 24px',
-            display: 'flex', justifyContent: 'space-between', gap: 40,
-          }}>
-            <div style={{ textAlign: 'center', flex: 1 }}>
-              <p style={{ margin: '24px 0 4px', borderTop: '1px solid #333', paddingTop: 6 }}>&nbsp;</p>
-              <p style={{ fontSize: 10, fontWeight: 600, color: '#555' }}>Técnica Responsável</p>
+        <div className="keep-together" style={{
+          margin: '24px 0 0', padding: '20px 0', textAlign: 'center',
+          borderTop: '2px solid #1a3a5c', background: '#fafbfc',
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 60 }}>
+            <div style={{ textAlign: 'center', minWidth: 200 }}>
+              <p style={{ margin: '30px 0 4px', borderTop: '1px solid #333', paddingTop: 6, width: '80%', marginLeft: 'auto', marginRight: 'auto' }}>&nbsp;</p>
+              <p style={{ fontSize: 11, fontWeight: 700, marginTop: 6 }}>Técnica Responsável</p>
+              <p style={{ fontSize: 9, color: '#666' }}>Serviço de Acolhimento</p>
             </div>
-            <div style={{ textAlign: 'center', flex: 1 }}>
-              <p style={{ margin: '24px 0 4px', borderTop: '1px solid #333', paddingTop: 6 }}>&nbsp;</p>
-              <p style={{ fontSize: 10, fontWeight: 600, color: '#555' }}>Coordenadora</p>
+            <div style={{ textAlign: 'center', minWidth: 200 }}>
+              <p style={{ margin: '30px 0 4px', borderTop: '1px solid #333', paddingTop: 6, width: '80%', marginLeft: 'auto', marginRight: 'auto' }}>&nbsp;</p>
+              <p style={{ fontSize: 11, fontWeight: 700, marginTop: 6 }}>Coordenadora</p>
+              <p style={{ fontSize: 9, color: '#666' }}>Lar Ebenezer</p>
             </div>
           </div>
-          <p style={{ fontSize: 9, textAlign: 'center', color: '#999', marginTop: 8 }}>
-            Documento gerado em {dataAtual} — Sistema RMA Lar Ebenezer
+        </div>
+
+        {/* ===== FOOTER ===== */}
+        <div style={{
+          background: 'linear-gradient(135deg, #0d1b2a 0%, #1b3a5c 50%, #1a5276 100%)',
+          color: '#fff', padding: '14px 20mm', margin: '0',
+          textAlign: 'center', fontSize: 8, lineHeight: 1.6,
+        }}>
+          <p style={{ margin: 0, color: '#fff' }}>
+            Documento gerado em {dataAtual} — <strong>Sistema RMA</strong> — Lar Ebenezer
+          </p>
+          <p style={{ margin: '4px 0 0', color: '#fff', opacity: 0.7 }}>
+            Relatório Mensal de Atendimento — Proteção Social Especial — Alta Complexidade
           </p>
         </div>
       </div>
