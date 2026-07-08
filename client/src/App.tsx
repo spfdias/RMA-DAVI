@@ -7,6 +7,7 @@ import AcolhidosLista from './pages/AcolhidosLista';
 import RelatorioMensal from './pages/RelatorioMensal';
 import RelatorioLista from './pages/RelatorioLista';
 import RelatorioVisualizar from './pages/RelatorioVisualizar';
+import RelatorioAcolhidos from './pages/RelatorioAcolhidos';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import AdminUsers from './pages/AdminUsers';
@@ -51,6 +52,7 @@ function AppRoutes() {
           <Route path="/acolhidos/cadastro/:id" element={<AcolhidosCadastro />} />
           <Route path="/acolhidos/lista" element={<AcolhidosLista />} />
           <Route path="/relatorios" element={<RelatorioLista />} />
+          <Route path="/relatorios/acolhidos" element={<RelatorioAcolhidos />} />
           <Route path="/relatorios/novo" element={<RelatorioMensal />} />
           <Route path="/relatorios/:mes/:ano" element={<RelatorioMensal />} />
           <Route path="/relatorios/:mes/:ano/visualizar" element={<RelatorioVisualizar />} />

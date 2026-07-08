@@ -15,6 +15,7 @@ export default function Sidebar() {
     { path: '/acolhidos/lista', label: 'Listar Acolhidos', icon: '👥', adminOnly: false },
     { path: '/relatorios/novo', label: 'Novo Relatório', icon: '📄', adminOnly: false },
     { path: '/relatorios', label: 'Relatórios', icon: '📁', adminOnly: false },
+    { path: '/relatorios/acolhidos', label: 'Relatório Acolhidos', icon: '📋', adminOnly: false },
     { path: '/admin/usuarios', label: 'Gerenciar Usuários', icon: '🔐', adminOnly: true },
     { path: '/admin/auditoria', label: 'Auditoria', icon: '📋', adminOnly: true },
   ];
