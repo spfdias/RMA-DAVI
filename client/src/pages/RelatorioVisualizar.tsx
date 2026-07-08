@@ -167,18 +167,20 @@ export default function RelatorioVisualizar() {
 
         {/* ===== CABEÇALHO EXECUTIVO ===== */}
         <div className="keep-together" style={{
-          background: '#0d1b4a', color: '#fff',
-          padding: '14px 20px', marginBottom: 20,
+          background: 'linear-gradient(135deg, #0d1b4a 0%, #1a237e 50%, #283593 100%)',
+          color: '#fff', borderRadius: 6, padding: '14px 22px', marginBottom: 18,
           display: 'flex', alignItems: 'center', gap: 16,
+          boxShadow: '0 2px 8px rgba(13,27,74,0.25)',
         }}>
           <div style={{ flex: 1 }}>
-            <p style={{ fontSize: 9, fontWeight: 400, margin: 0, letterSpacing: 0.8 }}>GOVERNO DO ESTADO DE MATO GROSSO DO SUL</p>
-            <p style={{ fontSize: 9, fontWeight: 600, margin: '1px 0', letterSpacing: 0.3 }}>SECRETARIA DE ESTADO DE DIREITOS HUMANOS, ASSISTÊNCIA SOCIAL E TRABALHO</p>
-            <p style={{ fontSize: 9, fontWeight: 400, margin: 0 }}>Serviço de Acolhimento Institucional — <strong>Lar Ebenezer</strong></p>
+            <p style={{ fontSize: 9, fontWeight: 500, margin: 0, opacity: 0.85, letterSpacing: 0.8 }}>GOVERNO DO ESTADO DE MATO GROSSO DO SUL</p>
+            <p style={{ fontSize: 10, fontWeight: 600, margin: '2px 0', letterSpacing: 0.4 }}>SECRETARIA DE ESTADO DE DIREITOS HUMANOS, ASSISTÊNCIA SOCIAL E TRABALHO</p>
+            <p style={{ fontSize: 9, fontWeight: 400, margin: 0, opacity: 0.9 }}>Serviço de Acolhimento Institucional — <strong>Lar Ebenezer</strong></p>
           </div>
-          <div style={{ textAlign: 'right', flexShrink: 0, paddingLeft: 12, borderLeft: '1px solid rgba(255,255,255,0.3)' }}>
-            <p style={{ fontSize: 13, fontWeight: 700, margin: 0, lineHeight: 1.2 }}>{meses[Number(mesParam) - 1]}</p>
-            <p style={{ fontSize: 18, fontWeight: 800, margin: 0, lineHeight: 1.1 }}>{anoParam}</p>
+          <div style={{ textAlign: 'center', flexShrink: 0, padding: '6px 0 6px 14px', borderLeft: '1px solid rgba(255,255,255,0.25)' }}>
+            <p style={{ fontSize: 11, fontWeight: 500, margin: 0, opacity: 0.8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Mês</p>
+            <p style={{ fontSize: 15, fontWeight: 700, margin: '0px 0', lineHeight: 1.2 }}>{meses[Number(mesParam) - 1]}</p>
+            <p style={{ fontSize: 20, fontWeight: 800, margin: 0, lineHeight: 1.1 }}>{anoParam}</p>
           </div>
         </div>
 
