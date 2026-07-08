@@ -288,7 +288,7 @@ export default function RelatorioVisualizar() {
         </div>
 
         {/* ===== BLOCO II ===== */}
-        <div className="page-break">
+        <div>
           <p style={S.tituloBloco}>Bloco II — Atividades Realizadas</p>
 
           <p style={S.labelSec}>F. Volume de atividades</p>
@@ -311,7 +311,7 @@ export default function RelatorioVisualizar() {
         </div>
 
         {/* ===== BLOCO III ===== */}
-        <div className="page-break">
+        <div>
           <p style={S.tituloBloco}>Bloco III — Descrição das Atividades</p>
 
           <p style={S.labelSec}>H.1. Atividades realizadas no mês</p>
@@ -357,7 +357,7 @@ export default function RelatorioVisualizar() {
         </div>
 
         {/* ===== BLOCO IV ===== */}
-        <div className="page-break">
+        <div>
           <p style={S.tituloBloco}>Bloco IV — Informações Complementares</p>
 
           {[
