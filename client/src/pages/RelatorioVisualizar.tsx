@@ -123,8 +123,9 @@ export default function RelatorioVisualizar() {
             .no-print { display: none !important; }
             .keep-together { page-break-inside: avoid; }
             .avoid-break { page-break-after: avoid; }
+            #header-print { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; }
             #footer-print { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; }
-            #relatorio-print { padding-bottom: 60px; }
+            #relatorio-print { padding-top: 180px; padding-bottom: 60px; }
             .tb th, .tb .section-title, .tb tr[style*="background"] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
           }
           @media screen {
@@ -142,7 +143,7 @@ export default function RelatorioVisualizar() {
         `}</style>
 
         {/* ===== HEADER ===== */}
-        <div className="keep-together avoid-break" style={{ textAlign: 'center', marginBottom: 20, padding: '0 0 0', borderBottom: '2px solid #000', background: '#5B9BD5', color: '#fff' }}>
+        <div id="header-print" className="keep-together avoid-break" style={{ textAlign: 'center', marginBottom: 20, padding: '0 0 0', borderBottom: '2px solid #000', background: '#5B9BD5', color: '#fff' }}>
           <img src="/CabecalhoReport.jpg" alt="Cabeçalho" style={{ maxWidth: '100%', height: 'auto', display: 'block' }} />
           <p style={{ fontSize: '13pt', fontWeight: 700, lineHeight: 1.4, padding: '12px 0 16px' }}>
             RELATÓRIO MENSAL DE ATENDIMENTO<br />
