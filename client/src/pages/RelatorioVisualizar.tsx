@@ -103,13 +103,15 @@ export default function RelatorioVisualizar() {
   const dataAtual = new Date().toLocaleDateString('pt-BR');
 
   const S = {
-    pg: { margin: 0, fontSize: 12, lineHeight: 1.5, color: '#1a1a1a', fontFamily: '"Segoe UI", Roboto, Arial, sans-serif' },
-    tituloBloco: { fontSize: 13, fontWeight: 700, color: '#0d1b4a', borderBottom: '2px solid #1a237e', paddingBottom: 4, margin: '20px 0 10px' },
-    labelSec: { fontWeight: 600, fontSize: 11, color: '#333', margin: '10px 0 4px' },
-    tabela: { width: '100%', borderCollapse: 'collapse' as const, margin: '4px 0 10px' },
-    th: { border: '1px solid #bdbdbd', padding: '5px 8px', fontSize: 10, fontWeight: 700, background: '#e8eaf6', color: '#1a237e', textAlign: 'left' as const },
-    td: { border: '1px solid #bdbdbd', padding: '4px 8px', fontSize: 11 },
-    tdNum: { border: '1px solid #bdbdbd', padding: '4px 8px', fontSize: 11, textAlign: 'center' as const, width: 60 },
+    pg: { margin: 0, fontSize: 11, lineHeight: 1.6, color: '#1a1a1a', fontFamily: '"Times New Roman", "Georgia", serif' },
+    tituloPrincipal: { fontSize: 16, fontWeight: 700, color: '#0d1b4a', textAlign: 'center' as const, margin: '0 0 4px', letterSpacing: 0.5 },
+    tituloBloco: { fontSize: 13, fontWeight: 700, color: '#0d1b4a', borderBottom: '1px solid #0d1b4a', paddingBottom: 3, margin: '28px 0 12px', pageBreakAfter: 'avoid' as const },
+    labelSec: { fontWeight: 600, fontSize: 11, color: '#1a1a1a', margin: '14px 0 6px', pageBreakAfter: 'avoid' as const },
+    tabela: { width: '100%', borderCollapse: 'collapse' as const, margin: '6px 0 14px' },
+    th: { border: '1px solid #999', padding: '5px 8px', fontSize: 10, fontWeight: 700, background: '#e8eaf6', color: '#0d1b4a', textAlign: 'left' as const },
+    td: { border: '1px solid #999', padding: '4px 8px', fontSize: 10.5 },
+    tdNum: { border: '1px solid #999', padding: '4px 8px', fontSize: 10.5, textAlign: 'center' as const, width: 55 },
+    textoJustificado: { textAlign: 'justify' as const, margin: '0 0 10px', fontSize: 10.5, lineHeight: 1.7, orphans: 3, widows: 3 },
   };
 
   return (
@@ -134,73 +136,74 @@ export default function RelatorioVisualizar() {
       <div id="relatorio-print" style={S.pg}>
         <style>{`
           @media print {
-            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; margin: 0; padding: 0; }
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; margin: 0; padding: 0; font-family: "Times New Roman", Georgia, serif; }
             aside { display: none !important; }
             main { background: #fff !important; padding: 0 !important; }
             .no-print { display: none !important; }
-            @page { margin: 0.6in; size: A4; }
+            @page { margin: 0.75in 0.6in; size: A4; }
+            @page :first { margin-top: 0.5in; }
             #relatorio-print { box-shadow: none !important; border-radius: 0 !important; padding: 0 !important; background: #fff !important; }
             .page-break { page-break-before: always; }
             .keep-together { page-break-inside: avoid; }
+            .avoid-break-after { page-break-after: avoid; }
+            p { orphans: 3; widows: 3; }
+            h2, h3, h4 { page-break-after: avoid; }
+            table { font-size: 10pt; }
+            th { background: #e8eaf6 !important; color: #0d1b4a !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            img { max-width: 100% !important; }
           }
           @media screen {
-            #relatorio-print { background: #fff; padding: 36px 44px; border-radius: 8px; box-shadow: 0 1px 12px rgba(0,0,0,0.12); max-width: 210mm; margin: 0 auto; }
+            #relatorio-print { background: #fff; padding: 40px 48px; border-radius: 8px; box-shadow: 0 1px 12px rgba(0,0,0,0.12); max-width: 210mm; margin: 0 auto; font-family: "Times New Roman", Georgia, serif; }
           }
-          .tb { width: 100%; border-collapse: collapse; margin: 4px 0 10px; }
-          .tb th, .tb td { border: 1px solid #bdbdbd; padding: 4px 8px; font-size: 10.5px; vertical-align: top; }
-          .tb th { background: #e8eaf6; font-weight: 700; color: #1a237e; text-align: left; }
-          .tb .num { text-align: center; width: 55px; }
-          .img-grid { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-          .img-grid img { width: 160px; height: 160px; object-fit: cover; border-radius: 6px; border: 1px solid #bbb; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
-          @media print { .img-grid img { width: 180px; height: 180px; } }
+          .tb { width: 100%; border-collapse: collapse; margin: 6px 0 14px; }
+          .tb th, .tb td { border: 1px solid #999; padding: 4px 8px; font-size: 10pt; vertical-align: top; }
+          .tb th { background: #e8eaf6; font-weight: 700; color: #0d1b4a; text-align: left; }
+          .tb .num { text-align: center; width: 50px; }
+          .img-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+          .img-grid img { width: 150px; height: 150px; object-fit: cover; border: 1px solid #aaa; }
+          @media print { .img-grid img { width: 170px; height: 170px; } }
+          .report-text { text-align: justify; margin: 0 0 10px; font-size: 10.5pt; line-height: 1.7; orphans: 3; widows: 3; }
         `}</style>
 
         {/* ===== CABEÇALHO EXECUTIVO ===== */}
         <div className="keep-together" style={{
-          background: 'linear-gradient(135deg, #0d1b4a 0%, #1a237e 50%, #283593 100%)',
-          color: '#fff', borderRadius: 6, padding: '16px 24px', marginBottom: 24,
-          display: 'flex', alignItems: 'center', gap: 20,
-          boxShadow: '0 3px 10px rgba(13,27,74,0.3)',
+          background: '#0d1b4a', color: '#fff',
+          padding: '14px 20px', marginBottom: 20,
+          display: 'flex', alignItems: 'center', gap: 16,
         }}>
-          {(
-            <img src="/cabecalho.jpg" alt="Governo MS"
-              style={{ width: 65, height: 65, borderRadius: 4, objectFit: 'contain', background: '#fff', padding: 4, flexShrink: 0 }}
-              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
-            />
-          )}
           <div style={{ flex: 1 }}>
-            <p style={{ fontSize: 10, fontWeight: 500, margin: 0, opacity: 0.8, letterSpacing: 1 }}>GOVERNO DO ESTADO DE MATO GROSSO DO SUL</p>
-            <p style={{ fontSize: 11, fontWeight: 600, margin: '2px 0', letterSpacing: 0.5 }}>SECRETARIA DE ESTADO DE DIREITOS HUMANOS, ASSISTÊNCIA SOCIAL E TRABALHO</p>
-            <p style={{ fontSize: 10, fontWeight: 400, margin: 0, opacity: 0.9 }}>Serviço de Acolhimento Institucional — <strong>Lar Ebenezer</strong></p>
+            <p style={{ fontSize: 9, fontWeight: 400, margin: 0, letterSpacing: 0.8 }}>GOVERNO DO ESTADO DE MATO GROSSO DO SUL</p>
+            <p style={{ fontSize: 9, fontWeight: 600, margin: '1px 0', letterSpacing: 0.3 }}>SECRETARIA DE ESTADO DE DIREITOS HUMANOS, ASSISTÊNCIA SOCIAL E TRABALHO</p>
+            <p style={{ fontSize: 9, fontWeight: 400, margin: 0 }}>Serviço de Acolhimento Institucional — <strong>Lar Ebenezer</strong></p>
           </div>
-          <div style={{ textAlign: 'right', flexShrink: 0 }}>
-            <p style={{ fontSize: 16, fontWeight: 700, margin: 0, lineHeight: 1.2 }}>{meses[Number(mesParam) - 1]}</p>
-            <p style={{ fontSize: 22, fontWeight: 800, margin: 0, lineHeight: 1.1 }}>{anoParam}</p>
+          <div style={{ textAlign: 'right', flexShrink: 0, paddingLeft: 12, borderLeft: '1px solid rgba(255,255,255,0.3)' }}>
+            <p style={{ fontSize: 13, fontWeight: 700, margin: 0, lineHeight: 1.2 }}>{meses[Number(mesParam) - 1]}</p>
+            <p style={{ fontSize: 18, fontWeight: 800, margin: 0, lineHeight: 1.1 }}>{anoParam}</p>
           </div>
         </div>
 
-        {/* TÍTULO */}
-        <div className="keep-together" style={{ textAlign: 'center', marginBottom: 20 }}>
-          <p style={{ fontSize: 14, fontWeight: 700, color: '#0d1b4a', margin: 0, textTransform: 'uppercase', letterSpacing: 1 }}>
+        {/* TÍTULO PRINCIPAL */}
+        <div className="keep-together avoid-break-after" style={{ textAlign: 'center', marginBottom: 18 }}>
+          <p style={S.tituloPrincipal}>
             Relatório Mensal de Atendimento
           </p>
-          <p style={{ fontSize: 11, color: '#555', margin: '4px 0 0' }}>
+          <p style={{ fontSize: 10, color: '#555', margin: '2px 0 0', fontFamily: '"Times New Roman", serif', fontStyle: 'italic' }}>
             Proteção Social Especial — Alta Complexidade
           </p>
-          <p style={{ fontSize: 10, color: '#777', margin: '2px 0 0' }}>
+          <p style={{ fontSize: 9, color: '#888', margin: '2px 0 0', fontFamily: '"Times New Roman", serif' }}>
             Emissão: {dataAtual}
           </p>
         </div>
 
         {/* IDENTIFICAÇÃO */}
-        <div className="keep-together" style={{ marginBottom: 16 }}>
-          <table className="tb">
+        <div className="keep-together avoid-break-after" style={{ marginBottom: 14 }}>
+          <table className="tb" style={{ fontSize: '9.5pt' }}>
             <tbody>
-              <tr><td style={{ width: '30%', fontWeight: 600, background: '#f5f5f5' }}>Unidade</td><td>{val('identificacao.unidade') || 'Lar Ebenezer'}</td></tr>
-              <tr><td style={{ fontWeight: 600, background: '#f5f5f5' }}>Endereço</td><td>{val('identificacao.endereco') || '-'}</td></tr>
-              <tr><td style={{ fontWeight: 600, background: '#f5f5f5' }}>Telefone</td><td>{val('identificacao.telefone') || '-'}</td></tr>
-              <tr><td style={{ fontWeight: 600, background: '#f5f5f5' }}>E-mail</td><td>{val('identificacao.email') || '-'}</td></tr>
-              <tr><td style={{ fontWeight: 600, background: '#f5f5f5' }}>Município / UF</td><td>Dourados / MS</td></tr>
+              <tr><td style={{ width: '22%', fontWeight: 600, background: '#f5f5f5', fontSize: '9.5pt' }}>Unidade</td><td style={{ fontSize: '9.5pt' }}>{val('identificacao.unidade') || 'Lar Ebenezer'}</td></tr>
+              <tr><td style={{ fontWeight: 600, background: '#f5f5f5', fontSize: '9.5pt' }}>Endereço</td><td style={{ fontSize: '9.5pt' }}>{val('identificacao.endereco') || '-'}</td></tr>
+              <tr><td style={{ fontWeight: 600, background: '#f5f5f5', fontSize: '9.5pt' }}>Telefone</td><td style={{ fontSize: '9.5pt' }}>{val('identificacao.telefone') || '-'}</td></tr>
+              <tr><td style={{ fontWeight: 600, background: '#f5f5f5', fontSize: '9.5pt' }}>E-mail</td><td style={{ fontSize: '9.5pt' }}>{val('identificacao.email') || '-'}</td></tr>
+              <tr><td style={{ fontWeight: 600, background: '#f5f5f5', fontSize: '9.5pt' }}>Município / UF</td><td style={{ fontSize: '9.5pt' }}>Dourados / MS</td></tr>
             </tbody>
           </table>
         </div>
@@ -310,7 +313,7 @@ export default function RelatorioVisualizar() {
           <p style={S.tituloBloco}>Bloco III — Descrição das Atividades</p>
 
           <p style={S.labelSec}>H.1. Atividades realizadas no mês</p>
-          <p style={{ textAlign: 'justify', margin: '0 0 16px', fontSize: 11, whiteSpace: 'pre-wrap', lineHeight: 1.6 }}>
+          <p className="report-text" style={{ whiteSpace: 'pre-wrap' }}>
             {d.blocoH?.descricao || 'N/A'}
           </p>
 
@@ -362,9 +365,12 @@ export default function RelatorioVisualizar() {
           ].map(([campo, titulo]) => (
             <div key={campo} className="keep-together">
               <p style={S.labelSec}>{titulo}</p>
-              <p style={{ textAlign: 'justify', margin: '0 0 10px', fontSize: 11, whiteSpace: 'pre-wrap' }}>
-                {d.blocoI?.[campo] || 'N/A'}
-              </p>
+              {d.blocoI?.[campo] && d.blocoI[campo].length > 100
+                ? d.blocoI[campo].split('\n').filter((l: string) => l.trim()).map((par: string, i: number) => (
+                    <p key={i} className="report-text">{par}</p>
+                  ))
+                : <p className="report-text">{d.blocoI?.[campo] || 'N/A'}</p>
+              }
             </div>
           ))}
 
