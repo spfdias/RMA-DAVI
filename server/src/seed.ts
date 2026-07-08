@@ -19,10 +19,10 @@ const acolhidos = [
 async function main() {
   await initDatabase();
 
-  const count = queryOne('SELECT COUNT(*) as total FROM acolhidos');
+  const count = await queryOne('SELECT COUNT(*) as total FROM acolhidos');
   if (count && count.total === 0) {
     for (const a of acolhidos) {
-      runQuery(`
+      await runQuery(`
         INSERT INTO acolhidos (nome, data_nascimento, data_acolhimento, sexo)
         VALUES (?, ?, ?, ?)
       `, [a.nome, a.data_nascimento, a.data_acolhimento, a.sexo]);
@@ -30,11 +30,11 @@ async function main() {
     console.log(`${acolhidos.length} acolhidos importados com sucesso.`);
   }
 
-  const adminCount = queryOne('SELECT COUNT(*) as total FROM users');
+  const adminCount = await queryOne('SELECT COUNT(*) as total FROM users');
   if (adminCount && adminCount.total === 0) {
     const bcrypt = require('bcryptjs');
     const hash = bcrypt.hashSync('admin123', 10);
-    runQuery(`
+    await runQuery(`
       INSERT INTO users (nome, email, password_hash, role, approved)
       VALUES (?, ?, ?, 'admin', 1)
     `, ['Administrador', 'admin@rmadavi.com', hash]);
