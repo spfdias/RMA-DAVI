@@ -135,6 +135,8 @@ export default function RelatorioVisualizar() {
         <style>{`
           @media print {
             body { -webkit-print-color-adjust: exact; print-color-adjust: exact; margin: 0; padding: 0; }
+            aside { display: none !important; }
+            main { background: #fff !important; padding: 0 !important; }
             .no-print { display: none !important; }
             @page { margin: 0.6in; size: A4; }
             #relatorio-print { box-shadow: none !important; border-radius: 0 !important; padding: 0 !important; background: #fff !important; }

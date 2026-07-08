@@ -60,6 +60,8 @@ export default function RelatorioAcolhidos() {
         @media print {
           body { background: #fff !important; }
           @page { margin: 15mm; }
+          aside { display: none !important; }
+          main { background: #fff !important; padding: 0 !important; }
           .no-print { display: none !important; }
           .report-table th { background: #1a237e !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
           .report-table td { border-color: #ccc !important; }
