@@ -37,8 +37,8 @@ async function main() {
     runQuery(`
       INSERT INTO users (nome, email, password_hash, role, approved)
       VALUES (?, ?, ?, 'admin', 1)
-    `, ['Administrador', 'admin@ebenezer.com', hash]);
-    console.log('Usuário admin criado: admin@ebenezer.com / admin123');
+    `, ['Administrador', 'admin@rmadavi.com', hash]);
+    console.log('Usuário admin criado: admin@rmadavi.com');
   }
 
   console.log('Seed concluído.');

@@ -52,12 +52,12 @@ export default function Login() {
 
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: 16 }}>
-            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#444', marginBottom: 4 }}>Email</label>
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#444', marginBottom: 4 }}>Usuário / Email</label>
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required
               style={{
                 width: '100%', padding: '10px 14px', border: '1px solid #ddd',
                 borderRadius: 8, fontSize: 14, boxSizing: 'border-box',
-              }} placeholder="seu@email.com" />
+              }} placeholder="usuario@email.com" />
           </div>
           <div style={{ marginBottom: 24 }}>
             <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#444', marginBottom: 4 }}>Senha</label>

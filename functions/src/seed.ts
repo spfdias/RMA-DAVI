@@ -39,7 +39,7 @@ export async function seed() {
   const hash = bcrypt.hashSync('admin123', 10);
   await db.collection('users').add({
     nome: 'Administrador',
-    email: 'admin@ebenezer.com',
+    email: 'admin@rmadavi.com',
     password_hash: hash,
     role: 'admin',
     approved: true,
