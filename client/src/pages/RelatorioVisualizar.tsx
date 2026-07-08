@@ -117,7 +117,9 @@ export default function RelatorioVisualizar() {
           body { font-family: Arial, 'Times New Roman', serif; }
           @page { margin: 20mm 15mm; size: A4; }
           @media print {
-            body { font-family: Arial, 'Times New Roman', serif; color: #000; }
+            body { font-family: Arial, 'Times New Roman', serif; color: #000; background: #fff; }
+            aside, .sidebar, nav[class*="sidebar"], header[class*="sidebar"] { display: none !important; }
+            main { background: #fff !important; padding: 0 !important; margin: 0 !important; }
             .no-print { display: none !important; }
             .keep-together { page-break-inside: avoid; }
             .avoid-break { page-break-after: avoid; }
@@ -127,16 +129,18 @@ export default function RelatorioVisualizar() {
           }
           .tb { width: 100%; border-collapse: collapse; margin: 8px 0 14px; }
           .tb th, .tb td { border: 1px solid #000; padding: 5px 8px; font-size: 9pt; vertical-align: top; text-align: left; }
-          .tb th { font-weight: 700; text-align: center; }
+          .tb th { background: #5B9BD5; color: #fff; font-weight: 700; text-align: center; text-transform: uppercase; }
           .tb .num { text-align: center; width: 50px; }
           .tb .num-sm { text-align: center; width: 40px; }
+          .tb .section-title { background: #5B9BD5; color: #fff; font-weight: 700; text-align: center; text-transform: uppercase; font-size: 10pt; }
           .img-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
           .img-grid img { width: 150px; height: 150px; object-fit: cover; border: 1px solid #000; }
           @media print { .img-grid img { width: 170px; height: 170px; } }
         `}</style>
 
         {/* ===== HEADER ===== */}
-        <div className="keep-together avoid-break" style={{ textAlign: 'center', marginBottom: 20, padding: '20px 0 10px', borderBottom: '2px solid #000' }}>
+        <div className="keep-together avoid-break" style={{ textAlign: 'center', marginBottom: 20, padding: '10px 0', borderBottom: '2px solid #000' }}>
+          <img src="/CabecalhoReport.jpg" alt="Cabeçalho" style={{ maxWidth: '100%', height: 'auto', marginBottom: 12 }} />
           <p style={{ fontSize: '13pt', fontWeight: 700, lineHeight: 1.4 }}>
             RELATÓRIO MENSAL DE ATENDIMENTO<br />
             PROTEÇÃO SOCIAL ESPECIAL – ALTA COMPLEXIDADE<br />
@@ -150,27 +154,27 @@ export default function RelatorioVisualizar() {
           <table className="tb">
             <tbody>
               <tr>
-                <td style={{ width: '35%', fontWeight: 700, background: '#f0f0f0' }}>Mês e Ano de Referência:</td>
+                <td style={{ width: '35%', fontWeight: 700 }}>Mês e Ano de Referência:</td>
                 <td>{mesAnoLabel}</td>
               </tr>
               <tr>
-                <td style={{ fontWeight: 700, background: '#f0f0f0' }}>Nome da Unidade:</td>
+                <td style={{ fontWeight: 700 }}>Nome da Unidade:</td>
                 <td>{val('identificacao.unidade') || 'Lar Ebenezer'}</td>
               </tr>
               <tr>
-                <td style={{ fontWeight: 700, background: '#f0f0f0' }}>Endereço:</td>
+                <td style={{ fontWeight: 700 }}>Endereço:</td>
                 <td>{val('identificacao.endereco') || '-'}</td>
               </tr>
               <tr>
-                <td style={{ fontWeight: 700, background: '#f0f0f0' }}>Telefone:</td>
+                <td style={{ fontWeight: 700 }}>Telefone:</td>
                 <td>{val('identificacao.telefone') || '-'}</td>
               </tr>
               <tr>
-                <td style={{ fontWeight: 700, background: '#f0f0f0' }}>Email:</td>
+                <td style={{ fontWeight: 700 }}>Email:</td>
                 <td>{val('identificacao.email') || '-'}</td>
               </tr>
               <tr>
-                <td style={{ fontWeight: 700, background: '#f0f0f0' }}>Município: DOURADOS</td>
+                <td style={{ fontWeight: 700 }}>Município: DOURADOS</td>
                 <td>UF: MS</td>
               </tr>
             </tbody>
@@ -242,12 +246,12 @@ export default function RelatorioVisualizar() {
         <div style={S.section}>
           <table className="tb">
             <tbody>
-              <tr>
-                <td style={{ fontWeight: 700, textAlign: 'center', fontSize: '11pt', border: '1px solid #000' }} colSpan={2}>
+              <tr className="section-title">
+                <td style={{ fontSize: '11pt' }} colSpan={2}>
                   Bloco I – Volume de Atendimentos
                 </td>
               </tr>
-              <tr>
+              <tr style={{ background: '#5B9BD5', color: '#fff' }}>
                 <td style={{ fontWeight: 700, width: '80%' }}>A. Volume de usuários</td>
                 <td style={{ fontWeight: 700, textAlign: 'center', width: '20%' }}>Total</td>
               </tr>
@@ -285,7 +289,7 @@ export default function RelatorioVisualizar() {
           {/* B. Faixa etária */}
           <table className="tb">
             <tbody>
-              <tr>
+              <tr style={{ background: '#5B9BD5', color: '#fff' }}>
                 <td style={{ fontWeight: 700, width: '60%' }} colSpan={2}>B. Faixa etária dos usuários conveniados/SEMAS</td>
                 <td style={{ fontWeight: 700, textAlign: 'center', width: '20%' }}>Total</td>
               </tr>
@@ -305,11 +309,11 @@ export default function RelatorioVisualizar() {
           {/* C. Deficiências */}
           <table className="tb">
             <tbody>
-              <tr>
+              <tr style={{ background: '#5B9BD5', color: '#fff' }}>
                 <td style={{ fontWeight: 700 }} rowSpan={2}>C. - Deficiências dos usuários conveniados/SEMAS</td>
                 <td style={{ fontWeight: 700, textAlign: 'center' }} colSpan={3}>Total / Grau de dependência</td>
               </tr>
-              <tr>
+              <tr style={{ background: '#5B9BD5', color: '#fff' }}>
                 <td style={{ fontWeight: 700, textAlign: 'center', width: '12%' }}>I</td>
                 <td style={{ fontWeight: 700, textAlign: 'center', width: '12%' }}>II</td>
                 <td style={{ fontWeight: 700, textAlign: 'center', width: '12%' }}>III</td>
@@ -346,7 +350,7 @@ export default function RelatorioVisualizar() {
           {/* D. Cor / Raça */}
           <table className="tb">
             <tbody>
-              <tr>
+              <tr style={{ background: '#5B9BD5', color: '#fff' }}>
                 <td style={{ fontWeight: 700 }} rowSpan={2}>D. Cor ou raça/ nacionalidade dos usuários conveniados/SEMAS</td>
                 <td style={{ fontWeight: 700, textAlign: 'center' }}>Feminino</td>
                 <td style={{ fontWeight: 700, textAlign: 'center' }}>Masculino</td>
@@ -397,12 +401,12 @@ export default function RelatorioVisualizar() {
         <div style={S.section}>
           <table className="tb">
             <tbody>
-              <tr>
-                <td style={{ fontWeight: 700, textAlign: 'center', fontSize: '11pt', border: '1px solid #000' }} colSpan={2}>
+              <tr className="section-title">
+                <td style={{ fontSize: '11pt' }} colSpan={2}>
                   Bloco II – Atividades realizadas com os usuários conveniados/SEMAS
                 </td>
               </tr>
-              <tr>
+              <tr style={{ background: '#5B9BD5', color: '#fff' }}>
                 <td style={{ fontWeight: 700, width: '80%' }}>F. Volume de atividades realizadas</td>
                 <td style={{ fontWeight: 700, textAlign: 'center', width: '20%' }}>Total</td>
               </tr>
@@ -433,12 +437,12 @@ export default function RelatorioVisualizar() {
 
           <table className="tb">
             <tbody>
-              <tr>
-                <td style={{ fontWeight: 700, textAlign: 'center', fontSize: '11pt', border: '1px solid #000' }} colSpan={2}>
+              <tr className="section-title">
+                <td style={{ fontSize: '11pt' }} colSpan={2}>
                   Bloco II – Encaminhamentos aos usuários conveniados/SEMAS
                 </td>
               </tr>
-              <tr>
+              <tr style={{ background: '#5B9BD5', color: '#fff' }}>
                 <td style={{ fontWeight: 700, width: '80%' }}>G. Volume de encaminhamentos</td>
                 <td style={{ fontWeight: 700, textAlign: 'center', width: '20%' }}>Total</td>
               </tr>
@@ -463,12 +467,12 @@ export default function RelatorioVisualizar() {
         <div className="keep-together" style={S.section}>
           <table className="tb">
             <tbody>
-              <tr>
-                <td style={{ fontWeight: 700, textAlign: 'center', fontSize: '11pt', border: '1px solid #000' }}>
+              <tr className="section-title">
+                <td style={{ fontSize: '11pt' }}>
                   Bloco III – Descrição das atividades mensal realizadas com os usuários/SEMAS
                 </td>
               </tr>
-              <tr>
+              <tr style={{ background: '#5B9BD5', color: '#fff' }}>
                 <td style={{ fontWeight: 700 }}>H. Descrição das atividades</td>
               </tr>
               <tr>
@@ -521,13 +525,13 @@ export default function RelatorioVisualizar() {
         <div style={S.section}>
           <table className="tb">
             <tbody>
-              <tr>
-                <td style={{ fontWeight: 700, textAlign: 'center', fontSize: '11pt', border: '1px solid #000' }} colSpan={2}>
+              <tr className="section-title">
+                <td style={{ fontSize: '11pt' }} colSpan={2}>
                   Bloco IV – Informações complementares
                 </td>
               </tr>
-              <tr>
-                <td style={{ fontWeight: 700, textAlign: 'center', background: '#f0f0f0' }} colSpan={2}>
+              <tr style={{ background: '#5B9BD5', color: '#fff' }}>
+                <td style={{ fontWeight: 700, textAlign: 'center' }} colSpan={2}>
                   I. Informações
                 </td>
               </tr>
