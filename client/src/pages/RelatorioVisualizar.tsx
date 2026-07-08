@@ -228,7 +228,7 @@ export default function RelatorioVisualizar() {
         })}
 
         {/* ===== BLOCO I ===== */}
-        <div className="page-break">
+        <div>
           <p style={S.tituloBloco}>Bloco I — Volume de Atendimentos</p>
 
           <p style={S.labelSec}>A. Volume de usuários</p>
