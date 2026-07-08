@@ -123,8 +123,9 @@ export default function RelatorioVisualizar() {
             .no-print { display: none !important; }
             .keep-together { page-break-inside: avoid; }
             .avoid-break { page-break-after: avoid; }
-            #footer-print { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; background: #fff; padding: 4px 15mm; border-top: 1px solid #999; font-size: 7.5pt; line-height: 1.6; }
-            #relatorio-print { padding-bottom: 60px; }
+            #header-print { position: fixed; top: 0; left: 0; right: 0; text-align: center; background: #fff; z-index: 1000; }
+            #footer-print { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; background: #fff; padding: 4px 15mm; border-top: 1px solid #999; font-size: 7.5pt; line-height: 1.6; z-index: 1000; }
+            #relatorio-print { padding-top: 100px; padding-bottom: 60px; }
             .tb th, .tb .section-title, .tb tr[style*="background"] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
           }
           @media screen {
@@ -141,8 +142,8 @@ export default function RelatorioVisualizar() {
           @media print { .img-grid img { width: 170px; height: 170px; } }
         `}</style>
 
-        {/* ===== HEADER IMAGE ===== */}
-        <div style={{ textAlign: 'center' }}>
+        {/* ===== HEADER IMAGE (fixed on every page) ===== */}
+        <div id="header-print">
           <img src="/CabecalhoReport.jpg" alt="Cabeçalho" style={{ maxWidth: '100%', height: 'auto', display: 'block' }} />
         </div>
 
@@ -385,6 +386,7 @@ export default function RelatorioVisualizar() {
           </table>
 
           {/* E. Tempo de acolhimento */}
+          <div className="keep-together" style={{ pageBreakBefore: 'always' }}>
           <p style={{ ...S.label, pageBreakAfter: 'avoid' }}>E. Informe há quanto tempo os conveniados/SEMAS estão acolhidos na Unidade</p>
           <table className="tb">
             <thead>
