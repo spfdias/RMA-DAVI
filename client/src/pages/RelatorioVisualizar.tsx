@@ -123,6 +123,8 @@ export default function RelatorioVisualizar() {
             .no-print { display: none !important; }
             .keep-together { page-break-inside: avoid; }
             .avoid-break { page-break-after: avoid; }
+            #footer-print { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; }
+            #relatorio-print { padding-bottom: 60px; }
           }
           @media screen {
             #relatorio-print { background: #fff; padding: 20mm 15mm; border-radius: 4px; box-shadow: 0 1px 12px rgba(0,0,0,0.12); max-width: 210mm; margin: 0 auto; font-family: Arial, 'Times New Roman', serif; }
@@ -139,9 +141,9 @@ export default function RelatorioVisualizar() {
         `}</style>
 
         {/* ===== HEADER ===== */}
-        <div className="keep-together avoid-break" style={{ textAlign: 'center', marginBottom: 20, padding: '10px 0', borderBottom: '2px solid #000' }}>
-          <img src="/CabecalhoReport.jpg" alt="Cabeçalho" style={{ maxWidth: '100%', height: 'auto', marginBottom: 12 }} />
-          <p style={{ fontSize: '13pt', fontWeight: 700, lineHeight: 1.4 }}>
+        <div className="keep-together avoid-break" style={{ textAlign: 'center', marginBottom: 20, padding: '0 0 0', borderBottom: '2px solid #000', background: '#5B9BD5', color: '#fff' }}>
+          <img src="/CabecalhoReport.jpg" alt="Cabeçalho" style={{ maxWidth: '100%', height: 'auto', display: 'block' }} />
+          <p style={{ fontSize: '13pt', fontWeight: 700, lineHeight: 1.4, padding: '12px 0 16px' }}>
             RELATÓRIO MENSAL DE ATENDIMENTO<br />
             PROTEÇÃO SOCIAL ESPECIAL – ALTA COMPLEXIDADE<br />
             SERVIÇO DE ACOLHIMENTO INSTITUCIONAL<br />
@@ -349,12 +351,17 @@ export default function RelatorioVisualizar() {
 
           {/* D. Cor / Raça */}
           <table className="tb">
-            <tbody>
-              <tr style={{ background: '#5B9BD5', color: '#fff' }}>
-                <td style={{ fontWeight: 700 }} rowSpan={2}>D. Cor ou raça/ nacionalidade dos usuários conveniados/SEMAS</td>
-                <td style={{ fontWeight: 700, textAlign: 'center' }}>Feminino</td>
-                <td style={{ fontWeight: 700, textAlign: 'center' }}>Masculino</td>
+            <thead>
+              <tr className="section-title">
+                <th style={{ fontSize: '10pt' }} colSpan={3}>D. Cor ou raça/ nacionalidade dos usuários conveniados/SEMAS</th>
               </tr>
+              <tr style={{ background: '#5B9BD5', color: '#fff' }}>
+                <th style={{ width: '60%' }}>&nbsp;</th>
+                <th style={{ width: '20%' }}>Feminino</th>
+                <th style={{ width: '20%' }}>Masculino</th>
+              </tr>
+            </thead>
+            <tbody>
               {[
                 ['D1', 'D.1. Branco'],
                 ['D2', 'D.2. Pardo'],
@@ -590,9 +597,8 @@ export default function RelatorioVisualizar() {
         </div>
 
         {/* ===== FOOTER ===== */}
-        <div style={{ textAlign: 'center', marginTop: 20, paddingTop: 10, borderTop: '1px solid #000', fontSize: '8pt' }}>
-          <p>Documento gerado em {dataAtual} — Sistema RMA — Lar Ebenezer</p>
-          <p style={{ marginTop: 2 }}>Relatório Mensal de Atendimento — Proteção Social Especial — Alta Complexidade</p>
+        <div id="footer-print" style={{ textAlign: 'center', marginTop: 20 }}>
+          <img src="/RodapeReport.jpg" alt="Rodapé" style={{ maxWidth: '100%', height: 'auto', display: 'block' }} />
         </div>
       </div>
     </div>
