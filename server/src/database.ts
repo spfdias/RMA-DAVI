@@ -150,11 +150,14 @@ async function run(sql: string, params: any[] = []): Promise<void> {
 }
 
 async function initializeSchema(): Promise<void> {
-  const createTable = (sql: string) => run(sql);
+  const autoPk = IS_PG ? 'SERIAL PRIMARY KEY' : 'INTEGER PRIMARY KEY AUTOINCREMENT';
+  const nowFn = IS_PG ? 'NOW()' : "datetime('now', 'localtime')";
 
-  await createTable(`
+  const sqls: string[] = [];
+
+  sqls.push(`
     CREATE TABLE IF NOT EXISTS acolhidos (
-      id SERIAL PRIMARY KEY,
+      id ${autoPk},
       nome TEXT NOT NULL,
       data_nascimento TEXT NOT NULL,
       data_acolhimento TEXT NOT NULL,
@@ -164,83 +167,87 @@ async function initializeSchema(): Promise<void> {
       grau_dependencia TEXT DEFAULT '',
       observacoes TEXT DEFAULT '',
       ativo INTEGER NOT NULL DEFAULT 1,
-      created_at TEXT NOT NULL DEFAULT NOW(),
-      updated_at TEXT NOT NULL DEFAULT NOW()
+      created_at TEXT NOT NULL DEFAULT (${nowFn}),
+      updated_at TEXT NOT NULL DEFAULT (${nowFn})
     )
   `);
 
-  await createTable(`
+  sqls.push(`
     CREATE TABLE IF NOT EXISTS desligamentos (
-      id SERIAL PRIMARY KEY,
+      id ${autoPk},
       acolhido_id INTEGER NOT NULL,
       data_desligamento TEXT NOT NULL,
       motivo TEXT NOT NULL,
       observacoes TEXT DEFAULT '',
-      created_at TEXT NOT NULL DEFAULT NOW(),
+      created_at TEXT NOT NULL DEFAULT (${nowFn}),
       FOREIGN KEY (acolhido_id) REFERENCES acolhidos(id)
     )
   `);
 
-  await createTable(`
+  sqls.push(`
     CREATE TABLE IF NOT EXISTS relatorios (
-      id SERIAL PRIMARY KEY,
+      id ${autoPk},
       mes INTEGER NOT NULL,
       ano INTEGER NOT NULL,
       dados TEXT NOT NULL DEFAULT '{}',
-      created_at TEXT NOT NULL DEFAULT NOW(),
-      updated_at TEXT NOT NULL DEFAULT NOW(),
+      created_at TEXT NOT NULL DEFAULT (${nowFn}),
+      updated_at TEXT NOT NULL DEFAULT (${nowFn}),
       UNIQUE(mes, ano)
     )
   `);
 
-  await createTable(`
+  sqls.push(`
     CREATE TABLE IF NOT EXISTS imagens_atividades (
-      id SERIAL PRIMARY KEY,
+      id ${autoPk},
       relatorio_id INTEGER NOT NULL,
       categoria TEXT NOT NULL,
       filename TEXT NOT NULL,
       original_name TEXT NOT NULL,
       descricao TEXT DEFAULT '',
       rotation INTEGER NOT NULL DEFAULT 0,
-      created_at TEXT NOT NULL DEFAULT NOW(),
+      created_at TEXT NOT NULL DEFAULT (${nowFn}),
       FOREIGN KEY (relatorio_id) REFERENCES relatorios(id) ON DELETE CASCADE
     )
   `);
 
-  await createTable(`
+  sqls.push(`
     CREATE TABLE IF NOT EXISTS users (
-      id SERIAL PRIMARY KEY,
+      id ${autoPk},
       nome TEXT NOT NULL,
       email TEXT NOT NULL UNIQUE,
       password_hash TEXT NOT NULL,
       role TEXT NOT NULL DEFAULT 'user',
       approved INTEGER NOT NULL DEFAULT 0,
-      created_at TEXT NOT NULL DEFAULT NOW()
+      created_at TEXT NOT NULL DEFAULT (${nowFn})
     )
   `);
 
-  await createTable(`
+  sqls.push(`
     CREATE TABLE IF NOT EXISTS audit_log (
-      id SERIAL PRIMARY KEY,
+      id ${autoPk},
       relatorio_id INTEGER NOT NULL,
       user_id INTEGER NOT NULL,
       user_name TEXT NOT NULL,
       changes TEXT NOT NULL DEFAULT '{}',
-      created_at TEXT NOT NULL DEFAULT NOW(),
+      created_at TEXT NOT NULL DEFAULT (${nowFn}),
       FOREIGN KEY (relatorio_id) REFERENCES relatorios(id),
       FOREIGN KEY (user_id) REFERENCES users(id)
     )
   `);
 
-  await createTable(`
+  sqls.push(`
     CREATE TABLE IF NOT EXISTS categorias (
-      id SERIAL PRIMARY KEY,
+      id ${autoPk},
       value TEXT NOT NULL UNIQUE,
       label TEXT NOT NULL,
       icon TEXT NOT NULL DEFAULT '📎',
-      created_at TEXT NOT NULL DEFAULT NOW()
+      created_at TEXT NOT NULL DEFAULT (${nowFn})
     )
   `);
+
+  for (const sql of sqls) {
+    await run(sql);
+  }
 
   if (!IS_PG) {
     try {
