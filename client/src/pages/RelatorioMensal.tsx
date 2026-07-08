@@ -565,7 +565,7 @@ export default function RelatorioMensal() {
                             background: '#fff',
                           }}>
                             <img
-                              src={img.url || `${IMG_BASE}/${img.filename}`}
+                              src={img.data || img.url || `${IMG_BASE}/${img.filename}`}
                               alt={img.original_name}
                               style={{
                                 width: '100%', height: '100%',

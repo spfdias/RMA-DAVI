@@ -141,10 +141,13 @@ router.post('/:id/imagens', upload.array('imagens', 20), async (req: Request, re
 
   const inserted = [];
   for (const file of files) {
+    const fileBuffer = fs.readFileSync(file.path);
+    const base64Data = `data:${file.mimetype};base64,${fileBuffer.toString('base64')}`;
+
     const result = await runQuery(`
-      INSERT INTO imagens_atividades (relatorio_id, categoria, filename, original_name)
-      VALUES (?, ?, ?, ?)
-    `, [req.params.id, categoria, file.filename, file.originalname]);
+      INSERT INTO imagens_atividades (relatorio_id, categoria, filename, original_name, data)
+      VALUES (?, ?, ?, ?, ?)
+    `, [req.params.id, categoria, file.filename, file.originalname, base64Data]);
     const imgId = result.lastInsertRowid;
     // Rename file to include DB id for future recovery
     const oldPath = file.path;

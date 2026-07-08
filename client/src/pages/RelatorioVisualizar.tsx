@@ -510,7 +510,7 @@ export default function RelatorioVisualizar() {
                           border: '1px solid #000',
                         }}>
                           <img
-                            src={img.url || `${IMG_BASE}/${img.filename}`}
+                            src={img.data || img.url || `${IMG_BASE}/${img.filename}`}
                             alt={img.original_name}
                             style={{
                               maxWidth: '100%', maxHeight: '100%',

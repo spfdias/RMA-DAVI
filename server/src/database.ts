@@ -254,6 +254,10 @@ async function initializeSchema(): Promise<void> {
       sqliteRunQuery('ALTER TABLE imagens_atividades ADD COLUMN rotation INTEGER NOT NULL DEFAULT 0');
     } catch {}
   }
+
+  try {
+    await run('ALTER TABLE imagens_atividades ADD COLUMN data TEXT DEFAULT NULL');
+  } catch {}
 }
 
 async function seedData(): Promise<void> {
