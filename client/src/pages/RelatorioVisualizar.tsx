@@ -135,6 +135,7 @@ export default function RelatorioVisualizar() {
             .tb-a6p { margin-top: 100px !important; }
             .tb-g3p { margin-top: 100px !important; }
             .bloco-d { margin-top: 100px !important; }
+            .bloco-g { margin-top: 100px !important; }
             .img-print-page { page-break-before: always; margin-top: 100px !important; }
             .img-tbl td { height: 170px !important; }
           }
@@ -483,7 +484,7 @@ export default function RelatorioVisualizar() {
           <p style={{ fontSize: '9pt', marginLeft: 20 }}>F.4. Quantidade de passeios</p>
           <p style={{ fontSize: '9pt', marginLeft: 20, marginBottom: 14 }}>F.5 Quantidade de atividades realizadas</p>
 
-          <table className="tb" style={{ pageBreakBefore: 'always' }}>
+          <table className="tb bloco-g" style={{ pageBreakBefore: 'always' }}>
             <tbody>
               <tr className="section-title">
                 <td style={{ fontSize: '11pt' }} colSpan={2}>
