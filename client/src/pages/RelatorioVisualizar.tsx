@@ -314,7 +314,7 @@ export default function RelatorioVisualizar() {
           <table className="tb">
             <thead>
               <tr style={{ background: '#5B9BD5', color: '#fff' }}>
-                <th style={{ width: '60%' }}>B. Faixa etária dos usuários conveniados/SEMAS</th>
+                <th style={{ width: '60%', textTransform: 'none' }}>B. Faixa etária dos usuários conveniados/SEMAS</th>
                 <th style={{ width: '20%' }}>Masculino</th>
                 <th style={{ width: '20%' }}>Feminino</th>
               </tr>
@@ -628,7 +628,7 @@ export default function RelatorioVisualizar() {
           <div className="img-print-page" style={{ pageBreakBefore: 'always', paddingTop: 80 }}>
             <p style={{ ...S.label, marginTop: 16 }}>Registro fotográfico</p>
             <div id="photo-section">
-              {categorias.map((cat) => {
+              {categorias.map((cat, idx) => {
                 const catImgs = imagens.filter((i) => i.categoria === cat.value);
                 if (catImgs.length === 0) return null;
 
@@ -639,7 +639,7 @@ export default function RelatorioVisualizar() {
                 }
 
                 return (
-                  <div key={cat.value} className="photo-category" style={{ marginBottom: 12 }}>
+                  <div key={cat.value} className="photo-category" style={{ marginBottom: 12, paddingTop: idx === 0 ? 0 : 80, pageBreakInside: 'avoid' }}>
                     <p className="categoria-titulo" style={{ fontWeight: 700, fontSize: '10pt', margin: '0 0 4px' }}>
                       {cat.label} ({catImgs.length})
                     </p>
