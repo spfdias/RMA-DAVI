@@ -279,7 +279,7 @@ export default function RelatorioVisualizar() {
             <tbody>
               <tr>
                 <td style={{ border: '1px solid #000', padding: '5px 8px', fontSize: '9pt', verticalAlign: 'top' }}>
-                  A.6. Total de usuários desligados<br /><br /><br /><br /><br />
+                  A.6. Total de usuários desligados<br /><br /><br /><br /><br /><br /><br />
                   {[
                     ['A6_familia_extensa', 'Família extensa'],
                     ['A6_familia_origem', 'Família de origem'],
