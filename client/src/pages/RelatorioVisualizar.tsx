@@ -132,6 +132,7 @@ export default function RelatorioVisualizar() {
             #footer-print { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; background: #fff; border-top: 1px solid #999; font-size: 7.5pt; line-height: 1.6; z-index: 1000; }
             #relatorio-print { padding-top: 82px; padding-bottom: 80px; }
             .tb th, .tb .section-title, .tb tr[style*="background"] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .tb-a6p { margin-top: 70px !important; }
           }
           @media screen {
             #header-print { max-width: 210mm; margin: 0 auto; background: #fff; border-radius: 4px 4px 0 0; }
@@ -275,11 +276,11 @@ export default function RelatorioVisualizar() {
             </tbody>
           </table>
 
-          <table className="tb" style={{ pageBreakBefore: 'always', marginTop: 0, borderTop: '1px solid #000' }}>
+          <table className="tb tb-a6p" style={{ pageBreakBefore: 'always', marginTop: 0 }}>
             <tbody>
               <tr>
                 <td style={{ padding: '5px 8px', fontSize: '9pt', verticalAlign: 'top', width: '80%' }}>
-                  <div style={{ marginTop: '85px' }}>A.6. Total de usuários desligados<br />
+                  A.6. Total de usuários desligados<br />
                   {[
                     ['A6_familia_extensa', 'Família extensa'],
                     ['A6_familia_origem', 'Família de origem'],
@@ -295,7 +296,6 @@ export default function RelatorioVisualizar() {
                       </div>
                     );
                   })}
-                  </div>
                 </td>
                 <td className="num" style={{ width: '20%' }}>-</td>
               </tr>
