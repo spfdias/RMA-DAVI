@@ -136,7 +136,7 @@ export default function RelatorioVisualizar() {
           @media screen {
             #header-print { max-width: 210mm; margin: 0 auto; background: #fff; border-radius: 4px 4px 0 0; }
             #header-print img { width: 100%; height: auto; display: block; border-radius: 4px 4px 0 0; }
-            #relatorio-print { background: #fff; padding: 20mm 15mm; border-radius: 0 0 4px 4px; box-shadow: 0 1px 12px rgba(0,0,0,0.12); max-width: 210mm; margin: 0 auto; font-family: Arial, 'Times New Roman', serif; }
+            #relatorio-print { background: #fff; padding: 8mm 15mm 20mm; border-radius: 0 0 4px 4px; box-shadow: 0 1px 12px rgba(0,0,0,0.12); max-width: 210mm; margin: 0 auto; font-family: Arial, 'Times New Roman', serif; }
           }
           .tb { width: 100%; border-collapse: collapse; margin: 8px 0 14px; }
           .tb th, .tb td { border: 1px solid #000; padding: 5px 8px; font-size: 9pt; vertical-align: top; text-align: left; }
@@ -488,13 +488,13 @@ export default function RelatorioVisualizar() {
         <div className="keep-together" style={S.section}>
           <table className="tb">
             <tbody>
-              <tr className="section-title">
-                <td style={{ fontSize: '11pt' }}>
+              <tr>
+                <td className="section-title" style={{ fontSize: '11pt', background: '#5B9BD5', color: '#fff', fontWeight: 700, textAlign: 'center', textTransform: 'uppercase' }}>
                   Bloco III – Descrição das atividades mensal realizadas com os usuários/SEMAS
                 </td>
               </tr>
-              <tr style={{ background: '#5B9BD5', color: '#fff' }}>
-                <td style={{ fontWeight: 700 }}>H. Descrição das atividades</td>
+              <tr>
+                <td style={{ fontWeight: 700, background: '#5B9BD5', color: '#fff' }}>H. Descrição das atividades</td>
               </tr>
               <tr>
                 <td style={{ minHeight: 60, padding: '10px 8px', lineHeight: 1.6, textAlign: 'justify' }}>
