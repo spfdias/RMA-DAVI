@@ -120,7 +120,7 @@ export default function RelatorioVisualizar() {
         <style>{`
           * { margin: 0; padding: 0; box-sizing: border-box; }
           body { font-family: Arial, 'Times New Roman', serif; }
-          @page { margin: 22mm 15mm 20mm; size: A4; }
+          @page { margin: 24mm 15mm 20mm; size: A4; }
           @media print {
             body { font-family: Arial, 'Times New Roman', serif; color: #000; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             aside, .sidebar, nav[class*="sidebar"], header[class*="sidebar"] { display: none !important; }
@@ -130,7 +130,7 @@ export default function RelatorioVisualizar() {
             #header-print { position: fixed; top: 0; left: 0; right: 0; text-align: center; background: #fff; z-index: 1000; }
             #header-print img { width: 100%; height: auto; display: block; }
             #footer-print { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; background: #fff; border-top: 1px solid #999; font-size: 7.5pt; line-height: 1.6; z-index: 1000; }
-            #relatorio-print { padding-top: 10px; padding-bottom: 80px; }
+            #relatorio-print { padding-top: 80px; padding-bottom: 80px; }
             .tb th, .tb .section-title, .tb tr[style*="background"] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .tb-a6p { margin-top: 100px !important; }
             .tb-d4p { margin-top: 100px !important; }
