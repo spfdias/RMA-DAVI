@@ -440,7 +440,7 @@ export default function RelatorioVisualizar() {
         </div>
 
         {/* ===== BLOCO II – ATIVIDADES ===== */}
-        <div style={{ ...S.section, pageBreakBefore: 'always', paddingTop: 80 }}>
+        <div style={{ ...S.section }}>
           <div className="keep-together">
             <table className="tb">
               <thead>
