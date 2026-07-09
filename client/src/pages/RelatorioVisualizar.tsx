@@ -151,6 +151,8 @@ export default function RelatorioVisualizar() {
           .img-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
           .img-grid img { width: 150px; height: 150px; object-fit: cover; border: 1px solid #000; }
           @media print { .img-grid img { width: 170px; height: 170px; } }
+          .img-row { display: flex; gap: 8px; margin-bottom: 8px; break-inside: avoid; page-break-inside: avoid; }
+          .categoria-titulo { break-after: avoid; page-break-after: avoid; }
         `}</style>
 
         {/* ===== HEADER TITLE (first page only) ===== */}
@@ -549,30 +551,49 @@ export default function RelatorioVisualizar() {
               {categorias.map((cat) => {
                 const catImgs = imagens.filter((i) => i.categoria === cat.value);
                 if (catImgs.length === 0) return null;
+
+                // Divide as imagens da categoria em linhas de 4, para que cada
+                // linha seja tratada como um bloco atômico na impressão
+                // (o flex-wrap sozinho não é reconhecido como "linhas" pelo
+                // motor de paginação do navegador).
+                const IMAGES_PER_ROW = 4;
+                const rows: any[][] = [];
+                for (let i = 0; i < catImgs.length; i += IMAGES_PER_ROW) {
+                  rows.push(catImgs.slice(i, i + IMAGES_PER_ROW));
+                }
+
                 return (
-                  <div key={cat.value} className="keep-together" style={{ marginBottom: 12 }}>
-                    <p style={{ fontWeight: 700, fontSize: '10pt', margin: '0 0 4px' }}>
+                  <div key={cat.value} style={{ marginBottom: 12 }}>
+                    <p className="categoria-titulo" style={{ fontWeight: 700, fontSize: '10pt', margin: '0 0 4px' }}>
                       {cat.label} ({catImgs.length})
                     </p>
-                    <div className="img-grid">
-                      {catImgs.map((img: any) => (
-                        <div key={img.id} style={{
-                          width: 160, height: 160, overflow: 'hidden',
-                          display: 'flex', alignItems: 'center', justifyContent: 'center',
-                          border: '1px solid #000', pageBreakInside: 'avoid',
-                        }}>
-                          <img
-                            src={img.data || img.url || `${IMG_BASE}/${img.filename}`}
-                            alt={img.original_name}
-                            style={{
-                              maxWidth: '100%', maxHeight: '100%',
-                              objectFit: 'contain',
-                              transform: `rotate(${img.rotation || 0}deg)`,
-                            }}
-                          />
-                        </div>
-                      ))}
-                    </div>
+                    {rows.map((linha, rowIndex) => (
+                      <div
+                        key={rowIndex}
+                        className="img-row"
+                        // Mantém a primeira linha grudada no título (evita
+                        // título "órfão" sozinho no fim de uma página)
+                        style={rowIndex === 0 ? { breakBefore: 'avoid', pageBreakBefore: 'avoid' } : undefined}
+                      >
+                        {linha.map((img: any) => (
+                          <div key={img.id} style={{
+                            width: 160, height: 160, overflow: 'hidden',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            border: '1px solid #000',
+                          }}>
+                            <img
+                              src={img.data || img.url || `${IMG_BASE}/${img.filename}`}
+                              alt={img.original_name}
+                              style={{
+                                maxWidth: '100%', maxHeight: '100%',
+                                objectFit: 'contain',
+                                transform: `rotate(${img.rotation || 0}deg)`,
+                              }}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    ))}
                   </div>
                 );
               })}
