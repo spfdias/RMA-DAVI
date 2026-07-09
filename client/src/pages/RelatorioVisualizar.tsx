@@ -120,7 +120,7 @@ export default function RelatorioVisualizar() {
         <style>{`
           * { margin: 0; padding: 0; box-sizing: border-box; }
           body { font-family: Arial, 'Times New Roman', serif; }
-          @page { margin: 24mm 15mm 20mm; size: A4; }
+          @page { margin: 32mm 15mm 20mm; size: A4; }
           @media print {
             body { font-family: Arial, 'Times New Roman', serif; color: #000; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             aside, .sidebar, nav[class*="sidebar"], header[class*="sidebar"] { display: none !important; }
