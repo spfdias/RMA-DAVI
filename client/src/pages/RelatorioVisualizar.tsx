@@ -625,7 +625,7 @@ export default function RelatorioVisualizar() {
         {/* ===== REGISTRO FOTOGRÁFICO ===== */}
         {imagens.length > 0 && (
           <div className="img-print-page" style={{ pageBreakBefore: 'always', paddingTop: 80 }}>
-            <p style={{ ...S.label, marginTop: 16 }}>Registro fotográfico</p>
+            <p style={{ ...S.label }}>Registro fotográfico</p>
             <div id="photo-section">
               {categorias.map((cat, idx) => {
                 const catImgs = imagens.filter((i) => i.categoria === cat.value);
