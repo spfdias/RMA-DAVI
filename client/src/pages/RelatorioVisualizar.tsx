@@ -127,9 +127,13 @@ export default function RelatorioVisualizar() {
             main { background: #fff !important; padding: 0 !important; margin: 0 !important; }
             .no-print { display: none !important; }
             .keep-together { page-break-inside: avoid; }
+            table { page-break-inside: auto; }
+            tr, thead { page-break-inside: avoid; }
+            .td-descricao { height: auto !important; overflow: visible !important; white-space: pre-wrap; }
+            textarea { display: block; width: 100%; border: none; height: auto !important; overflow: visible !important; white-space: pre-wrap; }
             #header-print { position: fixed; top: 0; left: 0; right: 0; text-align: center; background: #fff; z-index: 1000; }
             #header-print img { width: 100%; height: auto; display: block; }
-            #footer-print { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; background: #fff; border-top: 1px solid #999; font-size: 7.5pt; line-height: 1.6; }
+            #footer-print { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; background: #fff; border-top: 1px solid #999; font-size: 7.5pt; line-height: 1.6; height: 15mm; }
             #relatorio-print { padding-top: 80px; padding-bottom: 40px; }
             .tb th, .tb .section-title, .tb tr[style*="background"] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .tb-a6p { margin-top: 100px !important; }
@@ -537,7 +541,7 @@ export default function RelatorioVisualizar() {
           <table className="tb" style={{ marginTop: 0, borderTop: 'none', breakInside: 'auto', pageBreakInside: 'auto' }}>
             <tbody>
               <tr>
-                <td style={{ minHeight: 60, padding: '10px 8px', lineHeight: 1.6, textAlign: 'justify', borderTop: 'none', breakInside: 'auto', pageBreakInside: 'auto' }}>
+                <td className="td-descricao" style={{ minHeight: 60, padding: '10px 8px', lineHeight: 1.6, textAlign: 'justify', borderTop: 'none', breakInside: 'auto', pageBreakInside: 'auto' }}>
                   <p style={{ marginBottom: 6, fontWeight: 600 }}>H.1. Descreva quais atividades os usuários realizaram durante o mês (convivência, socioeducativa, passeios, visitas a outros locais, atendimento médico, atividades da vida diária, para independência, de auto cuidado, cursos, etc)</p>
                   {d.blocoH?.descricao || 'N/A'}
                 </td>
@@ -595,24 +599,30 @@ export default function RelatorioVisualizar() {
         </div>
 
         {/* ===== BLOCO IV ===== */}
-        <div className="keep-together" style={{ ...S.section, pageBreakBefore: 'always' }}>
-          <table className="tb">
+        <div style={{ ...S.section, pageBreakBefore: 'always' }}>
+          <div className="keep-together" style={{ breakAfter: 'avoid', pageBreakAfter: 'avoid' }}>
+            <table className="tb" style={{ marginBottom: 0 }}>
+              <tbody>
+                <tr className="section-title">
+                  <td style={{ fontSize: '11pt' }} colSpan={2}>
+                    Bloco IV – Informações complementares
+                  </td>
+                </tr>
+                <tr style={{ background: '#5B9BD5', color: '#fff' }}>
+                  <td style={{ fontWeight: 700, textAlign: 'center' }} colSpan={2}>I. Informações</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <table className="tb" style={{ marginTop: 0, borderTop: 'none' }}>
             <tbody>
-              <tr className="section-title">
-                <td style={{ fontSize: '11pt' }} colSpan={2}>
-                  Bloco IV – Informações complementares
-                </td>
-              </tr>
-              <tr style={{ background: '#5B9BD5', color: '#fff' }}>
-                <td style={{ fontWeight: 700, textAlign: 'center' }} colSpan={2}>I. Informações</td>
-              </tr>
               <tr>
                 <td style={{ fontWeight: 700, width: '40%', verticalAlign: 'top' }}>I.1. Limites e dificuldades enfrentadas no mês:</td>
-                <td style={{ width: '60%', textAlign: 'justify' }}>{d.blocoI?.limites || 'N/A'}</td>
+                <td className="td-descricao" style={{ width: '60%', textAlign: 'justify' }}>{d.blocoI?.limites || 'N/A'}</td>
               </tr>
               <tr>
                 <td style={{ fontWeight: 700, verticalAlign: 'top' }}>I.2. Avanços:</td>
-                <td style={{ textAlign: 'justify' }}>{d.blocoI?.avancos || 'N/A'}</td>
+                <td className="td-descricao" style={{ textAlign: 'justify' }}>{d.blocoI?.avancos || 'N/A'}</td>
               </tr>
               <tr>
                 <td style={{ fontWeight: 700, verticalAlign: 'top' }}>I.3. Aquisição do mês:</td>
