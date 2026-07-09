@@ -1,0 +1,334 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, 'Times New Roman', serif;
+  font-size: 10pt;
+  line-height: 1.5;
+  color: #000;
+  background: #fff;
+}
+
+@page {
+  size: A4;
+  margin: 32mm 15mm 25mm;
+}
+
+@media screen {
+  body {
+    background: #e8e8e8;
+    padding: 20px;
+  }
+  #header-print {
+    max-width: 210mm;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 4px 4px 0 0;
+  }
+  #header-print img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px 4px 0 0;
+  }
+  #relatorio-print {
+    background: #fff;
+    padding: 8mm 15mm 20mm;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 1px 12px rgba(0,0,0,0.12);
+    max-width: 210mm;
+    margin: 0 auto;
+    font-size: 10pt;
+    line-height: 1.5;
+    color: #000;
+  }
+  .no-screen { display: none !important; }
+}
+
+@media print {
+  body {
+    font-family: Arial, 'Times New Roman', serif;
+    color: #000;
+    background: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .no-print { display: none !important; }
+  .keep-together { page-break-inside: avoid; }
+  table { page-break-inside: auto; }
+  tr, thead { page-break-inside: avoid; }
+  #header-print {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    background: #fff;
+    z-index: 1000;
+  }
+  #header-print img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  #footer-print {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    background: #fff;
+    border-top: 1px solid #999;
+    font-size: 7.5pt;
+    line-height: 1.6;
+    padding: 4px 0;
+    z-index: 1000;
+  }
+  #relatorio-print {
+    padding-top: 80px;
+    padding-bottom: 40px;
+  }
+  .tb th,
+  .tb .section-title {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+#header-print img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+#relatorio-print {
+  font-size: 10pt;
+  line-height: 1.5;
+  color: #000;
+  max-width: 210mm;
+  margin: 0 auto;
+}
+
+.title-header {
+  text-align: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #000;
+  background: #5B9BD5;
+  color: #fff;
+  padding: 12px 0 16px;
+}
+
+.title-header h1 {
+  font-size: 13pt;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.tb {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0 14px;
+}
+
+.tb th,
+.tb td {
+  border: 1px solid #000;
+  padding: 5px 8px;
+  font-size: 9pt;
+  vertical-align: top;
+  text-align: left;
+}
+
+.tb th {
+  background: #5B9BD5;
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.tb .num {
+  text-align: center;
+  width: 50px;
+}
+
+.tb .num-sm {
+  text-align: center;
+  width: 40px;
+}
+
+.tb .section-title {
+  background: #5B9BD5;
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 10pt;
+}
+
+.tb .total-col {
+  font-weight: 700;
+  text-align: center;
+  width: 50px;
+  background: #f2f2f2;
+}
+
+.prof-section {
+  background: #5B9BD5;
+  color: #fff;
+  font-weight: 700;
+  text-align: left;
+  padding: 5px 8px;
+  font-size: 8pt;
+  text-transform: uppercase;
+}
+
+.check-list {
+  list-style: none;
+  padding: 0;
+  font-size: 8.5pt;
+}
+
+.check-list li {
+  margin-bottom: 1pt;
+  white-space: nowrap;
+}
+
+.checkbox-marker {
+  font-weight: 700;
+}
+
+.obs-text {
+  font-size: 7.5pt;
+  font-style: italic;
+  color: #444;
+  margin: 2pt 0 6pt;
+  line-height: 1.4;
+}
+
+.grau-desc {
+  font-size: 7.5pt;
+  margin: 1pt 0 2pt;
+  line-height: 1.4;
+}
+
+.grau-desc strong {
+  font-weight: 700;
+}
+
+.td-descricao {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow: visible;
+  height: auto;
+  min-height: 60px;
+  vertical-align: top;
+  break-inside: auto;
+  page-break-inside: auto;
+}
+
+.signature-block {
+  margin-top: 30px;
+  padding-top: 10px;
+  text-align: center;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.signature-block .signature-line {
+  width: 60%;
+  border-top: 1px solid #000;
+  padding-top: 4px;
+  margin: 40px auto 0;
+}
+
+.signature-block .signature-label {
+  font-size: 10pt;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.keep-together {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.avoid-break {
+  page-break-inside: avoid;
+}
+
+.page-break {
+  page-break-before: always;
+  break-before: page;
+}
+
+.ident-grid {
+  border: 1px solid #000;
+  margin: 8px 0 14px;
+}
+
+.ident-grid table {
+  margin: 0;
+}
+
+.ident-grid td {
+  border: 1px solid #000;
+  padding: 4px 8px;
+  font-size: 9pt;
+}
+
+.ident-grid .label {
+  font-weight: 700;
+  width: 35%;
+  background: #f8f8f8;
+}
+
+.prof-obs {
+  font-size: 7.5pt;
+  font-style: italic;
+  color: #555;
+  margin: 3pt 0 8pt;
+  line-height: 1.4;
+}
+
+.btn {
+  display: inline-block;
+  padding: 8px 20px;
+  background: #5B9BD5;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: Arial, 'Times New Roman', serif;
+  transition: background 0.2s;
+}
+
+.btn:hover { background: #4a8bc4; }
+
+.btn-secondary {
+  background: #fff;
+  color: #5B9BD5;
+  border: 1px solid #5B9BD5;
+}
+
+.btn-secondary:hover { background: #f0f4fa; }
+
+.toolbar {
+  text-align: right;
+  padding: 10px 0;
+  margin-bottom: 10px;
+}
+
+.toolbar .btn + .btn { margin-left: 8px; }
+
+.section-gap { margin-bottom: 18px; }
+
+.page-break-block {
+  page-break-before: always;
+  break-before: page;
+}

@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatório Mensal de Atendimento – RMA</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- === TOOLBAR (tela apenas) === -->
+  <div class="toolbar no-print">
+    <button class="btn" onclick="window.print()">Imprimir / Exportar PDF</button>
+    <button class="btn btn-secondary" onclick="gerarPDFPlaywright()">Gerar PDF (Playwright)</button>
+  </div>
+
+  <!-- ===== HEADER IMAGE ===== -->
+  <div id="header-print" style="z-index:0;">
+    <img src="../CabecalhoReport.jpg" alt="Cabeçalho" />
+  </div>
+
+  <div id="relatorio-print" style="position:relative;z-index:1;">
+
+    <!-- ===== HEADER TITLE (first page only) ===== -->
+    <div class="keep-together avoid-break" style="text-align:center;margin-bottom:20px;border-bottom:2px solid #000;background:#5B9BD5;color:#fff;">
+      <p style="font-size:13pt;font-weight:700;line-height:1.4;padding:12px 0 16px;">
+        RELATÓRIO MENSAL DE ATENDIMENTO<br />
+        PROTEÇÃO SOCIAL ESPECIAL – ALTA COMPLEXIDADE<br />
+        SERVIÇO DE ACOLHIMENTO INSTITUCIONAL<br />
+        LAR EBENEZER
+      </p>
+    </div>
+
+    <!-- ===== IDENTIFICAÇÃO ===== -->
+    <div class="keep-together avoid-break section-gap">
+      <table class="tb">
+        <tbody>
+          <tr>
+            <td style="width:35%;font-weight:700;">Mês e Ano de Referência:</td>
+            <td data-field="mesAno">___________________ / _______</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;">Nome da Unidade:</td>
+            <td data-field="unidade">Lar Ebenezer</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;">Endereço:</td>
+            <td data-field="endereco"></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;">Telefone:</td>
+            <td data-field="telefone"></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;">E-mail:</td>
+            <td data-field="email"></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;">Município: DOURADOS</td>
+            <td>UF: MS</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ===== PROFISSIONAIS ===== -->
+    <div class="keep-together section-gap">
+      <table class="tb">
+        <thead>
+          <tr>
+            <th style="width:40%;">NOME DO PROFISSIONAL</th>
+            <th style="width:30%;">FUNÇÃO</th>
+            <th style="width:30%;">TIPO DE VÍNCULO</th>
+          </tr>
+        </thead>
+        <tbody id="profissionais-list">
+          <tr>
+            <td>___________________</td>
+            <td>___________________</td>
+            <td>___________________</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="tb">
+        <tbody>
+          <tr>
+            <td class="prof-section" colspan="3">Nome do Profissional Vinculado no Mês</td>
+          </tr>
+        </tbody>
+        <tbody id="profissionais-vinculados-list">
+          <tr>
+            <td style="width:40%;">___________________</td>
+            <td style="width:30%;">___________________</td>
+            <td style="width:30%;">___________________</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="tb">
+        <tbody>
+          <tr>
+            <td class="prof-section" colspan="3">Nome do Profissional Desvinculado no Mês</td>
+          </tr>
+        </tbody>
+        <tbody id="profissionais-desvinculados-list">
+          <tr>
+            <td style="width:40%;">___________________</td>
+            <td style="width:30%;">___________________</td>
+            <td style="width:30%;">___________________</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="obs-text">
+        OBS: Quando o Profissional Vinculado no Mês é necessário em anexo a ficha do contendo as informações RH para cadastro no SISTEMA MDS/GSI (solicitar no DGSUAS a ficha com as informações necessária, caso não tenha.)
+      </p>
+    </div>
+
+    <!-- ===== BLOCO I – VOLUME DE ATENDIMENTOS ===== -->
+    <div class="section-gap page-break-block" style="padding-top:80px;">
+      <table class="tb">
+        <tbody>
+          <tr class="section-title">
+            <td style="font-size:11pt;text-transform:none;" colspan="2">Bloco I – Volume de Atendimentos</td>
+          </tr>
+          <tr style="background:#5B9BD5;color:#fff;">
+            <th style="width:80%;text-align:left;text-transform:none;">A. Volume de usuários</th>
+            <th style="width:20%;">Total</th>
+          </tr>
+        </tbody>
+        <tbody id="blocoA-list">
+          <tr>
+            <td>A.1. Capacidade total de usuários na Unidade</td>
+            <td class="num" data-field="blocoA.A1">___</td>
+          </tr>
+          <tr>
+            <td>A.2. Total de usuários acolhidos na Unidade</td>
+            <td class="num" data-field="blocoA.A2">___</td>
+          </tr>
+          <tr>
+            <td>A.3. Total de usuários conveniados /SEMAS</td>
+            <td class="num" data-field="blocoA.A3">___</td>
+          </tr>
+          <tr>
+            <td>A.4. Total de usuários conveniados/SEMAS acolhidos na Unidade</td>
+            <td class="num" data-field="blocoA.A4">___</td>
+          </tr>
+          <tr>
+            <td>A.5. Novos usuários inseridos no mês</td>
+            <td class="num" data-field="blocoA.A5">___</td>
+          </tr>
+          <tr>
+            <td style="padding:5px 8px;font-size:9pt;vertical-align:top;">
+              A.6. Total de usuários desligados
+              <div style="margin-top:3pt;">
+                <ul class="check-list" id="blocoA6-list">
+                  <li><span class="checkbox-marker">( &nbsp; )</span> Família extensa</li>
+                  <li><span class="checkbox-marker">( &nbsp; )</span> Família de origem</li>
+                  <li><span class="checkbox-marker">( &nbsp; )</span> Família substituta</li>
+                  <li><span class="checkbox-marker">( &nbsp; )</span> Maioridade</li>
+                  <li><span class="checkbox-marker">( &nbsp; )</span> Falecimento</li>
+                  <li><span class="checkbox-marker">( &nbsp; )</span> Transferida para outra unidade</li>
+                </ul>
+              </div>
+            </td>
+            <td class="num" style="width:20%;vertical-align:middle;">-</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="obs-text">OBS: A.6. especificar entre parênteses a quantidade</p>
+
+      <!-- B. Faixa etária -->
+      <table class="tb">
+        <thead>
+          <tr style="background:#5B9BD5;color:#fff;">
+            <th style="width:60%;text-align:left;text-transform:none;">B. Faixa etária dos usuários conveniados/SEMAS</th>
+            <th style="width:20%;">Masculino</th>
+            <th style="width:20%;">Feminino</th>
+          </tr>
+        </thead>
+        <tbody id="blocoB-list">
+          <tr>
+            <td style="padding-left:20px;">B.1. 0 a 6 anos</td>
+            <td class="num" data-field="blocoB.B1_M">___</td>
+            <td class="num" data-field="blocoB.B1_F">___</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px;">B.2. 07 a 14 anos</td>
+            <td class="num" data-field="blocoB.B2_M">___</td>
+            <td class="num" data-field="blocoB.B2_F">___</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px;">B.3. 15 a 17 anos</td>
+            <td class="num" data-field="blocoB.B3_M">___</td>
+            <td class="num" data-field="blocoB.B3_F">___</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- C. Deficiências -->
+      <table class="tb">
+        <tbody>
+          <tr style="background:#5B9BD5;color:#fff;">
+            <td style="font-weight:700;" rowspan="2">C. Deficiências dos usuários conveniados/SEMAS</td>
+            <td style="font-weight:700;text-align:center;" colspan="3">Total / Grau de dependência</td>
+          </tr>
+          <tr style="background:#5B9BD5;color:#fff;">
+            <td style="font-weight:700;text-align:center;width:12%;">I</td>
+            <td style="font-weight:700;text-align:center;width:12%;">II</td>
+            <td style="font-weight:700;text-align:center;width:12%;">III</td>
+          </tr>
+        </tbody>
+        <tbody id="blocoC-list">
+          <tr>
+            <td>C.1. Deficiência múltipla (uma ou mais deficiências)</td>
+            <td class="num" data-field="blocoC.C1.I">___</td>
+            <td class="num" data-field="blocoC.C1.II">___</td>
+            <td class="num" data-field="blocoC.C1.III">___</td>
+          </tr>
+          <tr>
+            <td>C.2. Deficiência visual</td>
+            <td class="num" data-field="blocoC.C2.I">___</td>
+            <td class="num" data-field="blocoC.C2.II">___</td>
+            <td class="num" data-field="blocoC.C2.III">___</td>
+          </tr>
+          <tr>
+            <td>C.3. Deficiência auditiva</td>
+            <td class="num" data-field="blocoC.C3.I">___</td>
+            <td class="num" data-field="blocoC.C3.II">___</td>
+            <td class="num" data-field="blocoC.C3.III">___</td>
+          </tr>
+          <tr>
+            <td>C.4. Deficiência física</td>
+            <td class="num" data-field="blocoC.C4.I">___</td>
+            <td class="num" data-field="blocoC.C4.II">___</td>
+            <td class="num" data-field="blocoC.C4.III">___</td>
+          </tr>
+          <tr>
+            <td>C.5. Transtorno mental e/ou psiquiátrico</td>
+            <td class="num" data-field="blocoC.C5.I">___</td>
+            <td class="num" data-field="blocoC.C5.II">___</td>
+            <td class="num" data-field="blocoC.C5.III">___</td>
+          </tr>
+          <tr>
+            <td>C.6. TEA (Transtorno do Espectro Autista)</td>
+            <td class="num" data-field="blocoC.C6.I">___</td>
+            <td class="num" data-field="blocoC.C6.II">___</td>
+            <td class="num" data-field="blocoC.C6.III">___</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- D. Cor ou raça -->
+      <div class="keep-together page-break-block" style="padding-top:80px;">
+        <p class="obs-text">OBS: Especificar a quantidade em cada grau de dependência</p>
+        <p class="grau-desc"><strong>GRAU DE DEPENDÊNCIA I</strong> – Idosos independentes, mesmo que requeiram uso de equipamento de auto-ajuda</p>
+        <p class="grau-desc"><strong>GRAU DE DEPENDÊNCIA II</strong> – Idosos com dependência em até três atividades de autocuidado para a vida diária</p>
+        <p class="grau-desc" style="margin-bottom:12px;"><strong>GRAU DE DEPENDÊNCIA III</strong> – Idosos com dependência que requeiram assistência em todas as atividades de autocuidado para a vida diária e/ ou com comprometimento cognitivo</p>
+        <table class="tb">
+          <thead>
+            <tr class="section-title">
+              <th style="font-size:10pt;text-align:left;text-transform:none;" colspan="3">D. Cor ou raça/ nacionalidade dos usuários conveniados/SEMAS</th>
+            </tr>
+            <tr style="background:#5B9BD5;color:#fff;">
+              <th style="width:60%;">&nbsp;</th>
+              <th style="width:20%;">Masculino</th>
+              <th style="width:20%;">Feminino</th>
+            </tr>
+          </thead>
+          <tbody id="blocoD-list">
+            <tr>
+              <td>D.1. Branco</td>
+              <td class="num" data-field="blocoD.D1.masculino">___</td>
+              <td class="num" data-field="blocoD.D1.feminino">___</td>
+            </tr>
+            <tr>
+              <td>D.2. Pardo</td>
+              <td class="num" data-field="blocoD.D2.masculino">___</td>
+              <td class="num" data-field="blocoD.D2.feminino">___</td>
+            </tr>
+            <tr>
+              <td>D.3. Preto</td>
+              <td class="num" data-field="blocoD.D3.masculino">___</td>
+              <td class="num" data-field="blocoD.D3.feminino">___</td>
+            </tr>
+            <tr>
+              <td>D.4. Amarelo</td>
+              <td class="num" data-field="blocoD.D4.masculino">___</td>
+              <td class="num" data-field="blocoD.D4.feminino">___</td>
+            </tr>
+            <tr>
+              <td>D.5. Indígena</td>
+              <td class="num" data-field="blocoD.D5.masculino">___</td>
+              <td class="num" data-field="blocoD.D5.feminino">___</td>
+            </tr>
+            <tr>
+               <td>D.6. Imigrantes. Especifique a nacionalidade. País:</td>
+              <td class="num" data-field="blocoD.D6.masculino">___</td>
+              <td class="num" data-field="blocoD.D6.feminino">___</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- E. Tempo de acolhimento -->
+      <div class="keep-together" style="margin-top:4px;">
+        <table class="tb">
+          <thead>
+            <tr style="background:#5B9BD5;color:#fff;">
+              <th style="font-weight:700;font-size:9pt;text-align:left;text-transform:none;" colspan="7">E. Informe há quanto tempo os conveniados/SEMAS estão acolhidos na Unidade</th>
+            </tr>
+            <tr>
+              <th style="font-size:8pt;">Menos de 1 mês</th>
+              <th style="font-size:8pt;">1 a 6 meses</th>
+              <th style="font-size:8pt;">7 a 12 meses</th>
+              <th style="font-size:8pt;">1 a 2 anos</th>
+              <th style="font-size:8pt;">3 a 5 anos</th>
+              <th style="font-size:8pt;">6 a 8 anos</th>
+              <th style="font-size:8pt;">Acima de 9 anos</th>
+            </tr>
+          </thead>
+          <tbody id="blocoE-list">
+            <tr>
+              <td class="num" data-field="blocoE.menos_1m">___</td>
+              <td class="num" data-field="blocoE.1a6m">___</td>
+              <td class="num" data-field="blocoE.7a12m">___</td>
+              <td class="num" data-field="blocoE.1a2a">___</td>
+              <td class="num" data-field="blocoE.3a5a">___</td>
+              <td class="num" data-field="blocoE.6a8a">___</td>
+              <td class="num" data-field="blocoE.acima_9a">___</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== BLOCO II – ATIVIDADES ===== -->
+    <div class="section-gap">
+      <div class="keep-together">
+        <table class="tb">
+          <tbody>
+            <tr class="section-title">
+              <td style="font-size:11pt;text-transform:none;" colspan="2">Bloco II – Atividades realizadas com os usuários conveniados/SEMAS</td>
+            </tr>
+            <tr style="background:#5B9BD5;color:#fff;">
+              <th style="width:80%;text-align:left;text-transform:none;">F. Volume de atividades realizadas</th>
+              <th style="width:20%;">Total</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <table class="tb" style="margin-top:0;border-top:none;">
+        <tbody id="blocoF-list">
+          <tr><td>F.1. Total de atendimentos individualizados realizados pela equipe técnica</td><td class="num" data-field="blocoF.F1">___</td></tr>
+          <tr><td>F.2. Total de atendimentos em grupo realizados pela equipe técnica</td><td class="num" data-field="blocoF.F2">___</td></tr>
+          <tr><td>F.3. Oficinas/palestras com os usuários</td><td class="num" data-field="blocoF.F3">___</td></tr>
+          <tr><td>F.4. Passeios com os usuários</td><td class="num" data-field="blocoF.F4">___</td></tr>
+          <tr><td>F.5. Datas comemorativas / Aniversariantes do mês / Eventos</td><td class="num" data-field="blocoF.F5">___</td></tr>
+          <tr><td>F.6. Visitas domiciliares</td><td class="num" data-field="blocoF.F6">___</td></tr>
+        </tbody>
+      </table>
+
+      <div style="page-break-before:always;padding-top:80px;">
+        <table class="tb" style="margin-top:0;border-top:none;">
+          <tbody id="blocoF-list-p2">
+            <tr><td>F.7. Total de atendimentos individualizados realizados pela equipe técnica aos familiares</td><td class="num" data-field="blocoF.F7">___</td></tr>
+          <tr><td>F.8. Visitas dos familiares na Unidade</td><td class="num" data-field="blocoF.F8">___</td></tr>
+          <tr><td>F.9. Reunião de equipe</td><td class="num" data-field="blocoF.F9">___</td></tr>
+          <tr><td>F.10. Reunião com a rede socioassistencial / intersetorial</td><td class="num" data-field="blocoF.F10">___</td></tr>
+          <tr><td>F.11. Participação em audiências</td><td class="num" data-field="blocoF.F11">___</td></tr>
+          <tr><td>F.12. Atendimento remoto</td><td class="num" data-field="blocoF.F12">___</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="obs-text" style="margin-left:20px;">F.4. Quantidade de passeios</p>
+      <p class="obs-text" style="margin-left:20px;margin-bottom:14px;">F.5. Quantidade de atividades realizadas</p>
+
+      <!-- G. Encaminhamentos -->
+      <div class="keep-together">
+        <table class="tb">
+          <tbody>
+            <tr class="section-title">
+              <td style="font-size:11pt;text-transform:none;" colspan="2">Bloco II – Encaminhamentos aos usuários conveniados/SEMAS</td>
+            </tr>
+            <tr style="background:#5B9BD5;color:#fff;">
+              <th style="width:80%;text-align:left;text-transform:none;">G. Volume de encaminhamentos</th>
+              <th style="width:20%;">Total</th>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="tb">
+          <tbody id="blocoG-list">
+            <tr><td>G.1. Encaminhamentos realizados para o mercado de trabalho</td><td class="num" data-field="blocoG.G1">___</td></tr>
+            <tr><td>G.2. Encaminhamentos realizados para cursos de qualificação</td><td class="num" data-field="blocoG.G2">___</td></tr>
+            <tr><td>G.3. Encaminhamentos realizados para outras políticas públicas (saúde, educação)</td><td class="num" data-field="blocoG.G3">___</td></tr>
+            <tr><td>G.4. Encaminhamentos realizados para a rede socioassistencial (famílias)</td><td class="num" data-field="blocoG.G4">___</td></tr>
+            <tr><td>G.5. Encaminhamentos de documentos e relatórios para Fórum e MP</td><td class="num" data-field="blocoG.G5">___</td></tr>
+            <tr><td>G.6. Outros. Especifique:</td><td class="num" data-field="blocoG.G6">___</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== BLOCO III – DESCRIÇÃO ===== -->
+    <div class="section-gap">
+      <div class="keep-together">
+        <table class="tb" style="margin-bottom:0;">
+          <tbody>
+            <tr>
+              <td class="section-title" style="font-size:11pt;text-transform:none;">Bloco III – Descrição das atividades mensal realizadas com os usuários/SEMAS</td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;background:#5B9BD5;color:#fff;border-bottom:none;text-transform:none;">H. Descrição das atividades</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <table class="tb" style="margin-top:0;border-top:none;">
+        <tbody>
+          <tr>
+            <td class="td-descricao" style="border-top:none;padding:10px 8px;line-height:1.6;text-align:justify;">
+              <p style="margin-bottom:6px;font-weight:600;">H.1. Descreva quais atividades os usuários realizaram durante o mês (convivência, socioeducativa, passeios, visitas a outros locais, atendimento médico, atividades da vida diária, para independência, de auto cuidado, cursos, etc)</p>
+              <div id="blocoH-descricao" class="td-descricao" data-field="blocoH.descricao"></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ===== REGISTRO FOTOGRÁFICO ===== -->
+      <div class="page-break-block" style="padding-top:80px;">
+        <p style="font-weight:700;font-size:10pt;margin:16px 0 4px;">Registro fotográfico</p>
+        <div id="photo-section" data-categories='["Doações","Eventos","Passeios","Capacitações","Atividades","Visitas","Outras"]'>
+          <div class="photo-category" data-category="doacoes">
+            <p class="keep-together" style="font-weight:700;font-size:10pt;margin:0 0 4px;">Doações</p>
+            <div class="img-grid" id="photos-doacoes">
+              <div class="photo-card">
+                <img src="assets/images/placeholder.svg" alt="Foto" data-src="" style="width:150px;height:150px;object-fit:cover;border:1px solid #000;" />
+              </div>
+            </div>
+          </div>
+          <div class="photo-category" data-category="eventos">
+            <p class="keep-together" style="font-weight:700;font-size:10pt;margin:0 0 4px;">Eventos</p>
+            <div class="img-grid" id="photos-eventos">
+              <div class="photo-card">
+                <img src="assets/images/placeholder.svg" alt="Foto" data-src="" style="width:150px;height:150px;object-fit:cover;border:1px solid #000;" />
+              </div>
+            </div>
+          </div>
+          <div class="photo-category" data-category="passeios">
+            <p class="keep-together" style="font-weight:700;font-size:10pt;margin:0 0 4px;">Passeios</p>
+            <div class="img-grid" id="photos-passeios">
+              <div class="photo-card">
+                <img src="assets/images/placeholder.svg" alt="Foto" data-src="" style="width:150px;height:150px;object-fit:cover;border:1px solid #000;" />
+              </div>
+            </div>
+          </div>
+          <div class="photo-category" data-category="capacitacoes">
+            <p class="keep-together" style="font-weight:700;font-size:10pt;margin:0 0 4px;">Capacitações</p>
+            <div class="img-grid" id="photos-capacitacoes">
+              <div class="photo-card">
+                <img src="assets/images/placeholder.svg" alt="Foto" data-src="" style="width:150px;height:150px;object-fit:cover;border:1px solid #000;" />
+              </div>
+            </div>
+          </div>
+          <div class="photo-category" data-category="atividades">
+            <p class="keep-together" style="font-weight:700;font-size:10pt;margin:0 0 4px;">Atividades</p>
+            <div class="img-grid" id="photos-atividades">
+              <div class="photo-card">
+                <img src="assets/images/placeholder.svg" alt="Foto" data-src="" style="width:150px;height:150px;object-fit:cover;border:1px solid #000;" />
+              </div>
+            </div>
+          </div>
+          <div class="photo-category" data-category="visitas">
+            <p class="keep-together" style="font-weight:700;font-size:10pt;margin:0 0 4px;">Visitas</p>
+            <div class="img-grid" id="photos-visitas">
+              <div class="photo-card">
+                <img src="assets/images/placeholder.svg" alt="Foto" data-src="" style="width:150px;height:150px;object-fit:cover;border:1px solid #000;" />
+              </div>
+            </div>
+          </div>
+          <div class="photo-category" data-category="outras">
+            <p class="keep-together" style="font-weight:700;font-size:10pt;margin:0 0 4px;">Outras</p>
+            <div class="img-grid" id="photos-outras">
+              <div class="photo-card">
+                <img src="assets/images/placeholder.svg" alt="Foto" data-src="" style="width:150px;height:150px;object-fit:cover;border:1px solid #000;" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== BLOCO IV – INFORMAÇÕES COMPLEMENTARES ===== -->
+    <div class="section-gap page-break-block" style="padding-top:80px;">
+      <div class="keep-together">
+        <table class="tb" style="margin-bottom:0;">
+          <tbody>
+            <tr class="section-title">
+              <td style="font-size:11pt;" colspan="2">Bloco IV – Informações complementares</td>
+            </tr>
+            <tr style="background:#5B9BD5;color:#fff;">
+              <td style="font-weight:700;text-align:center;" colspan="2">I. Informações</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <table class="tb" style="margin-top:0;border-top:none;">
+        <tbody>
+          <tr>
+            <td style="font-weight:700;width:40%;vertical-align:top;">I.1. Limites e dificuldades enfrentadas no mês:</td>
+            <td style="width:60%;text-align:justify;" data-field="blocoI.limites">___________________</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;vertical-align:top;">I.2. Avanços:</td>
+            <td style="text-align:justify;" data-field="blocoI.avancos">___________________</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;vertical-align:top;">I.3. Aquisição do mês:</td>
+            <td style="text-align:justify;" data-field="blocoI.aquisicao">___________________</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;vertical-align:top;">I.4. A equipe participou de alguma capacitação este mês:</td>
+            <td style="text-align:justify;" data-field="blocoI.capacitacoes">___________________</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="tb capacitacoes-table" id="capacitacoes-table" style="display:none;margin-top:4px;">
+        <thead>
+          <tr>
+            <th style="width:50%;">Nome do Profissional</th>
+            <th style="width:50%;">Nome da Capacitação</th>
+          </tr>
+        </thead>
+        <tbody id="capacitacoes-list"></tbody>
+      </table>
+    </div>
+
+    <!-- ===== ASSINATURAS ===== -->
+    <div class="signature-block keep-together">
+      <div class="signature-line"></div>
+      <p class="signature-label">Técnica responsável</p>
+
+      <div class="signature-line"></div>
+      <p class="signature-label">Coordenadora</p>
+
+      <p style="font-size:9pt;margin-top:20px;color:#555;">
+        Dourados-MS, _____ de _________________________ de _________
+      </p>
+    </div>
+
+  </div><!-- /relatorio-print -->
+
+  <!-- ===== FOOTER ===== -->
+  <div id="footer-print">
+    <div style="color:#1a3a6b;font-weight:600;">www.dourados.ms.gov.br/index.php/categoria/semas/</div>
+    <div style="color:#2a2a2a;">Rua Coronel Ponciano, 1700 . Pq. do Jequitibás . Bloco Anexo . 79830-200 . Dourados-MS</div>
+    <div>
+      <span style="color:#1a3a6b;font-weight:600;">67 3411-7710 / 3411-7746</span>
+      <span style="color:#2a2a2a;"> . semas@dourados.ms.gov.br</span>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
