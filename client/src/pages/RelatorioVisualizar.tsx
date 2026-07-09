@@ -135,7 +135,8 @@ export default function RelatorioVisualizar() {
             .tb-a6p { margin-top: 100px !important; }
             .tb-d4p { margin-top: 100px !important; }
             .tb-g3p { margin-top: 100px !important; }
-            .img-print-page { page-break-before: always; margin-top: 100px !important; }
+            .img-print-page { page-break-before: always; }
+            .cat-img-p { margin-top: 100px !important; }
           }
           @media screen {
             #header-print { max-width: 210mm; margin: 0 auto; background: #fff; border-radius: 4px 4px 0 0; }
@@ -550,7 +551,7 @@ export default function RelatorioVisualizar() {
                 const catImgs = imagens.filter((i) => i.categoria === cat.value);
                 if (catImgs.length === 0) return null;
                 return (
-                  <div key={cat.value} className="keep-together" style={{ marginBottom: 12 }}>
+                  <div key={cat.value} className="keep-together cat-img-p" style={{ marginBottom: 12 }}>
                     <p style={{ fontWeight: 700, fontSize: '10pt', margin: '0 0 4px' }}>
                       {cat.label} ({catImgs.length})
                     </p>
