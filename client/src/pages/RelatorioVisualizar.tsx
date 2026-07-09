@@ -133,9 +133,8 @@ export default function RelatorioVisualizar() {
             #relatorio-print { padding-top: 80px; padding-bottom: 80px; }
             .tb th, .tb .section-title, .tb tr[style*="background"] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .tb-a6p { margin-top: 100px !important; }
-            .tb-g3p { margin-top: 100px !important; }
             .bloco-d { margin-top: 100px !important; }
-            .bloco-g { margin-top: 100px !important; }
+            .bloco-g { margin-top: 150px !important; }
             .img-print-page { page-break-before: always; margin-top: 100px !important; }
             .img-tbl td { height: 170px !important; }
           }
@@ -481,47 +480,36 @@ export default function RelatorioVisualizar() {
             </tbody>
           </table>
 
-          <p style={{ fontSize: '9pt', marginLeft: 20 }}>F.4. Quantidade de passeios</p>
-          <p style={{ fontSize: '9pt', marginLeft: 20, marginBottom: 14 }}>F.5 Quantidade de atividades realizadas</p>
-
-          <table className="tb bloco-g" style={{ pageBreakBefore: 'always' }}>
-            <tbody>
-              <tr className="section-title">
-                <td style={{ fontSize: '11pt' }} colSpan={2}>
-                  Bloco II – Encaminhamentos aos usuários conveniados/SEMAS
-                </td>
-              </tr>
-              <tr style={{ background: '#5B9BD5', color: '#fff' }}>
-                <td style={{ fontWeight: 700, width: '80%' }}>G. Volume de encaminhamentos</td>
-                <td style={{ fontWeight: 700, textAlign: 'center', width: '20%' }}>Total</td>
-              </tr>
-              {[
-                ['G1', 'G.1. Encaminhamentos realizados para o mercado de trabalho'],
-                ['G2', 'G.2. Encaminhamentos realizados para cursos de qualificação'],
-              ].map(([gk, lbl]) => (
-                <tr key={gk}>
-                  <td>{lbl}</td>
-                  <td className="num">{d.blocoG?.[gk] ?? '-'}</td>
+          <div className="keep-together bloco-g" style={{ pageBreakBefore: 'always' }}>
+            <p style={{ fontSize: '9pt', marginLeft: 20 }}>F.4. Quantidade de passeios</p>
+            <p style={{ fontSize: '9pt', marginLeft: 20, marginBottom: 14 }}>F.5 Quantidade de atividades realizadas</p>
+            <table className="tb" style={{ marginTop: 0 }}>
+              <tbody>
+                <tr className="section-title">
+                  <td style={{ fontSize: '11pt' }} colSpan={2}>
+                    Bloco II – Encaminhamentos aos usuários conveniados/SEMAS
+                  </td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-
-          <table className="tb tb-g3p" style={{ marginTop: 0 }}>
-            <tbody>
-              {[
-                ['G3', 'G.3. Encaminhamentos realizados para outras políticas públicas (saúde, educação)'],
-                ['G4', 'G.4. Encaminhamentos realizados para a rede socioassistencial (famílias)'],
-                ['G5', 'G.5. Encaminhamentos de documentos e relatórios para Fórum e MP'],
-                ['G6', 'G.6. Outros. Especifique'],
-              ].map(([gk, lbl]) => (
-                <tr key={gk}>
-                  <td style={{ width: '80%' }}>{lbl}</td>
-                  <td className="num">{d.blocoG?.[gk] ?? '-'}</td>
+                <tr style={{ background: '#5B9BD5', color: '#fff' }}>
+                  <td style={{ fontWeight: 700, width: '80%' }}>G. Volume de encaminhamentos</td>
+                  <td style={{ fontWeight: 700, textAlign: 'center', width: '20%' }}>Total</td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+                {[
+                  ['G1', 'G.1. Encaminhamentos realizados para o mercado de trabalho'],
+                  ['G2', 'G.2. Encaminhamentos realizados para cursos de qualificação'],
+                  ['G3', 'G.3. Encaminhamentos realizados para outras políticas públicas (saúde, educação)'],
+                  ['G4', 'G.4. Encaminhamentos realizados para a rede socioassistencial (famílias)'],
+                  ['G5', 'G.5. Encaminhamentos de documentos e relatórios para Fórum e MP'],
+                  ['G6', 'G.6. Outros. Especifique'],
+                ].map(([gk, lbl]) => (
+                  <tr key={gk}>
+                    <td>{lbl}</td>
+                    <td className="num">{d.blocoG?.[gk] ?? '-'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {/* ===== BLOCO III – DESCRIÇÃO ===== */}
