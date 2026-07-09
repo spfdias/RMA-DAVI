@@ -133,7 +133,6 @@ export default function RelatorioVisualizar() {
             #relatorio-print { padding-top: 80px; padding-bottom: 80px; }
             .tb th, .tb .section-title, .tb tr[style*="background"] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .tb-a6p { margin-top: 100px !important; }
-            .tb-d4p { margin-top: 100px !important; }
             .tb-g3p { margin-top: 100px !important; }
             .img-print-page { page-break-before: always; margin-top: 100px !important; }
             .img-tbl td { height: 170px !important; }
@@ -374,7 +373,7 @@ export default function RelatorioVisualizar() {
           </p>
 
           {/* D. Cor / Raça */}
-          <div className="keep-together">
+          <div className="keep-together" style={{ pageBreakBefore: 'always' }}>
             <table className="tb">
               <thead>
                 <tr className="section-title">
@@ -399,24 +398,24 @@ export default function RelatorioVisualizar() {
                 ))}
               </tbody>
             </table>
-          </div>
 
-          <table className="tb tb-d4p" style={{ pageBreakBefore: 'always', marginTop: 0 }}>
-            <tbody>
-              {[
-                ['D3', 'D.3. Preto'],
-                ['D4', 'D.4. Amarelo'],
-                ['D5', 'D.5. Indígena'],
-                ['D6', 'D.6. Imigrantes. Especifique a nacionalidade\nPaís:'],
-              ].map(([dk, lbl]) => (
-                <tr key={dk}>
-                  <td style={{ width: '60%' }}>{lbl}</td>
-                  <td className="num">{d.blocoD?.[dk]?.feminino ?? '-'}</td>
-                  <td className="num">{d.blocoD?.[dk]?.masculino ?? '-'}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+            <table className="tb" style={{ marginTop: 0 }}>
+              <tbody>
+                {[
+                  ['D3', 'D.3. Preto'],
+                  ['D4', 'D.4. Amarelo'],
+                  ['D5', 'D.5. Indígena'],
+                  ['D6', 'D.6. Imigrantes. Especifique a nacionalidade\nPaís:'],
+                ].map(([dk, lbl]) => (
+                  <tr key={dk}>
+                    <td style={{ width: '60%' }}>{lbl}</td>
+                    <td className="num">{d.blocoD?.[dk]?.feminino ?? '-'}</td>
+                    <td className="num">{d.blocoD?.[dk]?.masculino ?? '-'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
           {/* E. Tempo de acolhimento */}
           <div className="keep-together" style={{ pageBreakBefore: 'auto', marginBottom: 4, paddingBottom: 0 }}>
