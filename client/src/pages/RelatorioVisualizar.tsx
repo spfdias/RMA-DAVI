@@ -550,79 +550,76 @@ export default function RelatorioVisualizar() {
               </tr>
             </tbody>
           </table>
+        </div>
 
-          {/* ===== BLOCO IV - INFORMAÇÕES COMPLEMENTARES ===== */}
-          <div style={S.section}>
-            <div className="keep-together">
-              <table className="tb" style={{ marginBottom: 0 }}>
-                <tbody>
-                  <tr className="section-title">
-                    <td style={{ fontSize: '11pt', textTransform: 'none' }} colSpan={2}>
-                      Bloco IV - Informações Complementares
-                    </td>
-                  </tr>
-                  <tr style={{ background: '#5B9BD5', color: '#fff' }}>
-                    <td style={{ fontWeight: 700, textAlign: 'left', textTransform: 'none' }} colSpan={2}>I. Informações</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <table className="tb" style={{ marginTop: 0, borderTop: 'none' }}>
+        {/* ===== BLOCO IV - INFORMAÇÕES COMPLEMENTARES + ASSINATURAS ===== */}
+        <div style={{ ...S.section, pageBreakBefore: 'always', paddingTop: 80 }}>
+          <div className="keep-together">
+            <table className="tb" style={{ marginBottom: 0 }}>
               <tbody>
-                <tr>
-                  <td style={{ fontWeight: 700, width: '40%', verticalAlign: 'top' }}>I.1. Limites e dificuldades enfrentadas no mês:</td>
-                  <td className="td-descricao" style={{ width: '60%', textAlign: 'justify' }}>{d.blocoI?.limites || 'N/A'}</td>
-                </tr>
-                <tr>
-                  <td style={{ fontWeight: 700, verticalAlign: 'top' }}>I.2. Avanços:</td>
-                  <td className="td-descricao" style={{ textAlign: 'justify' }}>{d.blocoI?.avancos || 'N/A'}</td>
-                </tr>
-                <tr>
-                  <td style={{ fontWeight: 700, verticalAlign: 'top' }}>I.3. Aquisição do mês:</td>
-                  <td style={{ textAlign: 'justify' }}>{d.blocoI?.aquisicao || 'N/A'}</td>
-                </tr>
-                <tr>
-                  <td style={{ fontWeight: 700, verticalAlign: 'top' }}>I.4. A equipe participou de alguma capacitação este mês:</td>
-                  <td style={{ textAlign: 'justify' }}>
-                    {(d.blocoI?.capacitacoes?.filter((c: any) => c?.nome || c?.nome_capacitacao)?.length || 0) > 0
-                      ? d.blocoI.capacitacoes.filter((c: any) => c?.nome || c?.nome_capacitacao).map((c: any, i: number) => (
-                          <span key={i}>{c.nome || '-'} — {c.nome_capacitacao || '-'}{i < d.blocoI.capacitacoes.filter((cx: any) => cx?.nome || cx?.nome_capacitacao).length - 1 ? '; ' : ''}</span>
-                        ))
-                      : 'N/A'}
+                <tr className="section-title">
+                  <td style={{ fontSize: '11pt', textTransform: 'none' }} colSpan={2}>
+                    Bloco IV - Informações Complementares
                   </td>
+                </tr>
+                <tr style={{ background: '#5B9BD5', color: '#fff' }}>
+                  <td style={{ fontWeight: 700, textAlign: 'left', textTransform: 'none' }} colSpan={2}>I. Informações</td>
                 </tr>
               </tbody>
             </table>
           </div>
+          <table className="tb" style={{ marginTop: 0, borderTop: 'none' }}>
+            <tbody>
+              <tr>
+                <td style={{ fontWeight: 700, width: '40%', verticalAlign: 'top' }}>I.1. Limites e dificuldades enfrentadas no mês:</td>
+                <td className="td-descricao" style={{ width: '60%', textAlign: 'justify' }}>{d.blocoI?.limites || 'N/A'}</td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 700, verticalAlign: 'top' }}>I.2. Avanços:</td>
+                <td className="td-descricao" style={{ textAlign: 'justify' }}>{d.blocoI?.avancos || 'N/A'}</td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 700, verticalAlign: 'top' }}>I.3. Aquisição do mês:</td>
+                <td style={{ textAlign: 'justify' }}>{d.blocoI?.aquisicao || 'N/A'}</td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 700, verticalAlign: 'top' }}>I.4. A equipe participou de alguma capacitação este mês:</td>
+                <td style={{ textAlign: 'justify' }}>
+                  {(d.blocoI?.capacitacoes?.filter((c: any) => c?.nome || c?.nome_capacitacao)?.length || 0) > 0
+                    ? d.blocoI.capacitacoes.filter((c: any) => c?.nome || c?.nome_capacitacao).map((c: any, i: number) => (
+                        <span key={i}>{c.nome || '-'} — {c.nome_capacitacao || '-'}{i < d.blocoI.capacitacoes.filter((cx: any) => cx?.nome || cx?.nome_capacitacao).length - 1 ? '; ' : ''}</span>
+                      ))
+                    : 'N/A'}
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
-          {/* ===== CAPACITAÇÕES E ASSINATURAS ===== */}
-          <div style={{ ...S.section, pageBreakBefore: 'always', paddingTop: 80 }}>
-            {(d.blocoI?.capacitacoes?.filter((c: any) => c?.nome || c?.nome_capacitacao)?.length || 0) > 0 && (
-              <table className="tb" style={{ marginTop: 4 }}>
-                <thead>
-                  <tr>
-                    <th style={{ width: '50%', textTransform: 'none' }}>Nome do Profissional</th>
-                    <th style={{ width: '50%', textTransform: 'none' }}>Nome da Capacitação</th>
+          {(d.blocoI?.capacitacoes?.filter((c: any) => c?.nome || c?.nome_capacitacao)?.length || 0) > 0 && (
+            <table className="tb" style={{ marginTop: 4 }}>
+              <thead>
+                <tr>
+                  <th style={{ width: '50%', textTransform: 'none' }}>Nome do Profissional</th>
+                  <th style={{ width: '50%', textTransform: 'none' }}>Nome da Capacitação</th>
+                </tr>
+              </thead>
+              <tbody>
+                {d.blocoI.capacitacoes.filter((c: any) => c?.nome || c?.nome_capacitacao).map((c: any, i: number) => (
+                  <tr key={i}>
+                    <td>{c.nome || '-'}</td>
+                    <td>{c.nome_capacitacao || '-'}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {d.blocoI.capacitacoes.filter((c: any) => c?.nome || c?.nome_capacitacao).map((c: any, i: number) => (
-                    <tr key={i}>
-                      <td>{c.nome || '-'}</td>
-                      <td>{c.nome_capacitacao || '-'}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
+                ))}
+              </tbody>
+            </table>
+          )}
 
-            <div className="keep-together" style={{ marginTop: 30, paddingTop: 10, textAlign: 'center' }}>
-              <p style={{ marginTop: 40, borderTop: '1px solid #000', paddingTop: 4, width: '60%', marginLeft: 'auto', marginRight: 'auto' }}>&nbsp;</p>
-              <p style={{ fontSize: '10pt', fontWeight: 700 }}>Técnica responsável</p>
+          <div className="keep-together" style={{ marginTop: 30, paddingTop: 10, textAlign: 'center' }}>
+            <p style={{ marginTop: 40, borderTop: '1px solid #000', paddingTop: 4, width: '60%', marginLeft: 'auto', marginRight: 'auto' }}>&nbsp;</p>
+            <p style={{ fontSize: '10pt', fontWeight: 700 }}>Técnica responsável</p>
 
-              <p style={{ marginTop: 40, borderTop: '1px solid #000', paddingTop: 4, width: '60%', marginLeft: 'auto', marginRight: 'auto' }}>&nbsp;</p>
-              <p style={{ fontSize: '10pt', fontWeight: 700 }}>Coordenadora</p>
-            </div>
+            <p style={{ marginTop: 40, borderTop: '1px solid #000', paddingTop: 4, width: '60%', marginLeft: 'auto', marginRight: 'auto' }}>&nbsp;</p>
+            <p style={{ fontSize: '10pt', fontWeight: 700 }}>Coordenadora</p>
           </div>
         </div>
 
