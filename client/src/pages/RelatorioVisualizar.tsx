@@ -414,7 +414,7 @@ export default function RelatorioVisualizar() {
           </table>
 
           {/* E. Tempo de acolhimento */}
-          <div className="keep-together" style={{ pageBreakBefore: 'auto', marginBottom: 50, paddingBottom: 20 }}>
+          <div className="keep-together" style={{ pageBreakBefore: 'auto', marginBottom: 4, paddingBottom: 0 }}>
             <p style={{ ...S.label, pageBreakAfter: 'avoid' }}>E. Informe há quanto tempo os conveniados/SEMAS estão acolhidos na Unidade</p>
             <table className="tb">
               <thead>
