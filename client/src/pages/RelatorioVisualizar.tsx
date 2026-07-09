@@ -206,10 +206,10 @@ export default function RelatorioVisualizar() {
         <div className="keep-together" style={S.section}>
           <table className="tb">
             <thead>
-              <tr>
-                <th style={{ width: '40%' }}>NOME DO PROFISSIONAL</th>
-                <th style={{ width: '30%' }}>FUNÇÃO</th>
-                <th style={{ width: '30%' }}>TIPO DE VÍNCULO</th>
+              <tr style={{ background: '#5B9BD5', color: '#fff' }}>
+                <th style={{ width: '40%', textTransform: 'none' }}>NOME DO PROFISSIONAL</th>
+                <th style={{ width: '30%', textTransform: 'none' }}>FUNÇÃO</th>
+                <th style={{ width: '30%', textTransform: 'none' }}>TIPO DE VÍNCULO</th>
               </tr>
             </thead>
             <tbody>
@@ -224,8 +224,8 @@ export default function RelatorioVisualizar() {
                 </tr>
               ))}
 
-              <tr style={{ background: '#e8e8e8' }}>
-                <td style={{ fontWeight: 700, border: '1px solid #000' }} colSpan={3}>
+              <tr style={{ background: '#5B9BD5', color: '#fff' }}>
+                <td style={{ fontWeight: 700, border: '1px solid #000', textTransform: 'none' }} colSpan={3}>
                   NOME DO PROFISSIONAL VINCULADO NO MÊS
                 </td>
               </tr>
@@ -240,8 +240,8 @@ export default function RelatorioVisualizar() {
                 </tr>
               ))}
 
-              <tr style={{ background: '#e8e8e8' }}>
-                <td style={{ fontWeight: 700, border: '1px solid #000' }} colSpan={3}>
+              <tr style={{ background: '#5B9BD5', color: '#fff' }}>
+                <td style={{ fontWeight: 700, border: '1px solid #000', textTransform: 'none' }} colSpan={3}>
                   NOME DO PROFISSIONAL DESVINCULADO NO MÊS
                 </td>
               </tr>
@@ -264,17 +264,17 @@ export default function RelatorioVisualizar() {
         </div>
 
         {/* ===== BLOCO I ===== */}
-        <div style={S.section}>
+        <div style={{ ...S.section, pageBreakBefore: 'always', paddingTop: 80 }}>
           <table className="tb">
             <tbody>
               <tr className="section-title">
-                <td style={{ fontSize: '11pt' }} colSpan={2}>
+                <td style={{ fontSize: '11pt', textTransform: 'none' }} colSpan={2}>
                   Bloco I – Volume de Atendimentos
                 </td>
               </tr>
               <tr style={{ background: '#5B9BD5', color: '#fff' }}>
-                <td style={{ fontWeight: 700, width: '80%' }}>A. Volume de usuários</td>
-                <td style={{ fontWeight: 700, textAlign: 'center', width: '20%' }}>Total</td>
+                <th style={{ fontWeight: 700, width: '80%', textAlign: 'left', textTransform: 'none' }}>A. Volume de usuários</th>
+                <th style={{ fontWeight: 700, textAlign: 'center', width: '20%' }}>Total</th>
               </tr>
 
               {Object.entries(labelBlocoA).map(([k, lbl]) => (
@@ -283,11 +283,7 @@ export default function RelatorioVisualizar() {
                   <td className="num">{d.blocoA?.[k] ?? '-'}</td>
                 </tr>
               ))}
-            </tbody>
-          </table>
 
-          <table className="tb tb-a6p" style={{ pageBreakBefore: 'always', marginTop: 0 }}>
-            <tbody>
               <tr>
                 <td style={{ padding: '5px 8px', fontSize: '9pt', verticalAlign: 'top', width: '80%' }}>
                   A.6. Total de usuários desligados<br />
@@ -307,7 +303,7 @@ export default function RelatorioVisualizar() {
                     );
                   })}
                 </td>
-                <td className="num" style={{ width: '20%' }}>-</td>
+                <td className="num" style={{ width: '20%', verticalAlign: 'middle' }}>-</td>
               </tr>
             </tbody>
           </table>
@@ -368,56 +364,44 @@ export default function RelatorioVisualizar() {
             </tbody>
           </table>
 
-          <p style={S.obs}>OBS: Especificar a quantidade em cada grau de dependência</p>
-          <p style={{ fontSize: '9pt', margin: '4px 0' }}>
-            <strong>GRAU DE DEPENDÊNCIA I</strong> – Idosos independentes, mesmo que requeiram uso de equipamento de auto-ajuda
-          </p>
-          <p style={{ fontSize: '9pt', margin: '4px 0' }}>
-            <strong>GRAU DE DEPENDÊNCIA II</strong> – Idosos com dependência em até três atividades de autocuidado para a vida diária
-          </p>
-          <p style={{ fontSize: '9pt', margin: '4px 0 12px' }}>
-            <strong>GRAU DE DEPENDÊNCIA III</strong> – Idosos com dependência que requeiram assistência em todas as atividades de autocuidado para a vida diária e/ ou com comprometimento cognitivo
-          </p>
-
           {/* D. Cor / Raça */}
-          <div className="keep-together bloco-d" style={{ pageBreakBefore: 'always' }}>
+          <div className="keep-together" style={{ pageBreakBefore: 'always', paddingTop: 80 }}>
+            <p style={S.obs}>OBS: Especificar a quantidade em cada grau de dependência</p>
+            <p style={{ fontSize: '9pt', margin: '4px 0' }}>
+              <strong>GRAU DE DEPENDÊNCIA I</strong> – Idosos independentes, mesmo que requeiram uso de equipamento de auto-ajuda
+            </p>
+            <p style={{ fontSize: '9pt', margin: '4px 0' }}>
+              <strong>GRAU DE DEPENDÊNCIA II</strong> – Idosos com dependência em até três atividades de autocuidado para a vida diária
+            </p>
+            <p style={{ fontSize: '9pt', margin: '4px 0 12px' }}>
+              <strong>GRAU DE DEPENDÊNCIA III</strong> – Idosos com dependência que requeiram assistência em todas as atividades de autocuidado para a vida diária e/ ou com comprometimento cognitivo
+            </p>
             <table className="tb">
               <thead>
                 <tr className="section-title">
-                  <th style={{ fontSize: '10pt' }} colSpan={3}>D. Cor ou raça/ nacionalidade dos usuários conveniados/SEMAS</th>
+                  <th style={{ fontSize: '10pt', textAlign: 'left', textTransform: 'none' }} colSpan={3}>
+                    D. Cor ou raça/ nacionalidade dos usuários conveniados/SEMAS
+                  </th>
                 </tr>
                 <tr style={{ background: '#5B9BD5', color: '#fff' }}>
                   <th style={{ width: '60%' }}>&nbsp;</th>
-                  <th style={{ width: '20%' }}>Feminino</th>
                   <th style={{ width: '20%' }}>Masculino</th>
+                  <th style={{ width: '20%' }}>Feminino</th>
                 </tr>
               </thead>
               <tbody>
                 {[
                   ['D1', 'D.1. Branco'],
                   ['D2', 'D.2. Pardo'],
-                ].map(([dk, lbl]) => (
-                  <tr key={dk}>
-                    <td>{lbl}</td>
-                    <td className="num">{d.blocoD?.[dk]?.feminino ?? '-'}</td>
-                    <td className="num">{d.blocoD?.[dk]?.masculino ?? '-'}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-            <table className="tb" style={{ marginTop: 0 }}>
-              <tbody>
-                {[
                   ['D3', 'D.3. Preto'],
                   ['D4', 'D.4. Amarelo'],
                   ['D5', 'D.5. Indígena'],
-                  ['D6', 'D.6. Imigrantes. Especifique a nacionalidade\nPaís:'],
+                  ['D6', 'D.6. Imigrantes. Especifique a nacionalidade. País:'],
                 ].map(([dk, lbl]) => (
                   <tr key={dk}>
-                    <td style={{ width: '60%' }}>{lbl}</td>
-                    <td className="num">{d.blocoD?.[dk]?.feminino ?? '-'}</td>
+                    <td>{lbl}</td>
                     <td className="num">{d.blocoD?.[dk]?.masculino ?? '-'}</td>
+                    <td className="num">{d.blocoD?.[dk]?.feminino ?? '-'}</td>
                   </tr>
                 ))}
               </tbody>
@@ -426,13 +410,17 @@ export default function RelatorioVisualizar() {
 
           {/* E. Tempo de acolhimento */}
           <div className="keep-together" style={{ pageBreakBefore: 'auto', marginBottom: 4, paddingBottom: 0 }}>
-            <p style={{ ...S.label, pageBreakAfter: 'avoid' }}>E. Informe há quanto tempo os conveniados/SEMAS estão acolhidos na Unidade</p>
             <table className="tb">
               <thead>
+                <tr style={{ background: '#5B9BD5', color: '#fff' }}>
+                  <th style={{ fontWeight: 700, fontSize: '9pt', textAlign: 'left', textTransform: 'none' }} colSpan={7}>
+                    E. Informe há quanto tempo os conveniados/SEMAS estão acolhidos na Unidade
+                  </th>
+                </tr>
                 <tr>
                   {[
                     'Menos de 1 mês', '1 a 6 meses', '7 a 12 meses',
-                    '1 a 2 anos', '3 a 5 anos', '6 a 8 anos', 'Acima 9 anos',
+                    '1 a 2 anos', '3 a 5 anos', '6 a 8 anos', 'Acima de 9 anos',
                   ].map((lbl, i) => (
                     <th key={i} style={{ fontSize: '8pt' }}>{lbl}</th>
                   ))}
@@ -452,67 +440,81 @@ export default function RelatorioVisualizar() {
         </div>
 
         {/* ===== BLOCO II – ATIVIDADES ===== */}
-        <div style={{ ...S.section, pageBreakBefore: 'avoid' }}>
-          <div className="keep-together" style={{ breakAfter: 'avoid', pageBreakAfter: 'avoid' }}>
-            <table className="tb" style={{ marginBottom: 0 }}>
-              <tbody>
+        <div style={{ ...S.section, pageBreakBefore: 'always', paddingTop: 80 }}>
+          <div className="keep-together">
+            <table className="tb">
+              <thead>
                 <tr className="section-title">
-                  <td style={{ fontSize: '11pt' }} colSpan={2}>
+                  <td style={{ fontSize: '11pt', textTransform: 'none' }} colSpan={2}>
                     Bloco II – Atividades realizadas com os usuários conveniados/SEMAS
                   </td>
                 </tr>
                 <tr style={{ background: '#5B9BD5', color: '#fff' }}>
-                  <td style={{ fontWeight: 700, width: '80%' }}>F. Volume de atividades realizadas</td>
-                  <td style={{ fontWeight: 700, textAlign: 'center', width: '20%' }}>Total</td>
+                  <th style={{ width: '80%', textAlign: 'left', textTransform: 'none' }}>F. Volume de atividades realizadas</th>
+                  <th style={{ width: '20%' }}>Total</th>
                 </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['F1', 'F.1. Total de atendimentos individualizados realizados pela equipe técnica'],
+                  ['F2', 'F.2. Total de atendimentos em grupo realizados pela equipe técnica'],
+                  ['F3', 'F.3. Oficinas/palestras com os usuários'],
+                  ['F4', 'F.4. Passeios com os usuários'],
+                  ['F5', 'F.5. Datas comemorativas / Aniversariantes do mês / Eventos'],
+                  ['F6', 'F.6. Visitas domiciliares'],
+                ].map(([fk, lbl]) => (
+                  <tr key={fk}>
+                    <td>{lbl}</td>
+                    <td className="num">{d.blocoF?.[fk] ?? '-'}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
-          <table className="tb" style={{ marginTop: 0, borderTop: 'none' }}>
-            <tbody>
-              {[
-                ['F1', 'F.1. Total de atendimentos individualizados realizados pela equipe técnica'],
-                ['F2', 'F.2. Total de atendimentos em grupo realizados pela equipe técnica'],
-                ['F3', 'F.3. Oficinas/palestras com os usuários'],
-                ['F4', 'F.4. Passeios com os usuários'],
-                ['F5', 'F.5. Datas comemorativas/ Aniversariantes do mês/ Eventos'],
-                ['F6', 'F.6. Visitas domiciliares'],
-                ['F7', 'F.7. Total de atendimentos individualizados realizados pela equipe técnica aos familiares'],
-                ['F8', 'F.8. Visitas dos familiares na Unidade'],
-                ['F9', 'F.9. Reunião de equipe'],
-                ['F10', 'F.10. Reunião com a rede socioassistencial/intersetorial'],
-                ['F11', 'F.11. Participação em audiências'],
-                ['F12', 'F.12. Atendimento remoto'],
-              ].map(([fk, lbl]) => (
-                <tr key={fk}>
-                  <td>{lbl}</td>
-                  <td className="num">{d.blocoF?.[fk] ?? '-'}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
 
-          <div className="keep-together bloco-g" style={{ pageBreakBefore: 'always' }}>
-            <p style={{ fontSize: '9pt', marginLeft: 20 }}>F.4. Quantidade de passeios</p>
-            <p style={{ fontSize: '9pt', marginLeft: 20, marginBottom: 14 }}>F.5 Quantidade de atividades realizadas</p>
-            <table className="tb" style={{ marginTop: 0 }}>
+          <div style={{ pageBreakBefore: 'always', paddingTop: 80 }}>
+            <table className="tb" style={{ marginTop: 0, borderTop: 'none' }}>
               <tbody>
+                {[
+                  ['F7', 'F.7. Total de atendimentos individualizados realizados pela equipe técnica aos familiares'],
+                  ['F8', 'F.8. Visitas dos familiares na Unidade'],
+                  ['F9', 'F.9. Reunião de equipe'],
+                  ['F10', 'F.10. Reunião com a rede socioassistencial/intersetorial'],
+                  ['F11', 'F.11. Participação em audiências'],
+                  ['F12', 'F.12. Atendimento remoto'],
+                ].map(([fk, lbl]) => (
+                  <tr key={fk}>
+                    <td>{lbl}</td>
+                    <td className="num">{d.blocoF?.[fk] ?? '-'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p style={{ fontSize: '7.5pt', fontStyle: 'italic', color: '#444', marginLeft: 20 }}>F.4. Quantidade de passeios</p>
+            <p style={{ fontSize: '7.5pt', fontStyle: 'italic', color: '#444', marginLeft: 20, marginBottom: 14 }}>F.5. Quantidade de atividades realizadas</p>
+          </div>
+
+          <div className="keep-together">
+            <table className="tb">
+              <thead>
                 <tr className="section-title">
-                  <td style={{ fontSize: '11pt' }} colSpan={2}>
+                  <td style={{ fontSize: '11pt', textTransform: 'none' }} colSpan={2}>
                     Bloco II – Encaminhamentos aos usuários conveniados/SEMAS
                   </td>
                 </tr>
                 <tr style={{ background: '#5B9BD5', color: '#fff' }}>
-                  <td style={{ fontWeight: 700, width: '80%' }}>G. Volume de encaminhamentos</td>
-                  <td style={{ fontWeight: 700, textAlign: 'center', width: '20%' }}>Total</td>
+                  <th style={{ width: '80%', textAlign: 'left', textTransform: 'none' }}>G. Volume de encaminhamentos</th>
+                  <th style={{ width: '20%' }}>Total</th>
                 </tr>
+              </thead>
+              <tbody>
                 {[
                   ['G1', 'G.1. Encaminhamentos realizados para o mercado de trabalho'],
                   ['G2', 'G.2. Encaminhamentos realizados para cursos de qualificação'],
                   ['G3', 'G.3. Encaminhamentos realizados para outras políticas públicas (saúde, educação)'],
                   ['G4', 'G.4. Encaminhamentos realizados para a rede socioassistencial (famílias)'],
                   ['G5', 'G.5. Encaminhamentos de documentos e relatórios para Fórum e MP'],
-                  ['G6', 'G.6. Outros. Especifique'],
+                  ['G6', 'G.6. Outros. Especifique:'],
                 ].map(([gk, lbl]) => (
                   <tr key={gk}>
                     <td>{lbl}</td>
@@ -670,15 +672,6 @@ export default function RelatorioVisualizar() {
             </div>
           </div>
         )}
-
-        {/* ===== ASSINATURAS ===== */}
-        <div className="keep-together" style={{ marginTop: 30, paddingTop: 10, textAlign: 'center' }}>
-          <p style={{ marginTop: 40, borderTop: '1px solid #000', paddingTop: 4, width: '60%', marginLeft: 'auto', marginRight: 'auto' }}>&nbsp;</p>
-          <p style={{ fontSize: '10pt', fontWeight: 700 }}>Técnica responsável</p>
-
-          <p style={{ marginTop: 40, borderTop: '1px solid #000', paddingTop: 4, width: '60%', marginLeft: 'auto', marginRight: 'auto' }}>&nbsp;</p>
-          <p style={{ fontSize: '10pt', fontWeight: 700 }}>Coordenadora</p>
-        </div>
 
         {/* ===== FOOTER ===== */}
         <div id="footer-print" style={{ textAlign: 'center', fontSize: '7.5pt', lineHeight: 1.6, padding: '4px 0', borderTop: '1px solid #999' }}>
