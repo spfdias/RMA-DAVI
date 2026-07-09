@@ -134,6 +134,7 @@ export default function RelatorioVisualizar() {
             .tb th, .tb .section-title, .tb tr[style*="background"] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .tb-a6p { margin-top: 100px !important; }
             .tb-g3p { margin-top: 100px !important; }
+            .bloco-d { margin-top: 100px !important; }
             .img-print-page { page-break-before: always; margin-top: 100px !important; }
             .img-tbl td { height: 170px !important; }
           }
@@ -373,7 +374,7 @@ export default function RelatorioVisualizar() {
           </p>
 
           {/* D. Cor / Raça */}
-          <div className="keep-together" style={{ pageBreakBefore: 'always' }}>
+          <div className="keep-together bloco-d" style={{ pageBreakBefore: 'always' }}>
             <table className="tb">
               <thead>
                 <tr className="section-title">
