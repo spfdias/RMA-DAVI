@@ -136,11 +136,15 @@ export default function RelatorioVisualizar() {
             #footer-print { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; background: #fff; border-top: 1px solid #999; font-size: 7.5pt; line-height: 1.6; height: 15mm; }
             #relatorio-print { padding-top: 80px; padding-bottom: 40px; }
             .tb th, .tb .section-title, .tb tr[style*="background"] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .tb-a6p { margin-top: 100px !important; }
+            .tb-a6p { margin-top: 50px !important; }
             .bloco-d { margin-top: 100px !important; }
-            .bloco-g { margin-top: 150px !important; }
+            .bloco-g { margin-top: 80px !important; }
             .img-print-page { page-break-before: always; margin-top: 100px !important; }
-            .img-tbl td { height: 170px !important; }
+            .img-print-page .categoria-titulo { break-after: avoid; page-break-after: avoid; }
+            .img-print-page .keep-together { page-break-inside: avoid; }
+            .img-tbl { page-break-inside: auto; }
+            .img-tbl td { height: 170px !important; page-break-inside: avoid; break-inside: avoid; }
+            .img-tbl td img { max-width: 100%; max-height: 100%; object-fit: contain; }
           }
           @media screen {
             #header-print { max-width: 210mm; margin: 0 auto; background: #fff; border-radius: 4px 4px 0 0; }
@@ -263,7 +267,8 @@ export default function RelatorioVisualizar() {
 
         {/* ===== BLOCO I ===== */}
         <div style={S.section}>
-          <table className="tb">
+          <div className="keep-together" style={{ breakAfter: 'avoid', pageBreakAfter: 'avoid' }}>
+            <table className="tb" style={{ marginBottom: 0 }}>
             <tbody>
               <tr className="section-title">
                 <td style={{ fontSize: '11pt' }} colSpan={2}>
@@ -283,8 +288,9 @@ export default function RelatorioVisualizar() {
               ))}
             </tbody>
           </table>
+          </div>
 
-          <table className="tb tb-a6p" style={{ pageBreakBefore: 'always', marginTop: 0 }}>
+          <table className="tb tb-a6p" style={{ marginTop: 0 }}>
             <tbody>
               <tr>
                 <td style={{ padding: '5px 8px', fontSize: '9pt', verticalAlign: 'top', width: '80%' }}>
@@ -490,7 +496,7 @@ export default function RelatorioVisualizar() {
             </tbody>
           </table>
 
-          <div className="keep-together bloco-g" style={{ pageBreakBefore: 'always' }}>
+          <div className="keep-together bloco-g">
             <p style={{ fontSize: '9pt', marginLeft: 20 }}>F.4. Quantidade de passeios</p>
             <p style={{ fontSize: '9pt', marginLeft: 20, marginBottom: 14 }}>F.5 Quantidade de atividades realizadas</p>
             <table className="tb" style={{ marginTop: 0 }}>
