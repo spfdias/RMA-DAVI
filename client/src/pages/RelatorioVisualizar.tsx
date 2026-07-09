@@ -150,6 +150,8 @@ export default function RelatorioVisualizar() {
           .tb { width: 100%; border-collapse: collapse; margin: 8px 0 14px; }
           .tb th, .tb td { border: 1px solid #000; padding: 5px 8px; font-size: 9pt; vertical-align: top; text-align: left; }
           .tb th { background: #5B9BD5; color: #fff; font-weight: 700; text-align: center; text-transform: uppercase; }
+          .photo-category { page-break-inside: avoid; padding-top: 80px; }
+          #photo-section > .photo-category:first-child { padding-top: 0; }
           .tb .num { text-align: center; width: 50px; }
           .tb .num-sm { text-align: center; width: 40px; }
           .tb .section-title { background: #5B9BD5; color: #fff; font-weight: 700; text-align: center; text-transform: uppercase; font-size: 10pt; }
@@ -523,43 +525,114 @@ export default function RelatorioVisualizar() {
         </div>
 
         {/* ===== BLOCO III – DESCRIÇÃO ===== */}
-        <div style={S.section}>
-          <div className="keep-together" style={{ breakAfter: 'avoid', pageBreakAfter: 'avoid' }}>
-            <table className="tb" style={{ marginBottom: 0 }}>
-              <tbody>
-                <tr>
-                  <td className="section-title" style={{ fontSize: '11pt', background: '#5B9BD5', color: '#fff', fontWeight: 700, textAlign: 'center', textTransform: 'uppercase' }}>
-                    Bloco III – Descrição das atividades mensal realizadas com os usuários/SEMAS
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ fontWeight: 700, background: '#5B9BD5', color: '#fff', borderBottom: 'none' }}>H. Descrição das atividades</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <table className="tb" style={{ marginTop: 0, borderTop: 'none', breakInside: 'auto', pageBreakInside: 'auto' }}>
+        <div style={{ ...S.section, pageBreakBefore: 'always', paddingTop: 80 }}>
+          <table className="tb" style={{ pageBreakInside: 'avoid' }}>
+            <thead>
+              <tr>
+                <td className="section-title" style={{ fontSize: '11pt', textAlign: 'left', textTransform: 'none' }}>
+                  Bloco III – Descrição das atividades mensal realizadas com os usuários/SEMAS
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 700, background: '#5B9BD5', color: '#fff', borderBottom: 'none', paddingBottom: 0, textTransform: 'none' }}>
+                  H. Descrição das atividades
+                </td>
+              </tr>
+            </thead>
             <tbody>
               <tr>
-                <td className="td-descricao" style={{ minHeight: 60, padding: '10px 8px', lineHeight: 1.6, textAlign: 'justify', borderTop: 'none', breakInside: 'auto', pageBreakInside: 'auto' }}>
-                  <p style={{ marginBottom: 6, fontWeight: 600 }}>H.1. Descreva quais atividades os usuários realizaram durante o mês (convivência, socioeducativa, passeios, visitas a outros locais, atendimento médico, atividades da vida diária, para independência, de auto cuidado, cursos, etc)</p>
+                <td className="td-descricao" style={{ padding: '0 6px 10px', lineHeight: 1.6, textAlign: 'justify' }}>
+                  <p style={{ fontWeight: 600, margin: '0 0 8px' }}>H.1. Descreva quais atividades os usuários realizaram durante o mês (convivência, socioeducativa, passeios, visitas a outros locais, atendimento médico, atividades da vida diária, para independência, de auto cuidado, cursos, etc)</p>
                   {d.blocoH?.descricao || 'N/A'}
                 </td>
               </tr>
             </tbody>
           </table>
 
-          {imagens.length > 0 && (
-            <div className="img-print-page">
-              <p style={{ ...S.label, marginTop: 16 }}>Registro fotográfico</p>
+          {/* ===== BLOCO IV - INFORMAÇÕES COMPLEMENTARES ===== */}
+          <div style={S.section}>
+            <div className="keep-together">
+              <table className="tb" style={{ marginBottom: 0 }}>
+                <tbody>
+                  <tr className="section-title">
+                    <td style={{ fontSize: '11pt', textTransform: 'none' }} colSpan={2}>
+                      Bloco IV - Informações Complementares
+                    </td>
+                  </tr>
+                  <tr style={{ background: '#5B9BD5', color: '#fff' }}>
+                    <td style={{ fontWeight: 700, textAlign: 'left', textTransform: 'none' }} colSpan={2}>I. Informações</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <table className="tb" style={{ marginTop: 0, borderTop: 'none' }}>
+              <tbody>
+                <tr>
+                  <td style={{ fontWeight: 700, width: '40%', verticalAlign: 'top' }}>I.1. Limites e dificuldades enfrentadas no mês:</td>
+                  <td className="td-descricao" style={{ width: '60%', textAlign: 'justify' }}>{d.blocoI?.limites || 'N/A'}</td>
+                </tr>
+                <tr>
+                  <td style={{ fontWeight: 700, verticalAlign: 'top' }}>I.2. Avanços:</td>
+                  <td className="td-descricao" style={{ textAlign: 'justify' }}>{d.blocoI?.avancos || 'N/A'}</td>
+                </tr>
+                <tr>
+                  <td style={{ fontWeight: 700, verticalAlign: 'top' }}>I.3. Aquisição do mês:</td>
+                  <td style={{ textAlign: 'justify' }}>{d.blocoI?.aquisicao || 'N/A'}</td>
+                </tr>
+                <tr>
+                  <td style={{ fontWeight: 700, verticalAlign: 'top' }}>I.4. A equipe participou de alguma capacitação este mês:</td>
+                  <td style={{ textAlign: 'justify' }}>
+                    {(d.blocoI?.capacitacoes?.filter((c: any) => c?.nome || c?.nome_capacitacao)?.length || 0) > 0
+                      ? d.blocoI.capacitacoes.filter((c: any) => c?.nome || c?.nome_capacitacao).map((c: any, i: number) => (
+                          <span key={i}>{c.nome || '-'} — {c.nome_capacitacao || '-'}{i < d.blocoI.capacitacoes.filter((cx: any) => cx?.nome || cx?.nome_capacitacao).length - 1 ? '; ' : ''}</span>
+                        ))
+                      : 'N/A'}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          {/* ===== CAPACITAÇÕES E ASSINATURAS ===== */}
+          <div style={{ ...S.section, pageBreakBefore: 'always', paddingTop: 80 }}>
+            {(d.blocoI?.capacitacoes?.filter((c: any) => c?.nome || c?.nome_capacitacao)?.length || 0) > 0 && (
+              <table className="tb" style={{ marginTop: 4 }}>
+                <thead>
+                  <tr>
+                    <th style={{ width: '50%', textTransform: 'none' }}>Nome do Profissional</th>
+                    <th style={{ width: '50%', textTransform: 'none' }}>Nome da Capacitação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {d.blocoI.capacitacoes.filter((c: any) => c?.nome || c?.nome_capacitacao).map((c: any, i: number) => (
+                    <tr key={i}>
+                      <td>{c.nome || '-'}</td>
+                      <td>{c.nome_capacitacao || '-'}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+
+            <div className="keep-together" style={{ marginTop: 30, paddingTop: 10, textAlign: 'center' }}>
+              <p style={{ marginTop: 40, borderTop: '1px solid #000', paddingTop: 4, width: '60%', marginLeft: 'auto', marginRight: 'auto' }}>&nbsp;</p>
+              <p style={{ fontSize: '10pt', fontWeight: 700 }}>Técnica responsável</p>
+
+              <p style={{ marginTop: 40, borderTop: '1px solid #000', paddingTop: 4, width: '60%', marginLeft: 'auto', marginRight: 'auto' }}>&nbsp;</p>
+              <p style={{ fontSize: '10pt', fontWeight: 700 }}>Coordenadora</p>
+            </div>
+          </div>
+        </div>
+
+        {/* ===== REGISTRO FOTOGRÁFICO ===== */}
+        {imagens.length > 0 && (
+          <div className="img-print-page" style={{ pageBreakBefore: 'always', paddingTop: 80 }}>
+            <p style={{ ...S.label, marginTop: 16 }}>Registro fotográfico</p>
+            <div id="photo-section">
               {categorias.map((cat) => {
                 const catImgs = imagens.filter((i) => i.categoria === cat.value);
                 if (catImgs.length === 0) return null;
 
-                // Divide as imagens da categoria em linhas de 4, para que cada
-                // linha seja tratada como um bloco atômico na impressão
-                // (o flex-wrap sozinho não é reconhecido como "linhas" pelo
-                // motor de paginação do navegador).
                 const IMAGES_PER_ROW = 4;
                 const rows: any[][] = [];
                 for (let i = 0; i < catImgs.length; i += IMAGES_PER_ROW) {
@@ -567,7 +640,7 @@ export default function RelatorioVisualizar() {
                 }
 
                 return (
-                  <div key={cat.value} className="keep-together" style={{ marginBottom: 12 }}>
+                  <div key={cat.value} className="photo-category" style={{ marginBottom: 12 }}>
                     <p className="categoria-titulo" style={{ fontWeight: 700, fontSize: '10pt', margin: '0 0 4px' }}>
                       {cat.label} ({catImgs.length})
                     </p>
@@ -595,71 +668,8 @@ export default function RelatorioVisualizar() {
                 );
               })}
             </div>
-          )}
-        </div>
-
-        {/* ===== BLOCO IV ===== */}
-        <div style={{ ...S.section, pageBreakBefore: 'always' }}>
-          <div className="keep-together" style={{ breakAfter: 'avoid', pageBreakAfter: 'avoid' }}>
-            <table className="tb" style={{ marginBottom: 0 }}>
-              <tbody>
-                <tr className="section-title">
-                  <td style={{ fontSize: '11pt' }} colSpan={2}>
-                    Bloco IV – Informações complementares
-                  </td>
-                </tr>
-                <tr style={{ background: '#5B9BD5', color: '#fff' }}>
-                  <td style={{ fontWeight: 700, textAlign: 'center' }} colSpan={2}>I. Informações</td>
-                </tr>
-              </tbody>
-            </table>
           </div>
-          <table className="tb" style={{ marginTop: 0, borderTop: 'none' }}>
-            <tbody>
-              <tr>
-                <td style={{ fontWeight: 700, width: '40%', verticalAlign: 'top' }}>I.1. Limites e dificuldades enfrentadas no mês:</td>
-                <td className="td-descricao" style={{ width: '60%', textAlign: 'justify' }}>{d.blocoI?.limites || 'N/A'}</td>
-              </tr>
-              <tr>
-                <td style={{ fontWeight: 700, verticalAlign: 'top' }}>I.2. Avanços:</td>
-                <td className="td-descricao" style={{ textAlign: 'justify' }}>{d.blocoI?.avancos || 'N/A'}</td>
-              </tr>
-              <tr>
-                <td style={{ fontWeight: 700, verticalAlign: 'top' }}>I.3. Aquisição do mês:</td>
-                <td style={{ textAlign: 'justify' }}>{d.blocoI?.aquisicao || 'N/A'}</td>
-              </tr>
-              <tr>
-                <td style={{ fontWeight: 700, verticalAlign: 'top' }}>I.4. A equipe participou de alguma capacitação este mês:</td>
-                <td style={{ textAlign: 'justify' }}>
-                  {(d.blocoI?.capacitacoes?.filter((c: any) => c?.nome || c?.nome_capacitacao)?.length || 0) > 0
-                    ? d.blocoI.capacitacoes.filter((c: any) => c?.nome || c?.nome_capacitacao).map((c: any, i: number) => (
-                        <span key={i}>{c.nome || '-'} — {c.nome_capacitacao || '-'}{i < d.blocoI.capacitacoes.filter((cx: any) => cx?.nome || cx?.nome_capacitacao).length - 1 ? '; ' : ''}</span>
-                      ))
-                    : 'N/A'}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-
-          {(d.blocoI?.capacitacoes?.filter((c: any) => c?.nome || c?.nome_capacitacao)?.length || 0) > 0 && (
-            <table className="tb" style={{ marginTop: 4 }}>
-              <thead>
-                <tr>
-                  <th style={{ width: '50%' }}>Nome do Profissional</th>
-                  <th style={{ width: '50%' }}>Nome da Capacitação</th>
-                </tr>
-              </thead>
-              <tbody>
-                {d.blocoI.capacitacoes.filter((c: any) => c?.nome || c?.nome_capacitacao).map((c: any, i: number) => (
-                  <tr key={i}>
-                    <td>{c.nome || '-'}</td>
-                    <td>{c.nome_capacitacao || '-'}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div>
+        )}
 
         {/* ===== ASSINATURAS ===== */}
         <div className="keep-together" style={{ marginTop: 30, paddingTop: 10, textAlign: 'center' }}>
