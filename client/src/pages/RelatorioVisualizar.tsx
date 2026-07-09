@@ -275,11 +275,11 @@ export default function RelatorioVisualizar() {
             </tbody>
           </table>
 
-          <table className="tb" style={{ pageBreakBefore: 'always', marginTop: 0 }}>
+          <table className="tb" style={{ pageBreakBefore: 'always', marginTop: 0, borderTop: '1px solid #000' }}>
             <tbody>
               <tr>
-                <td style={{ padding: '60px 8px 10px', fontSize: '9pt', verticalAlign: 'top', width: '80%' }}>
-                  A.6. Total de usuários desligados<br />
+                <td style={{ padding: '5px 8px', fontSize: '9pt', verticalAlign: 'top', width: '80%' }}>
+                  <div style={{ marginTop: '85px' }}>A.6. Total de usuários desligados<br />
                   {[
                     ['A6_familia_extensa', 'Família extensa'],
                     ['A6_familia_origem', 'Família de origem'],
@@ -295,6 +295,7 @@ export default function RelatorioVisualizar() {
                       </div>
                     );
                   })}
+                  </div>
                 </td>
                 <td className="num" style={{ width: '20%' }}>-</td>
               </tr>
