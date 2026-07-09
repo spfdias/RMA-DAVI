@@ -528,10 +528,16 @@ export default function RelatorioVisualizar() {
               </tbody>
             </table>
           </div>
-          <div style={{ border: '1px solid #000', borderTop: 'none', minHeight: 60, padding: '10px 8px', lineHeight: 1.6, textAlign: 'justify', fontSize: '9pt' }}>
-            <p style={{ marginBottom: 6, fontWeight: 600 }}>H.1. Descreva quais atividades os usuários realizaram durante o mês (convivência, socioeducativa, passeios, visitas a outros locais, atendimento médico, atividades da vida diária, para independência, de auto cuidado, cursos, etc)</p>
-            {d.blocoH?.descricao || 'N/A'}
-          </div>
+          <table className="tb" style={{ marginTop: 0, borderTop: 'none', breakInside: 'auto', pageBreakInside: 'auto' }}>
+            <tbody>
+              <tr>
+                <td style={{ minHeight: 60, padding: '10px 8px', lineHeight: 1.6, textAlign: 'justify', borderTop: 'none', breakInside: 'auto', pageBreakInside: 'auto' }}>
+                  <p style={{ marginBottom: 6, fontWeight: 600 }}>H.1. Descreva quais atividades os usuários realizaram durante o mês (convivência, socioeducativa, passeios, visitas a outros locais, atendimento médico, atividades da vida diária, para independência, de auto cuidado, cursos, etc)</p>
+                  {d.blocoH?.descricao || 'N/A'}
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
           {imagens.length > 0 && (
             <div className="img-print-page">
