@@ -550,7 +550,7 @@ export default function RelatorioVisualizar() {
                 const catImgs = imagens.filter((i) => i.categoria === cat.value);
                 if (catImgs.length === 0) return null;
                 return (
-                  <div key={cat.value} style={{ marginBottom: 12 }}>
+                  <div key={cat.value} className="keep-together" style={{ marginBottom: 12 }}>
                     <p style={{ fontWeight: 700, fontSize: '10pt', margin: '0 0 4px' }}>
                       {cat.label} ({catImgs.length})
                     </p>
@@ -559,7 +559,7 @@ export default function RelatorioVisualizar() {
                         <div key={img.id} style={{
                           width: 160, height: 160, overflow: 'hidden',
                           display: 'flex', alignItems: 'center', justifyContent: 'center',
-                          border: '1px solid #000',
+                          border: '1px solid #000', pageBreakInside: 'avoid',
                         }}>
                           <img
                             src={img.data || img.url || `${IMG_BASE}/${img.filename}`}
