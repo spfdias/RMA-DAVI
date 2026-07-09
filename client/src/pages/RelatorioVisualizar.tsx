@@ -133,6 +133,7 @@ export default function RelatorioVisualizar() {
             #relatorio-print { padding-top: 82px; padding-bottom: 80px; }
             .tb th, .tb .section-title, .tb tr[style*="background"] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .tb-a6p { margin-top: 100px !important; }
+            .tb-d4p { margin-top: 100px !important; }
           }
           @media screen {
             #header-print { max-width: 210mm; margin: 0 auto; background: #fff; border-radius: 4px 4px 0 0; }
@@ -386,12 +387,25 @@ export default function RelatorioVisualizar() {
                 ['D1', 'D.1. Branco'],
                 ['D2', 'D.2. Pardo'],
                 ['D3', 'D.3. Preto'],
+              ].map(([dk, lbl]) => (
+                <tr key={dk}>
+                  <td>{lbl}</td>
+                  <td className="num">{d.blocoD?.[dk]?.feminino ?? '-'}</td>
+                  <td className="num">{d.blocoD?.[dk]?.masculino ?? '-'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <table className="tb tb-d4p" style={{ pageBreakBefore: 'always', marginTop: 0 }}>
+            <tbody>
+              {[
                 ['D4', 'D.4. Amarelo'],
                 ['D5', 'D.5. Indígena'],
                 ['D6', 'D.6. Imigrantes. Especifique a nacionalidade\nPaís:'],
               ].map(([dk, lbl]) => (
                 <tr key={dk}>
-                  <td>{lbl}</td>
+                  <td style={{ width: '60%' }}>{lbl}</td>
                   <td className="num">{d.blocoD?.[dk]?.feminino ?? '-'}</td>
                   <td className="num">{d.blocoD?.[dk]?.masculino ?? '-'}</td>
                 </tr>
