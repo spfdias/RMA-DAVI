@@ -134,6 +134,7 @@ export default function RelatorioVisualizar() {
             .tb th, .tb .section-title, .tb tr[style*="background"] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .tb-a6p { margin-top: 100px !important; }
             .tb-d4p { margin-top: 100px !important; }
+            .tb-g3p { margin-top: 100px !important; }
           }
           @media screen {
             #header-print { max-width: 210mm; margin: 0 auto; background: #fff; border-radius: 4px 4px 0 0; }
@@ -492,13 +493,25 @@ export default function RelatorioVisualizar() {
               {[
                 ['G1', 'G.1. Encaminhamentos realizados para o mercado de trabalho'],
                 ['G2', 'G.2. Encaminhamentos realizados para cursos de qualificação'],
+              ].map(([gk, lbl]) => (
+                <tr key={gk}>
+                  <td>{lbl}</td>
+                  <td className="num">{d.blocoG?.[gk] ?? '-'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <table className="tb tb-g3p" style={{ pageBreakBefore: 'always', marginTop: 0 }}>
+            <tbody>
+              {[
                 ['G3', 'G.3. Encaminhamentos realizados para outras políticas públicas (saúde, educação)'],
                 ['G4', 'G.4. Encaminhamentos realizados para a rede socioassistencial (famílias)'],
                 ['G5', 'G.5. Encaminhamentos de documentos e relatórios para Fórum e MP'],
                 ['G6', 'G.6. Outros. Especifique'],
               ].map(([gk, lbl]) => (
                 <tr key={gk}>
-                  <td>{lbl}</td>
+                  <td style={{ width: '80%' }}>{lbl}</td>
                   <td className="num">{d.blocoG?.[gk] ?? '-'}</td>
                 </tr>
               ))}
