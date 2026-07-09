@@ -80,34 +80,28 @@
             <td>___________________</td>
           </tr>
         </tbody>
-      </table>
-
-      <table class="tb">
         <tbody>
-          <tr>
-            <td class="prof-section" colspan="3">Nome do Profissional Vinculado no Mês</td>
+          <tr class="prof-section">
+            <td colspan="3">Nome do Profissional Vinculado no Mês</td>
           </tr>
         </tbody>
         <tbody id="profissionais-vinculados-list">
           <tr>
-            <td style="width:40%;">___________________</td>
-            <td style="width:30%;">___________________</td>
-            <td style="width:30%;">___________________</td>
+            <td>___________________</td>
+            <td>___________________</td>
+            <td>___________________</td>
           </tr>
         </tbody>
-      </table>
-
-      <table class="tb">
         <tbody>
-          <tr>
-            <td class="prof-section" colspan="3">Nome do Profissional Desvinculado no Mês</td>
+          <tr class="prof-section">
+            <td colspan="3">Nome do Profissional Desvinculado no Mês</td>
           </tr>
         </tbody>
         <tbody id="profissionais-desvinculados-list">
           <tr>
-            <td style="width:40%;">___________________</td>
-            <td style="width:30%;">___________________</td>
-            <td style="width:30%;">___________________</td>
+            <td>___________________</td>
+            <td>___________________</td>
+            <td>___________________</td>
           </tr>
         </tbody>
       </table>
@@ -340,7 +334,7 @@
     <div class="section-gap">
       <div class="keep-together">
         <table class="tb">
-          <tbody>
+          <thead>
             <tr class="section-title">
               <td style="font-size:11pt;text-transform:none;" colspan="2">Bloco II – Atividades realizadas com os usuários conveniados/SEMAS</td>
             </tr>
@@ -348,20 +342,17 @@
               <th style="width:80%;text-align:left;text-transform:none;">F. Volume de atividades realizadas</th>
               <th style="width:20%;">Total</th>
             </tr>
+          </thead>
+          <tbody id="blocoF-list">
+            <tr><td>F.1. Total de atendimentos individualizados realizados pela equipe técnica</td><td class="num" data-field="blocoF.F1">___</td></tr>
+            <tr><td>F.2. Total de atendimentos em grupo realizados pela equipe técnica</td><td class="num" data-field="blocoF.F2">___</td></tr>
+            <tr><td>F.3. Oficinas/palestras com os usuários</td><td class="num" data-field="blocoF.F3">___</td></tr>
+            <tr><td>F.4. Passeios com os usuários</td><td class="num" data-field="blocoF.F4">___</td></tr>
+            <tr><td>F.5. Datas comemorativas / Aniversariantes do mês / Eventos</td><td class="num" data-field="blocoF.F5">___</td></tr>
+            <tr><td>F.6. Visitas domiciliares</td><td class="num" data-field="blocoF.F6">___</td></tr>
           </tbody>
         </table>
       </div>
-
-      <table class="tb" style="margin-top:0;border-top:none;">
-        <tbody id="blocoF-list">
-          <tr><td>F.1. Total de atendimentos individualizados realizados pela equipe técnica</td><td class="num" data-field="blocoF.F1">___</td></tr>
-          <tr><td>F.2. Total de atendimentos em grupo realizados pela equipe técnica</td><td class="num" data-field="blocoF.F2">___</td></tr>
-          <tr><td>F.3. Oficinas/palestras com os usuários</td><td class="num" data-field="blocoF.F3">___</td></tr>
-          <tr><td>F.4. Passeios com os usuários</td><td class="num" data-field="blocoF.F4">___</td></tr>
-          <tr><td>F.5. Datas comemorativas / Aniversariantes do mês / Eventos</td><td class="num" data-field="blocoF.F5">___</td></tr>
-          <tr><td>F.6. Visitas domiciliares</td><td class="num" data-field="blocoF.F6">___</td></tr>
-        </tbody>
-      </table>
 
       <div style="page-break-before:always;padding-top:80px;">
         <table class="tb" style="margin-top:0;border-top:none;">
@@ -381,7 +372,7 @@
       <!-- G. Encaminhamentos -->
       <div class="keep-together">
         <table class="tb">
-          <tbody>
+          <thead>
             <tr class="section-title">
               <td style="font-size:11pt;text-transform:none;" colspan="2">Bloco II – Encaminhamentos aos usuários conveniados/SEMAS</td>
             </tr>
@@ -389,10 +380,7 @@
               <th style="width:80%;text-align:left;text-transform:none;">G. Volume de encaminhamentos</th>
               <th style="width:20%;">Total</th>
             </tr>
-          </tbody>
-        </table>
-
-        <table class="tb">
+          </thead>
           <tbody id="blocoG-list">
             <tr><td>G.1. Encaminhamentos realizados para o mercado de trabalho</td><td class="num" data-field="blocoG.G1">___</td></tr>
             <tr><td>G.2. Encaminhamentos realizados para cursos de qualificação</td><td class="num" data-field="blocoG.G2">___</td></tr>
@@ -406,153 +394,147 @@
     </div>
 
     <!-- ===== BLOCO III – DESCRIÇÃO ===== -->
-    <div class="section-gap">
-      <div class="keep-together">
-        <table class="tb" style="margin-bottom:0;">
-          <tbody>
-            <tr>
-              <td class="section-title" style="font-size:11pt;text-transform:none;">Bloco III – Descrição das atividades mensal realizadas com os usuários/SEMAS</td>
-            </tr>
-            <tr>
-              <td style="font-weight:700;background:#5B9BD5;color:#fff;border-bottom:none;text-transform:none;">H. Descrição das atividades</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <table class="tb" style="margin-top:0;border-top:none;">
+    <div class="section-gap page-break-block" style="padding-top:80px;">
+      <table class="tb" style="page-break-inside:avoid;">
+        <thead>
+          <tr>
+            <td class="section-title" style="font-size:11pt;text-align:left;text-transform:none;">Bloco III – Descrição das atividades mensal realizadas com os usuários/SEMAS</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;background:#5B9BD5;color:#fff;border-bottom:none;padding-bottom:0;text-transform:none;">H. Descrição das atividades</td>
+          </tr>
+        </thead>
         <tbody>
           <tr>
-            <td class="td-descricao" style="border-top:none;padding:10px 8px;line-height:1.6;text-align:justify;">
-              <p style="margin-bottom:6px;font-weight:600;">H.1. Descreva quais atividades os usuários realizaram durante o mês (convivência, socioeducativa, passeios, visitas a outros locais, atendimento médico, atividades da vida diária, para independência, de auto cuidado, cursos, etc)</p>
+            <td class="td-descricao" style="padding:0 6px 10px;line-height:1.6;text-align:justify;">
+              <p style="font-weight:600;margin:0 0 8px;">H.1. Descreva quais atividades os usuários realizaram durante o mês (convivência, socioeducativa, passeios, visitas a outros locais, atendimento médico, atividades da vida diária, para independência, de auto cuidado, cursos, etc)</p>
               <div id="blocoH-descricao" class="td-descricao" data-field="blocoH.descricao"></div>
             </td>
           </tr>
         </tbody>
       </table>
 
-      <!-- ===== REGISTRO FOTOGRÁFICO ===== -->
-      <div class="page-break-block" style="padding-top:80px;">
-        <p style="font-weight:700;font-size:10pt;margin:16px 0 4px;">Registro fotográfico</p>
-        <div id="photo-section" data-categories='["Doações","Eventos","Passeios","Capacitações","Atividades","Visitas","Outras"]'>
-          <div class="photo-category" data-category="doacoes">
-            <p class="keep-together" style="font-weight:700;font-size:10pt;margin:0 0 4px;">Doações</p>
-            <div class="img-grid" id="photos-doacoes">
-              <div class="photo-card">
-                <img src="assets/images/placeholder.svg" alt="Foto" data-src="" style="width:150px;height:150px;object-fit:cover;border:1px solid #000;" />
-              </div>
-            </div>
-          </div>
-          <div class="photo-category" data-category="eventos">
-            <p class="keep-together" style="font-weight:700;font-size:10pt;margin:0 0 4px;">Eventos</p>
-            <div class="img-grid" id="photos-eventos">
-              <div class="photo-card">
-                <img src="assets/images/placeholder.svg" alt="Foto" data-src="" style="width:150px;height:150px;object-fit:cover;border:1px solid #000;" />
-              </div>
-            </div>
-          </div>
-          <div class="photo-category" data-category="passeios">
-            <p class="keep-together" style="font-weight:700;font-size:10pt;margin:0 0 4px;">Passeios</p>
-            <div class="img-grid" id="photos-passeios">
-              <div class="photo-card">
-                <img src="assets/images/placeholder.svg" alt="Foto" data-src="" style="width:150px;height:150px;object-fit:cover;border:1px solid #000;" />
-              </div>
-            </div>
-          </div>
-          <div class="photo-category" data-category="capacitacoes">
-            <p class="keep-together" style="font-weight:700;font-size:10pt;margin:0 0 4px;">Capacitações</p>
-            <div class="img-grid" id="photos-capacitacoes">
-              <div class="photo-card">
-                <img src="assets/images/placeholder.svg" alt="Foto" data-src="" style="width:150px;height:150px;object-fit:cover;border:1px solid #000;" />
-              </div>
-            </div>
-          </div>
-          <div class="photo-category" data-category="atividades">
-            <p class="keep-together" style="font-weight:700;font-size:10pt;margin:0 0 4px;">Atividades</p>
-            <div class="img-grid" id="photos-atividades">
-              <div class="photo-card">
-                <img src="assets/images/placeholder.svg" alt="Foto" data-src="" style="width:150px;height:150px;object-fit:cover;border:1px solid #000;" />
-              </div>
-            </div>
-          </div>
-          <div class="photo-category" data-category="visitas">
-            <p class="keep-together" style="font-weight:700;font-size:10pt;margin:0 0 4px;">Visitas</p>
-            <div class="img-grid" id="photos-visitas">
-              <div class="photo-card">
-                <img src="assets/images/placeholder.svg" alt="Foto" data-src="" style="width:150px;height:150px;object-fit:cover;border:1px solid #000;" />
-              </div>
-            </div>
-          </div>
-          <div class="photo-category" data-category="outras">
-            <p class="keep-together" style="font-weight:700;font-size:10pt;margin:0 0 4px;">Outras</p>
-            <div class="img-grid" id="photos-outras">
-              <div class="photo-card">
-                <img src="assets/images/placeholder.svg" alt="Foto" data-src="" style="width:150px;height:150px;object-fit:cover;border:1px solid #000;" />
-              </div>
-            </div>
-          </div>
+      <!-- ===== BLOCO IV - INFORMAÇÕES COMPLEMENTARES ===== -->
+      <div class="section-gap">
+        <div class="keep-together">
+          <table class="tb" style="margin-bottom:0;">
+            <tbody>
+              <tr class="section-title">
+                <td style="font-size:11pt;text-transform:none;" colspan="2">Bloco IV - Informações Complementares</td>
+              </tr>
+              <tr style="background:#5B9BD5;color:#fff;">
+                <td style="font-weight:700;text-align:left;text-transform:none;" colspan="2">I. Informações</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <table class="tb" style="margin-top:0;border-top:none;">
+          <tbody>
+            <tr>
+              <td style="font-weight:700;width:40%;vertical-align:top;">I.1. Limites e dificuldades enfrentadas no mês:</td>
+              <td style="width:60%;text-align:justify;" data-field="blocoI.limites">___________________</td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;vertical-align:top;">I.2. Avanços:</td>
+              <td style="text-align:justify;" data-field="blocoI.avancos">___________________</td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;vertical-align:top;">I.3. Aquisição do mês:</td>
+              <td style="text-align:justify;" data-field="blocoI.aquisicao">___________________</td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;vertical-align:top;">I.4. A equipe participou de alguma capacitação este mês:</td>
+              <td style="text-align:justify;" data-field="blocoI.capacitacoes">___________________</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+      <!-- ===== CAPACITAÇÕES E ASSINATURAS ===== -->
+      <div class="section-gap page-break-block" style="padding-top:80px;">
+        <table class="tb capacitacoes-table" id="capacitacoes-table" style="display:none;margin-top:4px;">
+          <thead>
+            <tr>
+              <th style="width:50%;text-transform:none;">Nome do Profissional</th>
+              <th style="width:50%;text-transform:none;">Nome da Capacitação</th>
+            </tr>
+          </thead>
+          <tbody id="capacitacoes-list"></tbody>
+        </table>
+
+          <div class="signature-block keep-together">
+          <div class="signature-line"></div>
+          <p class="signature-label">Técnica responsável</p>
+
+          <div class="signature-line"></div>
+          <p class="signature-label">Coordenadora</p>
         </div>
       </div>
     </div>
 
-    <!-- ===== BLOCO IV – INFORMAÇÕES COMPLEMENTARES ===== -->
-    <div class="section-gap page-break-block" style="padding-top:80px;">
-      <div class="keep-together">
-        <table class="tb" style="margin-bottom:0;">
-          <tbody>
-            <tr class="section-title">
-              <td style="font-size:11pt;" colspan="2">Bloco IV – Informações complementares</td>
-            </tr>
-            <tr style="background:#5B9BD5;color:#fff;">
-              <td style="font-weight:700;text-align:center;" colspan="2">I. Informações</td>
-            </tr>
-          </tbody>
-        </table>
+    <!-- ===== REGISTRO FOTOGRÁFICO ===== -->
+    <div class="page-break-block" style="padding-top:80px;">
+      <p style="font-weight:700;font-size:10pt;margin:16px 0 4px;">Registro fotográfico</p>
+      <div id="photo-section" data-categories='["Doações","Eventos","Passeios","Capacitações","Atividades","Visitas","Outras"]'>
+        <div class="photo-category" data-category="doacoes">
+          <p class="keep-together" style="font-weight:700;font-size:10pt;margin:0 0 4px;">Doações</p>
+          <div class="img-grid" id="photos-doacoes">
+            <div class="photo-card">
+              <img src="assets/images/placeholder.svg" alt="Foto" data-src="" style="width:150px;height:150px;object-fit:cover;border:1px solid #000;" />
+            </div>
+          </div>
+        </div>
+        <div class="photo-category" data-category="eventos">
+          <p class="keep-together" style="font-weight:700;font-size:10pt;margin:0 0 4px;">Eventos</p>
+          <div class="img-grid" id="photos-eventos">
+            <div class="photo-card">
+              <img src="assets/images/placeholder.svg" alt="Foto" data-src="" style="width:150px;height:150px;object-fit:cover;border:1px solid #000;" />
+            </div>
+          </div>
+        </div>
+        <div class="photo-category" data-category="passeios">
+          <p class="keep-together" style="font-weight:700;font-size:10pt;margin:0 0 4px;">Passeios</p>
+          <div class="img-grid" id="photos-passeios">
+            <div class="photo-card">
+              <img src="assets/images/placeholder.svg" alt="Foto" data-src="" style="width:150px;height:150px;object-fit:cover;border:1px solid #000;" />
+            </div>
+          </div>
+        </div>
+        <div class="photo-category" data-category="capacitacoes">
+          <p class="keep-together" style="font-weight:700;font-size:10pt;margin:0 0 4px;">Capacitações</p>
+          <div class="img-grid" id="photos-capacitacoes">
+            <div class="photo-card">
+              <img src="assets/images/placeholder.svg" alt="Foto" data-src="" style="width:150px;height:150px;object-fit:cover;border:1px solid #000;" />
+            </div>
+          </div>
+        </div>
+        <div class="photo-category" data-category="atividades">
+          <p class="keep-together" style="font-weight:700;font-size:10pt;margin:0 0 4px;">Atividades</p>
+          <div class="img-grid" id="photos-atividades">
+            <div class="photo-card">
+              <img src="assets/images/placeholder.svg" alt="Foto" data-src="" style="width:150px;height:150px;object-fit:cover;border:1px solid #000;" />
+            </div>
+          </div>
+        </div>
+        <div class="photo-category" data-category="visitas">
+          <p class="keep-together" style="font-weight:700;font-size:10pt;margin:0 0 4px;">Visitas</p>
+          <div class="img-grid" id="photos-visitas">
+            <div class="photo-card">
+              <img src="assets/images/placeholder.svg" alt="Foto" data-src="" style="width:150px;height:150px;object-fit:cover;border:1px solid #000;" />
+            </div>
+          </div>
+        </div>
+        <div class="photo-category" data-category="outras">
+          <p class="keep-together" style="font-weight:700;font-size:10pt;margin:0 0 4px;">Outras</p>
+          <div class="img-grid" id="photos-outras">
+            <div class="photo-card">
+              <img src="assets/images/placeholder.svg" alt="Foto" data-src="" style="width:150px;height:150px;object-fit:cover;border:1px solid #000;" />
+            </div>
+          </div>
+        </div>
       </div>
-
-      <table class="tb" style="margin-top:0;border-top:none;">
-        <tbody>
-          <tr>
-            <td style="font-weight:700;width:40%;vertical-align:top;">I.1. Limites e dificuldades enfrentadas no mês:</td>
-            <td style="width:60%;text-align:justify;" data-field="blocoI.limites">___________________</td>
-          </tr>
-          <tr>
-            <td style="font-weight:700;vertical-align:top;">I.2. Avanços:</td>
-            <td style="text-align:justify;" data-field="blocoI.avancos">___________________</td>
-          </tr>
-          <tr>
-            <td style="font-weight:700;vertical-align:top;">I.3. Aquisição do mês:</td>
-            <td style="text-align:justify;" data-field="blocoI.aquisicao">___________________</td>
-          </tr>
-          <tr>
-            <td style="font-weight:700;vertical-align:top;">I.4. A equipe participou de alguma capacitação este mês:</td>
-            <td style="text-align:justify;" data-field="blocoI.capacitacoes">___________________</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <table class="tb capacitacoes-table" id="capacitacoes-table" style="display:none;margin-top:4px;">
-        <thead>
-          <tr>
-            <th style="width:50%;">Nome do Profissional</th>
-            <th style="width:50%;">Nome da Capacitação</th>
-          </tr>
-        </thead>
-        <tbody id="capacitacoes-list"></tbody>
-      </table>
-    </div>
-
-    <!-- ===== ASSINATURAS ===== -->
-    <div class="signature-block keep-together">
-      <div class="signature-line"></div>
-      <p class="signature-label">Técnica responsável</p>
-
-      <div class="signature-line"></div>
-      <p class="signature-label">Coordenadora</p>
-
-      <p style="font-size:9pt;margin-top:20px;color:#555;">
-        Dourados-MS, _____ de _________________________ de _________
-      </p>
     </div>
 
   </div><!-- /relatorio-print -->

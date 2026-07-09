@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" width="200" height="150">
+  <rect width="200" height="150" fill="#f0f0f0"/>
+  <rect x="1" y="1" width="198" height="148" fill="none" stroke="#ccc" stroke-width="1"/>
+  <text x="100" y="65" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="12" fill="#999">Fotografia</text>
+  <text x="100" y="82" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="10" fill="#bbb">(placeholder)</text>
+  <!-- Camera icon -->
+  <rect x="80" y="40" width="40" height="30" rx="3" fill="none" stroke="#ccc" stroke-width="1.5"/>
+  <circle cx="100" cy="55" r="8" fill="none" stroke="#ccc" stroke-width="1.5"/>
+  <circle cx="100" cy="55" r="3" fill="#ddd"/>
+  <rect x="86" y="38" width="8" height="5" rx="1" fill="none" stroke="#ccc" stroke-width="1"/>
+</svg>

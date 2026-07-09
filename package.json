@@ -9,5 +9,8 @@
     "build": "cd server && npm run build && cd ../client && npm run build",
     "start": "cd server && node dist/index.js",
     "seed": "cd server && npm run seed"
+  },
+  "dependencies": {
+    "playwright": "^1.61.1"
   }
 }

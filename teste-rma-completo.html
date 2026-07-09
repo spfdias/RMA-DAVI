@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RMA – Relatório Mensal de Atendimento (Teste)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: Arial, Helvetica, sans-serif; background: #eee; padding: 20px; color: #000; }
+
+  /* ===== @page ===== */
+  @page { margin: 32mm 15mm 25mm; size: A4; }
+
+  /* ===== PRINT ===== */
+  @media print {
+    body { background: #fff; padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .no-print { display: none !important; }
+    .keep-together { page-break-inside: avoid; }
+    .avoid-break { page-break-inside: avoid; }
+    table { page-break-inside: auto; }
+    tr, thead, tfoot { page-break-inside: avoid; }
+    .td-descricao { height: auto !important; overflow: visible !important; white-space: pre-wrap; }
+    #relatorio-print { padding: 0; box-shadow: none; max-width: none; margin: 0; }
+    .pagina-nova { page-break-before: always; margin-top: 0; }
+  }
+
+  /* ===== SCREEN ===== */
+  @media screen {
+    #relatorio-print { background: #fff; max-width: 210mm; margin: 0 auto; padding: 2cm; box-shadow: 0 1px 12px rgba(0,0,0,0.12); }
+    .pagina-nova { margin-top: 30px; border-top: 3px dashed #999; padding-top: 20px; }
+    #header-print, #footer-print { display: none; }
+  }
+
+  /* ===== HEADER / FOOTER FIXO ===== */
+  #header-print { position: fixed; top: 0; left: 0; right: 0; text-align: center; z-index: 1000; }
+  #header-print img { width: 100%; height: auto; display: block; }
+  #footer-print { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; z-index: 1000; }
+  #footer-print img { width: 100%; height: auto; display: block; }
+
+  /* ===== LAYOUT ===== */
+  #relatorio-print { font-size: 10pt; line-height: 1.5; padding-top: 80px; padding-bottom: 40px; }
+
+  /* ===== HEADER TITLE ===== */
+  .title-box { background: #5b9bd5; color: #fff; text-align: center; padding: 10px 15px; margin-bottom: 14px; border-bottom: 2px solid #000; }
+  .title-box h1 { font-size: 13pt; font-weight: 700; line-height: 1.4; }
+  .title-box h2 { font-size: 10pt; font-weight: 400; line-height: 1.3; }
+
+  /* ===== IDENTIFICATION VERTICAL ===== */
+  .id-box { width: 100%; border: 1px solid #000; margin-bottom: 14px; }
+  .id-row { border-bottom: 1px solid #000; padding: 3px 6px; font-size: 9pt; }
+  .id-row:last-child { border-bottom: none; }
+  .id-label { font-weight: 700; margin-right: 6px; }
+
+  /* ===== TABLE STANDARD ===== */
+  .tb { width: 100%; border-collapse: collapse; margin: 8px 0 14px; }
+  .tb th, .tb td { border: 1px solid #000; padding: 4px 6px; font-size: 9pt; vertical-align: top; text-align: left; }
+  .tb th { background: #5b9bd5; color: #fff; font-weight: 700; text-align: center; }
+  .tb .num { text-align: center; width: 50px; }
+  .tb .num-sm { text-align: center; width: 40px; }
+
+  .section-title { background: #2e74b5 !important; color: #fff; font-weight: 700; text-align: center; text-transform: uppercase; font-size: 10pt; }
+  .subsection-header { background: #9cc2e5 !important; color: #000; font-weight: 700; text-align: center; }
+  .subsection-header th, .subsection-header td { background: #9cc2e5 !important; }
+
+  /* ===== LISTS ===== */
+  .checkbox-list { list-style: none; padding: 0; font-size: 9pt; }
+  .checkbox-list li { margin-bottom: 2px; white-space: nowrap; }
+
+  /* ===== OBS ===== */
+  .obs { font-size: 8.5pt; color: #333; margin: 4px 0 8px; font-style: italic; }
+
+  /* ===== SIGNATURE ===== */
+  .signature-area { margin-top: 40px; text-align: center; }
+  .signature-area .linha { width: 250px; border-top: 1px solid #000; margin: 0 auto 4px; }
+  .signature-area .cargo { font-size: 11pt; font-weight: 700; }
+
+  /* ===== PHOTO GALLERY ===== */
+  .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+  .photo-grid .photo-card { border: 1px solid #000; padding: 4px; text-align: center; page-break-inside: avoid; break-inside: avoid; }
+  .photo-grid .photo-card img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  .photo-grid .photo-card .caption { font-size: 8pt; color: #555; margin-top: 2px; }
+  .categoria-titulo { font-weight: 700; font-size: 10pt; margin: 14px 0 4px; page-break-after: avoid; break-after: avoid; }
+
+  /* ===== BLOCOS ===== */
+  .bloco { margin-bottom: 18px; }
+  .bloco-d { page-break-inside: avoid; }
+</style>
+</head>
+<body>
+
+<div id="relatorio-print">
+
+  <!-- ===== HEADER FIXO ===== -->
+  <div id="header-print"><img src="CabecalhoReport.jpg" alt="Cabeçalho"></div>
+
+  <!-- ===== TITLE ===== -->
+  <div class="keep-together title-box">
+    <h1>RELATÓRIO MENSAL DE ATENDIMENTO</h1>
+    <h2>PROTEÇÃO SOCIAL ESPECIAL – ALTA COMPLEXIDADE<br>SERVIÇO DE ACOLHIMENTO INSTITUCIONAL</h2>
+  </div>
+
+  <!-- ===== IDENTIFICATION ===== -->
+  <div class="id-box">
+    <div class="id-row"><span class="id-label">Mês e Ano de Referência:</span><span class="id-value">___________________</span></div>
+    <div class="id-row"><span class="id-label">Nome da Unidade:</span><span class="id-value">LAR EBENEZER</span></div>
+    <div class="id-row"><span class="id-label">Endereço:</span><span class="id-value">___________________</span></div>
+    <div class="id-row"><span class="id-label">Telefone:</span><span class="id-value">___________________</span></div>
+    <div class="id-row"><span class="id-label">Email:</span><span class="id-value">___________________</span></div>
+    <div class="id-row"><span class="id-label">Município:</span><span class="id-value">DOURADOS &nbsp;&nbsp; UF: MS</span></div>
+  </div>
+
+  <!-- ===== PROFESSIONALS ===== -->
+  <div class="bloco">
+    <table class="tb">
+      <thead>
+        <tr>
+          <th style="width:40%">NOME DO PROFISSIONAL</th>
+          <th style="width:30%">FUNÇÃO</th>
+          <th style="width:30%">TIPO DE VÍNCULO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>-</td><td>-</td><td>-</td></tr>
+        <tr><td>-</td><td>-</td><td>-</td></tr>
+        <tr style="background:#e8e8e8"><td colspan="3" style="font-weight:700;background:#e8e8e8">NOME DO PROFISSIONAL VINCULADO NO MÊS</td></tr>
+        <tr><td>-</td><td>-</td><td>-</td></tr>
+        <tr><td>-</td><td>-</td><td>-</td></tr>
+        <tr style="background:#e8e8e8"><td colspan="3" style="font-weight:700;background:#e8e8e8">NOME DO PROFISSIONAL DESVINCULADO NO MÊS</td></tr>
+        <tr><td>-</td><td>-</td><td>-</td></tr>
+      </tbody>
+    </table>
+    <p class="obs">OBS: Quando o Profissional Vinculado no Mês é necessário em anexo a ficha do contendo as informações RH para cadastro no SISTEMA MDS/GSI (solicitar no DGSUAS a ficha com as informações necessária, caso não tenha.)</p>
+  </div>
+
+  <!-- ===== BLOCO I ===== -->
+  <div class="bloco">
+    <div class="keep-together" style="page-break-after:avoid;">
+      <table class="tb" style="margin-bottom:0;">
+        <tr><td class="section-title" colspan="2" style="font-size:11pt;">Bloco I – Volume de Atendimentos</td></tr>
+        <tr class="subsection-header"><td style="width:80%">A. Volume de usuários</td><td class="num">Total</td></tr>
+        <tr><td>A.1. Capacidade total de usuários na Unidade</td><td class="num">-</td></tr>
+        <tr><td>A.2. Total de usuários acolhidos na Unidade</td><td class="num">-</td></tr>
+        <tr><td>A.3. Total de usuários conveniados /SEMAS</td><td class="num">-</td></tr>
+        <tr><td>A.4. Total de usuários conveniados/SEMAS acolhidos na Unidade</td><td class="num">-</td></tr>
+        <tr><td>A.5. Novos usuários inseridos no mês</td><td class="num">-</td></tr>
+      </table>
+    </div>
+
+    <table class="tb">
+      <tr>
+        <td style="padding:5px 8px;font-size:9pt;vertical-align:top;width:80%;">
+          A.6. Total de usuários desligados<br>
+          <ul class="checkbox-list">
+            <li>(   ) Família extensa</li>
+            <li>(   ) Família de origem</li>
+            <li>(   ) Família substituta</li>
+            <li>(   ) Maioridade</li>
+            <li>(   ) Falecimento</li>
+            <li>(   ) Transferida para outra unidade</li>
+          </ul>
+        </td>
+        <td class="num" style="width:20%;">-</td>
+      </tr>
+    </table>
+    <p class="obs">OBS: A.6. especificar entre parênteses a quantidade</p>
+
+    <!-- B -->
+    <table class="tb">
+      <tr class="subsection-header">
+        <th style="width:60%;text-align:left;">B. Faixa etária dos usuários conveniados/SEMAS</th>
+        <th style="width:20%;">Masculino</th>
+        <th style="width:20%;">Feminino</th>
+      </tr>
+      <tr><td style="padding-left:20px;">B.1. 0 a 6 anos</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td style="padding-left:20px;">B.2. 07 a 14 anos</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td style="padding-left:20px;">B.3 15 a 17 anos</td><td class="num">-</td><td class="num">-</td></tr>
+    </table>
+
+    <!-- C -->
+    <table class="tb">
+      <tr class="subsection-header">
+        <th style="width:55%;text-align:left;">C. Deficiências dos usuários conveniados/SEMAS</th>
+        <th style="width:15%;">I</th>
+        <th style="width:15%;">II</th>
+        <th style="width:15%;">III</th>
+      </tr>
+      <tr><td style="font-weight:700;">Usuários com deficiência</td><td class="num">-</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td style="padding-left:20px;">C.1. Deficiência múltipla (uma ou mais deficiências)</td><td class="num">-</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td style="padding-left:20px;">C.2. Deficiência visual</td><td class="num">-</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td style="padding-left:20px;">C.3. Deficiência auditiva</td><td class="num">-</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td style="padding-left:20px;">C.4. Deficiência física</td><td class="num">-</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td style="padding-left:20px;">C.5. Transtorno mental e ou psiquiátrico</td><td class="num">-</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td style="padding-left:20px;">C.6 TEA (Transtorno Espectro Autista)</td><td class="num">-</td><td class="num">-</td><td class="num">-</td></tr>
+    </table>
+  </div>
+
+  <!-- ===== D + E (new page) ===== -->
+  <div class="bloco" style="page-break-before:always;margin-top:100px;">
+    <div class="keep-together" style="page-break-after:avoid;">
+      <table class="tb" style="margin-bottom:0;">
+        <tr><td class="section-title" colspan="2" style="font-size:11pt;">D. Cor ou raça/nacionalidade dos usuários conveniados/SEMAS</td></tr>
+        <tr class="subsection-header"><td style="width:40%;font-weight:700;"></td><td style="width:30%;">Feminino</td><td style="width:30%;">Masculino</td></tr>
+      </table>
+    </div>
+    <table class="tb" style="margin-top:0;border-top:none;">
+      <tr><td>D.1. Branco</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td>D.2. Pardo</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td>D.3. Preto</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td>D.4. Amarelo</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td>D.5. Indígena</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td>D.6. Imigrantes. Especifique a nacionalidade<br>País: __________</td><td class="num">-</td><td class="num">-</td></tr>
+    </table>
+
+    <p style="font-weight:700;font-size:9pt;margin:14px 0 4px;">E. Informe há quanto tempo os conveniados/SEMAS estão acolhidos na Unidade</p>
+    <table class="tb">
+      <thead>
+        <tr><th>Menos de 1 mês</th><th>1 a 6 meses</th><th>7 a 12 meses</th><th>1 a 2 anos</th><th>3 a 5 anos</th><th>6 a 8 anos</th><th>Acima 9 anos</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="num">-</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td class="num">-</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== BLOCO II - ATIVIDADES ===== -->
+  <div class="bloco">
+    <div class="keep-together" style="page-break-after:avoid;">
+      <table class="tb" style="margin-bottom:0;">
+        <tr><td class="section-title" colspan="2" style="font-size:11pt;">Bloco II – Atividades realizadas com os usuários conveniados/SEMAS</td></tr>
+        <tr class="subsection-header"><td style="width:80%;">F. Volume de atividades realizadas</td><td class="num">Total</td></tr>
+      </table>
+    </div>
+    <table class="tb" style="margin-top:0;border-top:none;">
+      <tr><td>F.1. Total de atendimentos individualizados realizados pela equipe técnica</td><td class="num">-</td></tr>
+      <tr><td>F.2. Total de atendimentos em grupo realizados pela equipe técnica</td><td class="num">-</td></tr>
+      <tr><td>F.3. Oficinas/palestras com os usuários</td><td class="num">-</td></tr>
+      <tr><td>F.4. Passeios com os usuários</td><td class="num">-</td></tr>
+      <tr><td>F.5. Datas comemorativas/ Aniversariantes do mês/ Eventos</td><td class="num">-</td></tr>
+      <tr><td>F.6. Visitas domiciliares</td><td class="num">-</td></tr>
+      <tr><td>F.7. Total de atendimentos individualizados realizados pela equipe técnica aos familiares</td><td class="num">-</td></tr>
+      <tr><td>F.8. Visitas dos familiares na Unidade</td><td class="num">-</td></tr>
+      <tr><td>F.9. Reunião de equipe</td><td class="num">-</td></tr>
+      <tr><td>F.10. Reunião com a rede socioassistencial/intersetorial</td><td class="num">-</td></tr>
+      <tr><td>F.11. Participação em audiências</td><td class="num">-</td></tr>
+      <tr><td>F.12. Atendimento remoto</td><td class="num">-</td></tr>
+    </table>
+  </div>
+
+  <!-- ===== F.4/F.5 + BLOCO II - ENCAMINHAMENTOS ===== -->
+  <div class="keep-together bloco" style="page-break-before:always;margin-top:100px;">
+    <p style="font-size:9pt;margin-left:20px;">F.4. Quantidade de passeios</p>
+    <p style="font-size:9pt;margin-left:20px;margin-bottom:10px;">F.5 Quantidade de atividades realizadas</p>
+
+    <table class="tb" style="margin-top:0;">
+      <tr><td class="section-title" colspan="2" style="font-size:11pt;">Bloco II – Encaminhamentos aos usuários conveniados/SEMAS</td></tr>
+      <tr class="subsection-header"><td style="width:80%;">G. Volume de encaminhamentos</td><td class="num">Total</td></tr>
+      <tr><td>G.1. Encaminhamentos realizados para o mercado de trabalho</td><td class="num">-</td></tr>
+      <tr><td>G.2. Encaminhamentos realizados para cursos de qualificação</td><td class="num">-</td></tr>
+      <tr><td>G.3. Encaminhamentos realizados para outras políticas públicas (saúde, educação)</td><td class="num">-</td></tr>
+      <tr><td>G.4. Encaminhamentos realizados para a rede socioassistencial (famílias)</td><td class="num">-</td></tr>
+      <tr><td>G.5. Encaminhamentos de documentos e relatórios para Fórum e MP</td><td class="num">-</td></tr>
+      <tr><td>G.6. Outros. Especifique</td><td class="num">-</td></tr>
+    </table>
+  </div>
+
+  <!-- ===== BLOCO III ===== -->
+  <div class="bloco">
+    <div class="keep-together" style="page-break-after:avoid;">
+      <table class="tb" style="margin-bottom:0;">
+        <tr><td class="section-title" style="font-size:11pt;">Bloco III – Descrição das atividades mensal realizadas com os usuários/SEMAS</td></tr>
+        <tr><td style="font-weight:700;background:#9cc2e5;color:#000;border-bottom:none;">H. Descrição das atividades</td></tr>
+      </table>
+    </div>
+    <table class="tb" style="margin-top:0;border-top:none;page-break-inside:auto;">
+      <tr>
+        <td class="td-descricao" style="min-height:60;padding:8px;line-height:1.6;text-align:justify;border-top:none;page-break-inside:auto;">
+          <p style="margin-bottom:6px;font-weight:600;">H.1. Descreva quais atividades os usuários realizaram durante o mês (convivência, socioeducativa, passeios, visitas a outros locais, atendimento médico, atividades da vida diária, para independência, de auto cuidado, cursos, etc)</p>
+          <!-- CONTEUDO LONGO PARA TESTE - INICIO -->
+          <p>Durante o mês de referência, os usuários participaram de diversas atividades planejadas pela equipe técnica, visando o desenvolvimento da autonomia, socialização e bem-estar psicossocial.</p>
+          <p>Na primeira semana, foram realizadas oficinas de artesanato com foco na coordenação motora fina e expressão criativa. Os usuários confeccionaram peças decorativas com material reciclável, demonstrando grande interesse e evolução nas técnicas de pintura e colagem.</p>
+          <p>Na segunda semana, a equipe promoveu uma roda de conversa sobre cuidados com a saúde e higiene pessoal. O encontro contou com a participação de uma enfermeira da UBS de referência, que abordou temas como lavagem correta das mãos, saúde bucal e prevenção de doenças sazonais.</p>
+          <p>No final de semana, foi realizado um passeio ao Parque Antenor Martins, onde os usuários puderam desfrutar de atividades ao ar livre, como caminhada orientada, piquenique coletivo e jogos recreativos.</p>
+          <p>Na terceira semana, teve início a oficina de culinária básica, onde os usuários aprenderam a preparar receitas simples e nutritivas. A atividade foi conduzida por uma nutricionista voluntária.</p>
+          <p>Também foram realizados atendimentos psicológicos individuais, com foco no suporte emocional e na elaboração de estratégias de enfrentamento para as dificuldades do dia a dia.</p>
+          <p>Na quarta semana, a equipe técnica organizou uma visita à Feira Central da cidade, onde os usuários puderam praticar habilidades de compra e contato social em ambiente externo à unidade.</p>
+          <p>Para encerrar o mês, foi realizada uma confraternização com música, dança e lanche coletivo em comemoração aos aniversariantes do período, fortalecendo os vínculos afetivos e o senso de pertencimento ao grupo.</p>
+          <p>Paralelamente às atividades em grupo, a equipe técnica manteve os atendimentos de rotina, incluindo a atualização dos prontuários, elaboração de relatórios, contato com familiares e reuniões de equipe para discussão dos casos.</p>
+          <p>Considera-se que o mês foi produtivo e as atividades propostas alcançaram os objetivos previstos, contribuindo para a melhoria da qualidade de vida dos usuários e para o fortalecimento de sua autonomia e autoconfiança.</p>
+          <!-- CONTEUDO LONGO - FIM -->
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ===== PHOTO GALLERY ===== -->
+  <div class="bloco" style="page-break-before:always;margin-top:100px;">
+    <p style="font-weight:700;font-size:11pt;margin-bottom:8px;">Registro fotográfico por categoria</p>
+
+    <!-- CATEGORIA: Doações -->
+    <div class="keep-together">
+      <p class="categoria-titulo">Doações (4)</p>
+      <div class="photo-grid">
+        <div class="photo-card"><div style="height:100px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;color:#999;">Foto 1</div><p class="caption">Doação - mês de referência</p></div>
+        <div class="photo-card"><div style="height:100px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;color:#999;">Foto 2</div><p class="caption">Doação - mês de referência</p></div>
+        <div class="photo-card"><div style="height:100px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;color:#999;">Foto 3</div><p class="caption">Doação - mês de referência</p></div>
+        <div class="photo-card"><div style="height:100px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;color:#999;">Foto 4</div><p class="caption">Doação - mês de referência</p></div>
+      </div>
+    </div>
+
+    <!-- CATEGORIA: Eventos -->
+    <div class="keep-together">
+      <p class="categoria-titulo">Eventos (2)</p>
+      <div class="photo-grid">
+        <div class="photo-card"><div style="height:100px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;color:#999;">Foto 5</div><p class="caption">Aniversariantes do mês</p></div>
+        <div class="photo-card"><div style="height:100px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;color:#999;">Foto 6</div><p class="caption">Confraternização</p></div>
+      </div>
+    </div>
+
+    <!-- CATEGORIA: Passeios -->
+    <div class="keep-together">
+      <p class="categoria-titulo">Passeios (3)</p>
+      <div class="photo-grid">
+        <div class="photo-card"><div style="height:100px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;color:#999;">Foto 7</div><p class="caption">Parque Antenor Martins</p></div>
+        <div class="photo-card"><div style="height:100px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;color:#999;">Foto 8</div><p class="caption">Feira Central</p></div>
+        <div class="photo-card"><div style="height:100px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;color:#999;">Foto 9</div><p class="caption">Passeio ao ar livre</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== BLOCO IV ===== -->
+  <div class="bloco" style="page-break-before:always;margin-top:100px;">
+    <div class="keep-together" style="page-break-after:avoid;">
+      <table class="tb" style="margin-bottom:0;">
+        <tr><td class="section-title" colspan="2" style="font-size:11pt;">Bloco IV – Informações complementares</td></tr>
+        <tr class="subsection-header"><td colspan="2" style="text-align:center;">I. Informações</td></tr>
+      </table>
+    </div>
+    <table class="tb" style="margin-top:0;border-top:none;">
+      <tr>
+        <td style="font-weight:700;width:40%;vertical-align:top;">I.1. Limites e dificuldades enfrentadas no mês:</td>
+        <td class="td-descricao" style="width:60%;text-align:justify;">-</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;vertical-align:top;">I.2. Avanços:</td>
+        <td class="td-descricao" style="text-align:justify;">-</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;vertical-align:top;">I.3. Aquisição do mês:</td>
+        <td style="text-align:justify;">-</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;vertical-align:top;">I.4. A equipe participou de alguma capacitação este mês:</td>
+        <td style="text-align:justify;">-</td>
+      </tr>
+    </table>
+
+    <table class="tb" style="margin-top:6px;">
+      <thead>
+        <tr><th style="width:50%;">Nome do Profissional</th><th style="width:50%;">Nome da Capacitação</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>-</td><td>-</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== SIGNATURE ===== -->
+  <div class="signature-area keep-together" style="page-break-before:always;margin-top:100px;">
+    <p style="font-size:14pt;font-weight:700;margin-bottom:4px;">DOURADOS - MS</p>
+    <div class="linha"></div>
+    <p class="cargo">Técnica responsável</p>
+    <p style="font-size:9pt;margin-top:20px;">____________________________</p>
+    <p class="cargo">Coordenadora</p>
+  </div>
+
+  <!-- ===== FOOTER FIXO ===== -->
+  <div id="footer-print"><img src="RodapeReport.jpg" alt="Rodapé"></div>
+
+</div><!-- /relatorio-print -->
+
+<!-- ===== CONTROLS ===== -->
+<div class="no-print" style="text-align:center;margin:20px 0;">
+  <button onclick="window.print()" style="padding:10px 30px;font-size:14px;cursor:pointer;background:#2e74b5;color:#fff;border:none;border-radius:6px;">GERAR PDF (CTRL+P)</button>
+  <p style="margin-top:10px;font-size:10pt;color:#666;">Use Ctrl+P ou o botão acima para gerar o PDF. O layout de impressão será aplicado automaticamente.</p>
+</div>
+
+</body>
+</html>

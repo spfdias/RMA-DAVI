@@ -332,3 +332,13 @@ body {
   page-break-before: always;
   break-before: page;
 }
+
+@media print {
+  .photo-category {
+    page-break-inside: avoid;
+    padding-top: 80px;
+  }
+  #photo-section > .photo-category:first-child {
+    padding-top: 0;
+  }
+}
