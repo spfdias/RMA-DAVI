@@ -135,6 +135,7 @@ export default function RelatorioVisualizar() {
             .tb-a6p { margin-top: 100px !important; }
             .tb-d4p { margin-top: 100px !important; }
             .tb-g3p { margin-top: 100px !important; }
+            .img-print-page { page-break-before: always; }
           }
           @media screen {
             #header-print { max-width: 210mm; margin: 0 auto; background: #fff; border-radius: 4px 4px 0 0; }
@@ -543,7 +544,7 @@ export default function RelatorioVisualizar() {
           </div>
 
           {imagens.length > 0 && (
-            <div>
+            <div className="img-print-page">
               <p style={{ ...S.label, marginTop: 16 }}>Registro fotográfico</p>
               {categorias.map((cat) => {
                 const catImgs = imagens.filter((i) => i.categoria === cat.value);
