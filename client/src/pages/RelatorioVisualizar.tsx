@@ -278,7 +278,7 @@ export default function RelatorioVisualizar() {
           <table className="tb" style={{ pageBreakBefore: 'always', marginTop: 0 }}>
             <tbody>
               <tr>
-                <td style={{ padding: '35px 8px 10px', fontSize: '9pt', verticalAlign: 'top', width: '80%' }}>
+                <td style={{ padding: '60px 8px 10px', fontSize: '9pt', verticalAlign: 'top', width: '80%' }}>
                   A.6. Total de usuários desligados<br />
                   {[
                     ['A6_familia_extensa', 'Família extensa'],
