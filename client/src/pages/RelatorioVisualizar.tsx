@@ -481,7 +481,7 @@ export default function RelatorioVisualizar() {
           <p style={{ fontSize: '9pt', marginLeft: 20 }}>F.4. Quantidade de passeios</p>
           <p style={{ fontSize: '9pt', marginLeft: 20, marginBottom: 14 }}>F.5 Quantidade de atividades realizadas</p>
 
-          <table className="tb">
+          <table className="tb" style={{ pageBreakBefore: 'always' }}>
             <tbody>
               <tr className="section-title">
                 <td style={{ fontSize: '11pt' }} colSpan={2}>
@@ -504,7 +504,7 @@ export default function RelatorioVisualizar() {
             </tbody>
           </table>
 
-          <table className="tb tb-g3p" style={{ pageBreakBefore: 'always', marginTop: 0 }}>
+          <table className="tb tb-g3p" style={{ marginTop: 0 }}>
             <tbody>
               {[
                 ['G3', 'G.3. Encaminhamentos realizados para outras políticas públicas (saúde, educação)'],
@@ -594,7 +594,7 @@ export default function RelatorioVisualizar() {
         </div>
 
         {/* ===== BLOCO IV ===== */}
-        <div style={S.section}>
+        <div className="keep-together" style={{ ...S.section, pageBreakBefore: 'always' }}>
           <table className="tb">
             <tbody>
               <tr className="section-title">
@@ -603,9 +603,7 @@ export default function RelatorioVisualizar() {
                 </td>
               </tr>
               <tr style={{ background: '#5B9BD5', color: '#fff' }}>
-                <td style={{ fontWeight: 700, textAlign: 'center' }} colSpan={2}>
-                  I. Informações
-                </td>
+                <td style={{ fontWeight: 700, textAlign: 'center' }} colSpan={2}>I. Informações</td>
               </tr>
               <tr>
                 <td style={{ fontWeight: 700, width: '40%', verticalAlign: 'top' }}>I.1. Limites e dificuldades enfrentadas no mês:</td>
