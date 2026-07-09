@@ -297,3 +297,57 @@ docker run -p 3001:3001 rma-davi
 - **Arquivo**: `server/src/database.ts` — migration adiciona coluna `data TEXT`
 - **Frontend**: `img.data` como fonte primária, fallback para URL do arquivo
 - Imagens novas daqui em diante persistem no PostgreSQL independentemente de deploy
+
+---
+
+## Sessão 08/07/2026 — Correções de Impressão PDF
+
+### Arquivo Principal
+`client/src/pages/RelatorioVisualizar.tsx` (674 linhas)
+
+### O que foi feito
+
+#### 1. Quebra de Página Confiável ( @page margin )
+- **Problema**: Conteúdo em novas páginas (após page-break) ficava atrás do cabeçalho fixo (`CabecalhoReport.jpg` ~20.5mm)
+- **Solução**: `@page { margin: 24mm 15mm 20mm }` — margem superior maior que o cabeçalho. Em **todas as páginas**, o conteúdo começa sempre abaixo do cabeçalho
+- `padding-top: 80px` no `#relatorio-print` mantém a primeira página com espaçamento original
+
+#### 2. Bloco A.6 (Total de usuários desligados)
+- Separado em tabela própria com `pageBreakBefore: 'always'` — vai para a próxima página na impressão
+- Margem 100px no print (`.tb-a6p`) para limpar o cabeçalho
+- Na tela: aparece logo abaixo do A.5 (marginTop: 0)
+
+#### 3. Bloco D.1-D.6 (Cor/Raça)
+- **D.1-D.2**: Branco, Pardo — ficam na tabela principal
+- **D.3-D.6**: Preto, Amarelo, Indígena, Imigrantes — tabela separada com `pageBreakBefore: 'always'` (`.tb-d4p`)
+- Margem 100px no print
+
+#### 4. Bloco G.1-G.6 (Encaminhamentos)
+- **G.1-G.2**: Mercado de trabalho, Cursos — tabela principal com `pageBreakBefore: 'always'`
+- **G.3-G.6**: Políticas públicas, Rede socioassistencial, Documentos, Outros — tabela separada sem page-break extra (`.tb-g3p`)
+- Todo o Bloco II Encaminhamentos vai para a próxima página
+
+#### 5. Bloco IV (Informações Complementares)
+- `keep-together` + `pageBreakBefore: 'always'` — vai inteiro para a próxima página
+
+#### 6. Registro Fotográfico (Imagens por Categoria)
+- **Problema anterior**: Flexbox (`display:flex; flex-wrap:wrap`) causava duplicação de fotos entre páginas no Chrome print
+- **Solução atual**: Cada linha de 4 imagens é uma `<table>` independente com `<tr>` e 4 `<td>`
+- **`<table className="img-tbl">`**: `table-layout: fixed`, `width: 100%`
+- **`<tr style={{ pageBreakInside: 'avoid' }}>`**: linha inteira não corta entre páginas
+- **`<td>`**: 25% largura, 160×160 (170×170 no print), imagem com `object-fit: contain`
+- **`keep-together`** nas categorias (título + fotos) — bloco intacto se couber na página
+- **`.img-print-page`**: `page-break-before: always; margin-top: 100px`
+- **`.categoria-titulo`**: `break-after: avoid` — título não fica órfão
+- **Observação**: Ainda há problemas com imagens grandes (>4 por categoria) ou muitas categorias — pode haver sobreposição ou corte no topo de páginas seguintes
+
+#### 7. Espaçamentos Ajustados
+- **Bloco I → Bloco II**: redução de `marginBottom: 50, paddingBottom: 20` para `marginBottom: 4`
+- **Bloco E → Bloco II**: espaçamento mínimo
+- **Bloco III (H)**: `keep-together` apenas na tabela H, imagens fora (podem quebrar)
+
+### Pendências para 09/07/2026
+- **Anexar Imagens por Categoria**: Imagens ainda estão se perdendo ou não mostrando por completo na impressão quando há muitas imagens em uma categoria
+- Revisar a fragmentação de `<table>` nas linhas de imagem — pode ser necessário um container único com múltiplas `<tr>` em vez de uma tabela por linha
+- Verificar se o `padding-top: 80px` + `@page margin 24mm` não criou espaçamento excessivo na primeira página
+- Testar com diferentes quantidades de imagens (2, 6, 10+) para garantir que todas aparecem sem corte
