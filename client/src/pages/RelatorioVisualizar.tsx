@@ -136,7 +136,7 @@ export default function RelatorioVisualizar() {
             .tb-d4p { margin-top: 100px !important; }
             .tb-g3p { margin-top: 100px !important; }
             .img-print-page { page-break-before: always; margin-top: 100px !important; }
-            .img-tbl td > div { width: 170px !important; height: 170px !important; }
+            .img-tbl td { height: 170px !important; }
           }
           @media screen {
             #header-print { max-width: 210mm; margin: 0 auto; background: #fff; border-radius: 4px 4px 0 0; }
@@ -149,7 +149,7 @@ export default function RelatorioVisualizar() {
           .tb .num { text-align: center; width: 50px; }
           .tb .num-sm { text-align: center; width: 40px; }
           .tb .section-title { background: #5B9BD5; color: #fff; font-weight: 700; text-align: center; text-transform: uppercase; font-size: 10pt; }
-          .img-tbl { width: 100%; border-collapse: collapse; }
+          .img-tbl { width: 100%; border-collapse: collapse; table-layout: fixed; }
           .img-tbl td { width: 25%; padding: 4px; text-align: center; vertical-align: middle; border: none; }
           .categoria-titulo { break-after: avoid; page-break-after: avoid; }
         `}</style>
@@ -567,26 +567,19 @@ export default function RelatorioVisualizar() {
                       {cat.label} ({catImgs.length})
                     </p>
                     {rows.map((linha, rowIndex) => (
-                      <table key={rowIndex} className="img-tbl" style={rowIndex === 0 ? { pageBreakBefore: 'avoid' } : undefined}>
+                      <table key={rowIndex} className="img-tbl">
                         <tbody>
                           <tr style={{ pageBreakInside: 'avoid' }}>
                             {linha.map((img: any) => (
-                              <td key={img.id}>
-                                <div style={{
-                                  width: 160, height: 160, overflow: 'hidden',
-                                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                  border: '1px solid #000',
-                                }}>
-                                  <img
-                                    src={img.data || img.url || `${IMG_BASE}/${img.filename}`}
-                                    alt={img.original_name}
-                                    style={{
-                                      maxWidth: '100%', maxHeight: '100%',
-                                      objectFit: 'contain',
-                                      transform: `rotate(${img.rotation || 0}deg)`,
-                                    }}
-                                  />
-                                </div>
+                              <td key={img.id} style={{ width: '25%', padding: 4, textAlign: 'center', verticalAlign: 'middle', border: '1px solid #000', height: 160 }}>
+                                <img
+                                  src={img.data || img.url || `${IMG_BASE}/${img.filename}`}
+                                  alt={img.original_name}
+                                  style={{
+                                    maxWidth: '100%', maxHeight: '100%', objectFit: 'contain',
+                                    transform: `rotate(${img.rotation || 0}deg)`,
+                                  }}
+                                />
                               </td>
                             ))}
                           </tr>
