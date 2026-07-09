@@ -286,10 +286,9 @@ export default function RelatorioVisualizar() {
                   ].map(([key, label]) => {
                     const v = d.blocoA?.[key] ?? 0;
                     return (
-                      <span key={key} style={{ display: 'inline-flex', alignItems: 'center', gap: 4, marginRight: 12, marginBottom: 4 }}>
-                        <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 16, height: 16, border: '2px solid #000', borderRadius: 2, fontSize: 11, fontWeight: 700, lineHeight: 1 }}>{v > 0 ? 'X' : ' '}</span>
-                        {label}{v > 0 ? ` (${v})` : ''}
-                      </span>
+                      <div key={key} style={{ marginBottom: 2, fontSize: '9pt', whiteSpace: 'nowrap' }}>
+                        {v > 0 ? '( X )' : '(   )'} {label}{v > 0 ? ` (${v})` : ''}
+                      </div>
                     );
                   })}
                 </td>
@@ -302,19 +301,23 @@ export default function RelatorioVisualizar() {
 
           {/* B. Faixa etária */}
           <table className="tb">
-            <tbody>
+            <thead>
               <tr style={{ background: '#5B9BD5', color: '#fff' }}>
-                <td style={{ fontWeight: 700, width: '60%' }} colSpan={2}>B. Faixa etária dos usuários conveniados/SEMAS</td>
-                <td style={{ fontWeight: 700, textAlign: 'center', width: '20%' }}>Total</td>
+                <th style={{ width: '60%' }}>B. Faixa etária dos usuários conveniados/SEMAS</th>
+                <th style={{ width: '20%' }}>Masculino</th>
+                <th style={{ width: '20%' }}>Feminino</th>
               </tr>
+            </thead>
+            <tbody>
               {[
                 ['B1', 'B.1.  0 a 6 anos', 'B1_M', 'B1_F'],
                 ['B2', 'B.2.  07 a 14 anos', 'B2_M', 'B2_F'],
                 ['B3', 'B.3  15 a 17 anos', 'B3_M', 'B3_F'],
               ].map(([id, lbl, mk, fk]) => (
                 <tr key={id}>
-                  <td style={{ paddingLeft: 20, width: '60%' }} colSpan={2}>{lbl}</td>
-                  <td className="num">{d.blocoB?.[fk] ?? '-'} / {d.blocoB?.[mk] ?? '-'}</td>
+                  <td style={{ paddingLeft: 20 }}>{lbl}</td>
+                  <td className="num">{d.blocoB?.[mk] ?? '-'}</td>
+                  <td className="num">{d.blocoB?.[fk] ?? '-'}</td>
                 </tr>
               ))}
             </tbody>
