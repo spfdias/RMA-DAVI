@@ -446,18 +446,24 @@ export default function RelatorioVisualizar() {
         </div>
 
         {/* ===== BLOCO II – ATIVIDADES ===== */}
-        <div className="keep-together" style={{ ...S.section, pageBreakBefore: 'avoid' }}>
-          <table className="tb">
+        <div style={{ ...S.section, pageBreakBefore: 'avoid' }}>
+          <div className="keep-together" style={{ breakAfter: 'avoid', pageBreakAfter: 'avoid' }}>
+            <table className="tb" style={{ marginBottom: 0 }}>
+              <tbody>
+                <tr className="section-title">
+                  <td style={{ fontSize: '11pt' }} colSpan={2}>
+                    Bloco II – Atividades realizadas com os usuários conveniados/SEMAS
+                  </td>
+                </tr>
+                <tr style={{ background: '#5B9BD5', color: '#fff' }}>
+                  <td style={{ fontWeight: 700, width: '80%' }}>F. Volume de atividades realizadas</td>
+                  <td style={{ fontWeight: 700, textAlign: 'center', width: '20%' }}>Total</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <table className="tb" style={{ marginTop: 0, borderTop: 'none' }}>
             <tbody>
-              <tr className="section-title">
-                <td style={{ fontSize: '11pt' }} colSpan={2}>
-                  Bloco II – Atividades realizadas com os usuários conveniados/SEMAS
-                </td>
-              </tr>
-              <tr style={{ background: '#5B9BD5', color: '#fff' }}>
-                <td style={{ fontWeight: 700, width: '80%' }}>F. Volume de atividades realizadas</td>
-                <td style={{ fontWeight: 700, textAlign: 'center', width: '20%' }}>Total</td>
-              </tr>
               {[
                 ['F1', 'F.1. Total de atendimentos individualizados realizados pela equipe técnica'],
                 ['F2', 'F.2. Total de atendimentos em grupo realizados pela equipe técnica'],
