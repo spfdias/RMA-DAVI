@@ -295,10 +295,9 @@ export default function RelatorioVisualizar() {
                     ['A6_falecimento', 'Falecimento'],
                     ['A6_transferencia', 'Transferida para outra unidade'],
                   ].map(([key, label]) => {
-                    const v = d.blocoA?.[key] ?? 0;
                     return (
                       <div key={key} style={{ marginBottom: 2, fontSize: '9pt', whiteSpace: 'nowrap' }}>
-                        {v > 0 ? '( X )' : '(   )'} {label}{v > 0 ? ` (${v})` : ''}
+                        ( ) {label}
                       </div>
                     );
                   })}
