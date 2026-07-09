@@ -135,6 +135,7 @@ export default function RelatorioVisualizar() {
             .tb-a6p { margin-top: 100px !important; }
             .bloco-d { margin-top: 100px !important; }
             .bloco-g { margin-top: 150px !important; }
+            .bloco-h { margin-top: 150px !important; }
             .img-print-page { page-break-before: always; margin-top: 100px !important; }
             .img-tbl td { height: 170px !important; }
           }
@@ -513,9 +514,8 @@ export default function RelatorioVisualizar() {
         </div>
 
         {/* ===== BLOCO III – DESCRIÇÃO ===== */}
-        <div style={S.section}>
-          <div className="keep-together">
-            <table className="tb">
+        <div className="bloco-h" style={{ ...S.section, pageBreakBefore: 'always' }}>
+            <table className="tb" style={{ marginTop: 0 }}>
             <tbody>
               <tr>
                 <td className="section-title" style={{ fontSize: '11pt', background: '#5B9BD5', color: '#fff', fontWeight: 700, textAlign: 'center', textTransform: 'uppercase' }}>
@@ -533,7 +533,6 @@ export default function RelatorioVisualizar() {
               </tr>
             </tbody>
           </table>
-          </div>
 
           {imagens.length > 0 && (
             <div className="img-print-page">
