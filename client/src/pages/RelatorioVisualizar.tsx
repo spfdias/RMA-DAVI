@@ -514,7 +514,7 @@ export default function RelatorioVisualizar() {
 
         {/* ===== BLOCO III – DESCRIÇÃO ===== */}
         <div style={S.section}>
-          <div className="keep-together">
+          <div className="keep-together" style={{ breakAfter: 'avoid', pageBreakAfter: 'avoid' }}>
             <table className="tb" style={{ marginBottom: 0 }}>
               <tbody>
                 <tr>
@@ -528,10 +528,10 @@ export default function RelatorioVisualizar() {
               </tbody>
             </table>
           </div>
-          <table className="tb" style={{ marginTop: 0, borderTop: 'none' }}>
+          <table className="tb" style={{ marginTop: 0, borderTop: 'none', breakInside: 'auto', pageBreakInside: 'auto' }}>
             <tbody>
               <tr>
-                <td style={{ minHeight: 60, padding: '10px 8px', lineHeight: 1.6, textAlign: 'justify', borderTop: 'none' }}>
+                <td style={{ minHeight: 60, padding: '10px 8px', lineHeight: 1.6, textAlign: 'justify', borderTop: 'none', breakInside: 'auto', pageBreakInside: 'auto' }}>
                   <p style={{ marginBottom: 6, fontWeight: 600 }}>H.1. Descreva quais atividades os usuários realizaram durante o mês (convivência, socioeducativa, passeios, visitas a outros locais, atendimento médico, atividades da vida diária, para independência, de auto cuidado, cursos, etc)</p>
                   {d.blocoH?.descricao || 'N/A'}
                 </td>
