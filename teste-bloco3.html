@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Teste Bloco III – Quebra de Página</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: Arial, 'Times New Roman', serif; background: #eee; padding: 20px; }
+
+  @page { margin: 32mm 15mm 25mm; size: A4; }
+
+  @media print {
+    body { font-family: Arial, 'Times New Roman', serif; color: #000; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .no-print { display: none !important; }
+    .keep-together { page-break-inside: avoid; }
+    #header-print { position: fixed; top: 0; left: 0; right: 0; text-align: center; background: #fff; z-index: 1000; }
+    #header-print img { width: 100%; height: auto; display: block; }
+    #footer-print { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; background: #fff; border-top: 1px solid #999; font-size: 7.5pt; line-height: 1.6; }
+    #relatorio-print { padding-top: 80px; padding-bottom: 40px; }
+    .tb th, .tb .section-title, .tb tr[style*="background"] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  @media screen {
+    #header-print { max-width: 210mm; margin: 0 auto; background: #fff; border-radius: 4px 4px 0 0; }
+    #header-print img { width: 100%; height: auto; display: block; border-radius: 4px 4px 0 0; }
+    #relatorio-print { background: #fff; padding: 8mm 15mm 20mm; border-radius: 0 0 4px 4px; box-shadow: 0 1px 12px rgba(0,0,0,0.12); max-width: 210mm; margin: 20px auto; font-family: Arial, 'Times New Roman', serif; }
+    .page-box { background: #fff; padding: 8mm 15mm 20mm; border-radius: 4px; box-shadow: 0 1px 12px rgba(0,0,0,0.12); max-width: 210mm; margin: 20px auto; }
+  }
+
+  .tb { width: 100%; border-collapse: collapse; margin: 8px 0 14px; }
+  .tb th, .tb td { border: 1px solid #000; padding: 5px 8px; font-size: 9pt; vertical-align: top; text-align: left; }
+  .tb th { background: #5B9BD5; color: #fff; font-weight: 700; text-align: center; text-transform: uppercase; }
+  .tb .section-title { background: #5B9BD5; color: #fff; font-weight: 700; text-align: center; text-transform: uppercase; font-size: 10pt; }
+
+  hr { margin: 40px 0; border: 0; border-top: 3px dashed #999; }
+  .label { font-size: 12pt; font-weight: 700; color: #1a237e; margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+<div id="header-print">
+  <img src="/CabecalhoReport.jpg" alt="Cabecalho" style="width:100%;height:auto;display:block;">
+</div>
+
+<div class="no-print" style="text-align:center;margin-bottom:20px;">
+  <p style="font-size:14pt;font-weight:700;color:#1a237e;">Teste Bloco III – Quebra de Página</p>
+  <p style="font-size:10pt;color:#666;">Use Ctrl+P (ou Cmd+P) para gerar o PDF e validar o comportamento</p>
+  <p style="font-size:9pt;color:#999;margin-top:6px;">Cenario 1: texto CURTO | Cenario 2: texto LONGO (quebra entre paginas)</p>
+</div>
+
+<!-- ============================================================ -->
+<!-- CENARIO 1: TEXTO CURTO -->
+<!-- ============================================================ -->
+<div class="page-box">
+  <div class="label">CENARIO 1 – Texto curto (cabeçalho + conteudo na mesma pagina)</div>
+
+  <div id="relatorio-print" style="font-size:10pt;line-height:1.5;color:#000;">
+
+    <!-- Copia fiel do Bloco III com as 3 regras aplicadas -->
+    <div style="margin-bottom:18px;">
+      <div class="keep-together" style="break-after:avoid;page-break-after:avoid;">
+        <table class="tb" style="margin-bottom:0;">
+          <tbody>
+            <tr>
+              <td class="section-title" style="font-size:11pt;background:#5B9BD5;color:#fff;font-weight:700;text-align:center;text-transform:uppercase;">
+                Bloco III – Descricao das atividades mensal realizadas com os usuarios/SEMAS
+              </td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;background:#5B9BD5;color:#fff;border-bottom:none;">H. Descricao das atividades</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <table class="tb" style="margin-top:0;border-top:none;break-inside:auto;page-break-inside:auto;">
+        <tbody>
+          <tr>
+            <td style="min-height:60;padding:10px 8px;line-height:1.6;text-align:justify;border-top:none;break-inside:auto;page-break-inside:auto;">
+              <p style="margin-bottom:6px;font-weight:600;">H.1. Descreva quais atividades os usuarios realizaram durante o mes (convivencia, socioeducativa, passeios, visitas a outros locais, atendimento medico, atividades da vida diaria, para independencia, de auto cuidado, cursos, etc)</p>
+              Texto curto de exemplo. Os usuarios participaram de oficinas de artesanato, rodas de conversa e passeio ao parque municipal.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<!-- CENARIO 2: TEXTO LONGO -->
+<!-- ============================================================ -->
+<div class="page-box">
+  <div class="label">CENARIO 2 – Texto longo (cabeçalho NAO deve ficar isolado; conteudo deve quebrar)</div>
+
+  <div id="relatorio-print" style="font-size:10pt;line-height:1.5;color:#000;">
+
+    <div style="margin-bottom:18px;">
+      <div class="keep-together" style="break-after:avoid;page-break-after:avoid;">
+        <table class="tb" style="margin-bottom:0;">
+          <tbody>
+            <tr>
+              <td class="section-title" style="font-size:11pt;background:#5B9BD5;color:#fff;font-weight:700;text-align:center;text-transform:uppercase;">
+                Bloco III – Descricao das atividades mensal realizadas com os usuarios/SEMAS
+              </td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;background:#5B9BD5;color:#fff;border-bottom:none;">H. Descricao das atividades</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <table class="tb" style="margin-top:0;border-top:none;break-inside:auto;page-break-inside:auto;">
+        <tbody>
+          <tr>
+            <td style="min-height:60;padding:10px 8px;line-height:1.6;text-align:justify;border-top:none;break-inside:auto;page-break-inside:auto;">
+              <p style="margin-bottom:6px;font-weight:600;">H.1. Descreva quais atividades os usuarios realizaram durante o mes (convivencia, socioeducativa, passeios, visitas a outros locais, atendimento medico, atividades da vida diaria, para independencia, de auto cuidado, cursos, etc)</p>
+              <p>Durante o mes de referencia, os usuarios participaram de diversas atividades planejadas pela equipe tecnica, visando o desenvolvimento da autonomia, socializacao e bem-estar psicossocial. As atividades foram organizadas conforme o Plano Individual de Atendimento (PIA) de cada usuario, respeitando suas limitacoes e potencialidades.</p>
+              <p>Na primeira semana, foram realizadas oficinas de artesanato com foco na coordenacao motora fina e expressao criativa. Os usuarios confeccionaram pecas decorativas com material reciclavel, demonstrando grande interesse e evolucao na tecnicas de pintura e colagem. A atividade ocorreu no salao de convivencia da unidade, com a participacao de 12 usuarios.</p>
+              <p>Na segunda semana, a equipe promoveu uma roda de conversa sobre cuidados com a saude e higiene pessoal. O encontro contou com a participacao de uma enfermeira da UBS de referencia, que abordou temas como lavagem correta das maos, saude bucal e prevencao de doencas sazonais. Os usuarios interagiram fazendo perguntas e compartilhando experiencias.</p>
+              <p>No final de semana, foi realizado um passeio ao Parque Antenor Martins, onde os usuarios puderam desfrutar de atividades ao ar livre, como caminhada orientada, piquenique coletivo e jogos recreativos. O passeio teve como objetivo estimular a integracao social e o contato com a natureza, sendo avaliado positivamente por todos os participantes.</p>
+              <p>Na terceira semana, teve inicio a oficina de culinaria basica, onde os usuarios aprenderam a preparar receitas simples e nutritivas. A atividade foi conduzida por uma nutricionista voluntaria e abordou desde a higienizacao dos alimentos ate o preparo e conservacao das refeicoes. Os usuarios mostraram entusiasmo e alguns inclusive se ofereceram para repetir a experiencia em casa.</p>
+              <p>Tambem foram realizados atendimentos psicologicos individuais, com foco no suporte emocional e na elaboracao de estrategias de enfrentamento para as dificuldades do dia a dia. Os atendimentos ocorreram no consultorio da unidade, com duracao media de 50 minutos cada, totalizando 8 sessoes no mes.</p>
+              <p>Na quarta semana, a equipe tecnica organizou uma visita a Feira Central da cidade, onde os usuarios puderam praticar habilidades de compra e contato social em ambiente externo a unidade. Cada usuario recebeu uma pequena quantia para administrar, promovendo o exercicio do planejamento financeiro e tomada de decisoes.</p>
+              <p>Para encerrar o mes, foi realizada uma confraternizacao com musica, danca e lanche coletivo em comemoracao aos aniversariantes do periodo. A atividade contou com a participacao de todos os usuarios e profissionais de plantao, fortalecendo os vinculos afetivos e o senso de pertencimento ao grupo.</p>
+              <p>Paralelamente as atividades em grupo, a equipe tecnica manteve os atendimentos de rotina, incluindo a atualizacao dos prontuarios, elaboracao de relatorios, contato com familiares e reunioes de equipe para discussao dos casos. Tambem foram realizados encaminhamentos para a rede de saude e assistencia social conforme necessidade identificada em cada caso.</p>
+              <p>Considera-se que o mes foi produtivo e as atividades propostas alcancaram os objetivos previstos, contribuindo para a melhoria da qualidade de vida dos usuarios e para o fortalecimento de sua autonomia e autoconfianca. A equipe segue acompanhando cada caso de forma individualizada, ajustando as intervencoes conforme as demandas que surgem ao longo do processo de acolhimento.</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- RODAPE (fixo no PDF) -->
+<!-- ============================================================ -->
+<div id="footer-print" style="text-align:center;font-size:7.5pt;line-height:1.6;padding:4px 0;border-top:1px solid #999;">
+  <div style="color:#1a3a6b;font-weight:600;">www.dourados.ms.gov.br/index.php/categoria/semas/</div>
+  <div style="color:#2a2a2a;">Rua Coronel Ponciano, 1700 . Pq. do Jequitibas . Bloco Anexo . 79830-200 . Dourados-MS</div>
+  <div>
+    <span style="color:#1a3a6b;font-weight:600;">67 3411-7710 / 3411-7746</span>
+    <span style="color:#2a2a2a;"> . semas@dourados.ms.gov.br</span>
+  </div>
+</div>
+
+</body>
+</html>
