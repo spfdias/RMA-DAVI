@@ -389,7 +389,6 @@ export default function RelatorioVisualizar() {
               {[
                 ['D1', 'D.1. Branco'],
                 ['D2', 'D.2. Pardo'],
-                ['D3', 'D.3. Preto'],
               ].map(([dk, lbl]) => (
                 <tr key={dk}>
                   <td>{lbl}</td>
@@ -403,6 +402,7 @@ export default function RelatorioVisualizar() {
           <table className="tb tb-d4p" style={{ pageBreakBefore: 'always', marginTop: 0 }}>
             <tbody>
               {[
+                ['D3', 'D.3. Preto'],
                 ['D4', 'D.4. Amarelo'],
                 ['D5', 'D.5. Indígena'],
                 ['D6', 'D.6. Imigrantes. Especifique a nacionalidade\nPaís:'],
