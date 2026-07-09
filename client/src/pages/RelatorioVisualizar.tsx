@@ -136,6 +136,7 @@ export default function RelatorioVisualizar() {
             .tb-d4p { margin-top: 100px !important; }
             .tb-g3p { margin-top: 100px !important; }
             .img-print-page { page-break-before: always; margin-top: 100px !important; }
+            .img-tbl td > div { width: 170px !important; height: 170px !important; }
           }
           @media screen {
             #header-print { max-width: 210mm; margin: 0 auto; background: #fff; border-radius: 4px 4px 0 0; }
@@ -148,10 +149,8 @@ export default function RelatorioVisualizar() {
           .tb .num { text-align: center; width: 50px; }
           .tb .num-sm { text-align: center; width: 40px; }
           .tb .section-title { background: #5B9BD5; color: #fff; font-weight: 700; text-align: center; text-transform: uppercase; font-size: 10pt; }
-          .img-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
-          .img-grid img { width: 150px; height: 150px; object-fit: cover; border: 1px solid #000; }
-          @media print { .img-grid img { width: 170px; height: 170px; } }
-          .img-row { display: flex; gap: 8px; margin-bottom: 8px; break-inside: avoid; page-break-inside: avoid; }
+          .img-tbl { width: 100%; border-collapse: collapse; }
+          .img-tbl td { width: 25%; padding: 4px; text-align: center; vertical-align: middle; border: none; }
           .categoria-titulo { break-after: avoid; page-break-after: avoid; }
         `}</style>
 
@@ -568,31 +567,31 @@ export default function RelatorioVisualizar() {
                       {cat.label} ({catImgs.length})
                     </p>
                     {rows.map((linha, rowIndex) => (
-                      <div
-                        key={rowIndex}
-                        className="img-row"
-                        // Mantém a primeira linha grudada no título (evita
-                        // título "órfão" sozinho no fim de uma página)
-                        style={rowIndex === 0 ? { breakBefore: 'avoid', pageBreakBefore: 'avoid' } : undefined}
-                      >
-                        {linha.map((img: any) => (
-                          <div key={img.id} style={{
-                            width: 160, height: 160, overflow: 'hidden',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            border: '1px solid #000',
-                          }}>
-                            <img
-                              src={img.data || img.url || `${IMG_BASE}/${img.filename}`}
-                              alt={img.original_name}
-                              style={{
-                                maxWidth: '100%', maxHeight: '100%',
-                                objectFit: 'contain',
-                                transform: `rotate(${img.rotation || 0}deg)`,
-                              }}
-                            />
-                          </div>
-                        ))}
-                      </div>
+                      <table key={rowIndex} className="img-tbl" style={rowIndex === 0 ? { pageBreakBefore: 'avoid' } : undefined}>
+                        <tbody>
+                          <tr style={{ pageBreakInside: 'avoid' }}>
+                            {linha.map((img: any) => (
+                              <td key={img.id}>
+                                <div style={{
+                                  width: 160, height: 160, overflow: 'hidden',
+                                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                  border: '1px solid #000',
+                                }}>
+                                  <img
+                                    src={img.data || img.url || `${IMG_BASE}/${img.filename}`}
+                                    alt={img.original_name}
+                                    style={{
+                                      maxWidth: '100%', maxHeight: '100%',
+                                      objectFit: 'contain',
+                                      transform: `rotate(${img.rotation || 0}deg)`,
+                                    }}
+                                  />
+                                </div>
+                              </td>
+                            ))}
+                          </tr>
+                        </tbody>
+                      </table>
                     ))}
                   </div>
                 );
