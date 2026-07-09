@@ -374,30 +374,32 @@ export default function RelatorioVisualizar() {
           </p>
 
           {/* D. Cor / Raça */}
-          <table className="tb">
-            <thead>
-              <tr className="section-title">
-                <th style={{ fontSize: '10pt' }} colSpan={3}>D. Cor ou raça/ nacionalidade dos usuários conveniados/SEMAS</th>
-              </tr>
-              <tr style={{ background: '#5B9BD5', color: '#fff' }}>
-                <th style={{ width: '60%' }}>&nbsp;</th>
-                <th style={{ width: '20%' }}>Feminino</th>
-                <th style={{ width: '20%' }}>Masculino</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[
-                ['D1', 'D.1. Branco'],
-                ['D2', 'D.2. Pardo'],
-              ].map(([dk, lbl]) => (
-                <tr key={dk}>
-                  <td>{lbl}</td>
-                  <td className="num">{d.blocoD?.[dk]?.feminino ?? '-'}</td>
-                  <td className="num">{d.blocoD?.[dk]?.masculino ?? '-'}</td>
+          <div className="keep-together">
+            <table className="tb">
+              <thead>
+                <tr className="section-title">
+                  <th style={{ fontSize: '10pt' }} colSpan={3}>D. Cor ou raça/ nacionalidade dos usuários conveniados/SEMAS</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+                <tr style={{ background: '#5B9BD5', color: '#fff' }}>
+                  <th style={{ width: '60%' }}>&nbsp;</th>
+                  <th style={{ width: '20%' }}>Feminino</th>
+                  <th style={{ width: '20%' }}>Masculino</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['D1', 'D.1. Branco'],
+                  ['D2', 'D.2. Pardo'],
+                ].map(([dk, lbl]) => (
+                  <tr key={dk}>
+                    <td>{lbl}</td>
+                    <td className="num">{d.blocoD?.[dk]?.feminino ?? '-'}</td>
+                    <td className="num">{d.blocoD?.[dk]?.masculino ?? '-'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
           <table className="tb tb-d4p" style={{ pageBreakBefore: 'always', marginTop: 0 }}>
             <tbody>
