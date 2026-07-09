@@ -313,7 +313,7 @@ export default function RelatorioVisualizar() {
           <table className="tb">
             <thead>
               <tr style={{ background: '#5B9BD5', color: '#fff' }}>
-                <th style={{ width: '60%', textTransform: 'none' }}>B. Faixa etária dos usuários conveniados/SEMAS</th>
+                <th style={{ width: '60%', textTransform: 'none', textAlign: 'left' }}>B. Faixa etária dos usuários conveniados/SEMAS</th>
                 <th style={{ width: '20%' }}>Masculino</th>
                 <th style={{ width: '20%' }}>Feminino</th>
               </tr>
