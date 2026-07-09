@@ -109,9 +109,20 @@ export default function RelatorioVisualizar() {
         )}
       </div>
 
-      {/* ===== HEADER IMAGE - outside content container for reliable print ===== */}
+      {/* ===== HEADER - native HTML+CSS com brasao recortado ===== */}
       <div id="header-print">
-        <img src="/CabecalhoReport.jpg" alt="Cabeçalho" style={{ width: '100%', height: 'auto', display: 'block' }} />
+        <div className="header-content">
+          <img src="/brasao.png" alt="Brasão" className="header-brasao" />
+          <div className="header-text">
+            <div className="header-linha1">ESTADO DE MATO GROSSO DO SUL</div>
+            <div className="header-linha2">PREFEITURA DE DOURADOS</div>
+            <div className="header-linha3">SECRETARIA MUNICIPAL DE ASSISTÊNCIA SOCIAL - SEMAS</div>
+          </div>
+        </div>
+        <div className="header-bars">
+          <div className="header-bar-amarela" />
+          <div className="header-bar-azul" />
+        </div>
       </div>
 
       <div id="relatorio-print" style={{
@@ -128,7 +139,15 @@ export default function RelatorioVisualizar() {
             .no-print { display: none !important; }
             .keep-together { page-break-inside: avoid; }
             #header-print { position: fixed; top: 0; left: 0; right: 0; text-align: center; background: #fff; z-index: 1000; }
-            #header-print img { width: 100%; height: auto; display: block; }
+            .header-content { display: flex; align-items: center; padding: 3px 15mm; }
+            .header-brasao { width: 20mm; height: auto; margin-right: 6px; }
+            .header-text { flex: 1; text-align: center; }
+            .header-linha1 { font-size: 9.5pt; font-weight: 700; color: #1a3a6b; letter-spacing: 0.5px; }
+            .header-linha2 { font-size: 12pt; font-weight: 700; color: #1a3a6b; letter-spacing: 0.5px; }
+            .header-linha3 { font-size: 9pt; color: #1a3a6b; }
+            .header-bars { width: 100%; }
+            .header-bar-amarela { height: 2mm; background: #FAE53A; }
+            .header-bar-azul { height: 2mm; background: #374397; }
             #footer-print { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; background: #fff; border-top: 1px solid #999; font-size: 7.5pt; line-height: 1.6; }
             #relatorio-print { padding-top: 80px; padding-bottom: 40px; }
             .tb th, .tb .section-title, .tb tr[style*="background"] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -140,7 +159,15 @@ export default function RelatorioVisualizar() {
           }
           @media screen {
             #header-print { max-width: 210mm; margin: 0 auto; background: #fff; border-radius: 4px 4px 0 0; }
-            #header-print img { width: 100%; height: auto; display: block; border-radius: 4px 4px 0 0; }
+            .header-content { display: flex; align-items: center; padding: 4px 15mm; }
+            .header-brasao { width: 50px; height: auto; margin-right: 8px; }
+            .header-text { flex: 1; text-align: center; }
+            .header-linha1 { font-size: 11pt; font-weight: 700; color: #1a3a6b; }
+            .header-linha2 { font-size: 14pt; font-weight: 700; color: #1a3a6b; }
+            .header-linha3 { font-size: 10pt; color: #1a3a6b; }
+            .header-bars { width: 100%; }
+            .header-bar-amarela { height: 3px; background: #FAE53A; }
+            .header-bar-azul { height: 3px; background: #374397; }
             #relatorio-print { background: #fff; padding: 8mm 15mm 20mm; border-radius: 0 0 4px 4px; box-shadow: 0 1px 12px rgba(0,0,0,0.12); max-width: 210mm; margin: 0 auto; font-family: Arial, 'Times New Roman', serif; }
           }
           .tb { width: 100%; border-collapse: collapse; margin: 8px 0 14px; }
