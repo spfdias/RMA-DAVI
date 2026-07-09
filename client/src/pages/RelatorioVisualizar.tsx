@@ -132,7 +132,7 @@ export default function RelatorioVisualizar() {
             #footer-print { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; background: #fff; border-top: 1px solid #999; font-size: 7.5pt; line-height: 1.6; z-index: 1000; }
             #relatorio-print { padding-top: 82px; padding-bottom: 80px; }
             .tb th, .tb .section-title, .tb tr[style*="background"] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .tb-a6p { margin-top: 70px !important; }
+            .tb-a6p { margin-top: 100px !important; }
           }
           @media screen {
             #header-print { max-width: 210mm; margin: 0 auto; background: #fff; border-radius: 4px 4px 0 0; }
