@@ -280,6 +280,7 @@ export default function RelatorioVisualizar() {
               <tr>
                 <td style={{ border: '1px solid #000', padding: '5px 8px', fontSize: '9pt', verticalAlign: 'top' }}>
                   A.6. Total de usuários desligados<br /><br />
+                  <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                   {[
                     ['A6_familia_extensa', 'Família extensa'],
                     ['A6_familia_origem', 'Família de origem'],
@@ -290,11 +291,12 @@ export default function RelatorioVisualizar() {
                   ].map(([key, label]) => {
                     const v = d.blocoA?.[key] ?? 0;
                     return (
-                      <div key={key} style={{ marginBottom: 2, fontSize: '9pt', whiteSpace: 'nowrap' }}>
+                      <div key={key} style={{ width: '50%', marginBottom: 2, fontSize: '9pt', whiteSpace: 'nowrap' }}>
                         {v > 0 ? '( X )' : '(   )'} {label}{v > 0 ? ` (${v})` : ''}
                       </div>
                     );
                   })}
+                  </div>
                 </td>
                 <td className="num">-</td>
               </tr>
