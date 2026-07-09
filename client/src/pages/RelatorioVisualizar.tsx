@@ -325,7 +325,7 @@ export default function RelatorioVisualizar() {
                 ['B3', 'B.3  15 a 17 anos', 'B3_M', 'B3_F'],
               ].map(([id, lbl, mk, fk]) => (
                 <tr key={id}>
-                  <td style={{ paddingLeft: 20 }}>{lbl}</td>
+                  <td>{lbl}</td>
                   <td className="num">{d.blocoB?.[mk] ?? '-'}</td>
                   <td className="num">{d.blocoB?.[fk] ?? '-'}</td>
                 </tr>
