@@ -109,6 +109,11 @@ export default function RelatorioVisualizar() {
         )}
       </div>
 
+      {/* ===== HEADER IMAGE - outside content container for reliable print ===== */}
+      <div id="header-print">
+        <img src="/CabecalhoReport.jpg" alt="Cabeçalho" style={{ width: '100%', height: 'auto', display: 'block' }} />
+      </div>
+
       <div id="relatorio-print" style={{
         fontSize: '10pt', lineHeight: 1.5, color: '#000',
       }}>
@@ -122,15 +127,16 @@ export default function RelatorioVisualizar() {
             main { background: #fff !important; padding: 0 !important; margin: 0 !important; }
             .no-print { display: none !important; }
             .keep-together { page-break-inside: avoid; }
-            .avoid-break { page-break-after: avoid; }
             #header-print { position: fixed; top: 0; left: 0; right: 0; text-align: center; background: #fff; z-index: 1000; }
-            #header-print img { max-width: 140px; height: auto; }
-            #footer-print { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; background: #fff; padding: 4px 15mm; border-top: 1px solid #999; font-size: 7.5pt; line-height: 1.6; z-index: 1000; }
-            #relatorio-print { padding-top: 30px; padding-bottom: 60px; }
+            #header-print img { width: 100%; height: auto; display: block; }
+            #footer-print { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; background: #fff; border-top: 1px solid #999; font-size: 7.5pt; line-height: 1.6; z-index: 1000; }
+            #relatorio-print { padding-top: 148px; padding-bottom: 80px; }
             .tb th, .tb .section-title, .tb tr[style*="background"] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
           }
           @media screen {
-            #relatorio-print { background: #fff; padding: 20mm 15mm; border-radius: 4px; box-shadow: 0 1px 12px rgba(0,0,0,0.12); max-width: 210mm; margin: 0 auto; font-family: Arial, 'Times New Roman', serif; }
+            #header-print { max-width: 210mm; margin: 0 auto; background: #fff; border-radius: 4px 4px 0 0; }
+            #header-print img { width: 100%; height: auto; display: block; border-radius: 4px 4px 0 0; }
+            #relatorio-print { background: #fff; padding: 20mm 15mm; border-radius: 0 0 4px 4px; box-shadow: 0 1px 12px rgba(0,0,0,0.12); max-width: 210mm; margin: 0 auto; font-family: Arial, 'Times New Roman', serif; }
           }
           .tb { width: 100%; border-collapse: collapse; margin: 8px 0 14px; }
           .tb th, .tb td { border: 1px solid #000; padding: 5px 8px; font-size: 9pt; vertical-align: top; text-align: left; }
@@ -143,13 +149,8 @@ export default function RelatorioVisualizar() {
           @media print { .img-grid img { width: 170px; height: 170px; } }
         `}</style>
 
-        {/* ===== HEADER IMAGE (fixed on every page) ===== */}
-        <div id="header-print">
-          <img src="/CabecalhoReport.jpg" alt="Cabeçalho" style={{ maxWidth: '140px', height: 'auto', display: 'block', margin: '0 auto' }} />
-        </div>
-
         {/* ===== HEADER TITLE (first page only) ===== */}
-        <div className="keep-together avoid-break" style={{ textAlign: 'center', marginBottom: 20, borderBottom: '2px solid #000', background: '#5B9BD5', color: '#fff' }}>
+        <div className="keep-together avoid-break" style={{ textAlign: 'center', marginBottom: 20, borderBottom: '2px solid #000', background: '#5B9BD5', color: '#fff', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
           <p style={{ fontSize: '13pt', fontWeight: 700, lineHeight: 1.4, padding: '12px 0 16px' }}>
             RELATÓRIO MENSAL DE ATENDIMENTO<br />
             PROTEÇÃO SOCIAL ESPECIAL – ALTA COMPLEXIDADE<br />
@@ -273,20 +274,24 @@ export default function RelatorioVisualizar() {
               ))}
 
               <tr>
-                <td>
-                  A.6. Total de usuários desligados<br />
-                  ( &nbsp; ) Família extensa &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(
-                  {d.blocoA?.A6_familia_extensa || 0})<br />
-                  ( &nbsp; ) Família de origem &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(
-                  {d.blocoA?.A6_familia_origem || 0})<br />
-                  ( &nbsp; ) Família substituta &nbsp;&nbsp;&nbsp;(
-                  {d.blocoA?.A6_familia_substituta || 0})<br />
-                  ( &nbsp; ) Maioridade &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(
-                  {d.blocoA?.A6_maioridade || 0})<br />
-                  ( &nbsp; ) Falecimento &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(
-                  {d.blocoA?.A6_falecimento || 0})<br />
-                  ( &nbsp; ) Transferida para outra unidade (
-                  {d.blocoA?.A6_transferencia || 0})
+                <td style={{ border: '1px solid #000', padding: '5px 8px', fontSize: '9pt', verticalAlign: 'top' }}>
+                  A.6. Total de usuários desligados<br /><br />
+                  {[
+                    ['A6_familia_extensa', 'Família extensa'],
+                    ['A6_familia_origem', 'Família de origem'],
+                    ['A6_familia_substituta', 'Família substituta'],
+                    ['A6_maioridade', 'Maioridade'],
+                    ['A6_falecimento', 'Falecimento'],
+                    ['A6_transferencia', 'Transferida para outra unidade'],
+                  ].map(([key, label]) => {
+                    const v = d.blocoA?.[key] ?? 0;
+                    return (
+                      <span key={key} style={{ display: 'inline-flex', alignItems: 'center', gap: 4, marginRight: 12, marginBottom: 4 }}>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 16, height: 16, border: '2px solid #000', borderRadius: 2, fontSize: 11, fontWeight: 700, lineHeight: 1 }}>{v > 0 ? 'X' : ' '}</span>
+                        {label}{v > 0 ? ` (${v})` : ''}
+                      </span>
+                    );
+                  })}
                 </td>
                 <td className="num">-</td>
               </tr>
@@ -387,33 +392,34 @@ export default function RelatorioVisualizar() {
           </table>
 
           {/* E. Tempo de acolhimento */}
-          <div className="keep-together" style={{ pageBreakBefore: 'always' }}>
-          <p style={{ ...S.label, pageBreakAfter: 'avoid' }}>E. Informe há quanto tempo os conveniados/SEMAS estão acolhidos na Unidade</p>
-          <table className="tb">
-            <thead>
-              <tr>
-                {[
-                  'Menos de 1 mês', '1 a 6 meses', '7 a 12 meses',
-                  '1 a 2 anos', '3 a 5 anos', '6 a 8 anos', 'Acima 9 anos',
-                ].map((lbl, i) => (
-                  <th key={i} style={{ fontSize: '8pt' }}>{lbl}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                {[
-                  'menos_1m', '1a6m', '7a12m', '1a2a', '3a5a', '6a8a', 'acima_9a',
-                ].map((ek) => (
-                  <td key={ek} className="num">{d.blocoE?.[ek] ?? '-'}</td>
-                ))}
-              </tr>
-            </tbody>
-          </table>
+          <div className="keep-together" style={{ pageBreakBefore: 'auto', marginBottom: 50, paddingBottom: 20 }}>
+            <p style={{ ...S.label, pageBreakAfter: 'avoid' }}>E. Informe há quanto tempo os conveniados/SEMAS estão acolhidos na Unidade</p>
+            <table className="tb">
+              <thead>
+                <tr>
+                  {[
+                    'Menos de 1 mês', '1 a 6 meses', '7 a 12 meses',
+                    '1 a 2 anos', '3 a 5 anos', '6 a 8 anos', 'Acima 9 anos',
+                  ].map((lbl, i) => (
+                    <th key={i} style={{ fontSize: '8pt' }}>{lbl}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  {[
+                    'menos_1m', '1a6m', '7a12m', '1a2a', '3a5a', '6a8a', 'acima_9a',
+                  ].map((ek) => (
+                    <td key={ek} className="num">{d.blocoE?.[ek] ?? '-'}</td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {/* ===== BLOCO II – ATIVIDADES ===== */}
-        <div style={S.section}>
+        <div className="keep-together" style={{ ...S.section, pageBreakBefore: 'avoid' }}>
           <table className="tb">
             <tbody>
               <tr className="section-title">
