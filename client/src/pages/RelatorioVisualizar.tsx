@@ -272,9 +272,13 @@ export default function RelatorioVisualizar() {
                   <td className="num">{d.blocoA?.[k] ?? '-'}</td>
                 </tr>
               ))}
+            </tbody>
+          </table>
 
-              <tr style={{ pageBreakBefore: 'always' }}>
-                <td style={{ padding: '80px 12px 10px', fontSize: '9pt', verticalAlign: 'top', borderTop: '1px solid #000' }}>
+          <table className="tb" style={{ marginTop: 0 }}>
+            <tbody>
+              <tr>
+                <td style={{ padding: '5px 8px', fontSize: '9pt', verticalAlign: 'top' }}>
                   A.6. Total de usuários desligados<br />
                   {[
                     ['A6_familia_extensa', 'Família extensa'],
