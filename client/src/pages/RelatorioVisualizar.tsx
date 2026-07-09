@@ -514,18 +514,24 @@ export default function RelatorioVisualizar() {
 
         {/* ===== BLOCO III – DESCRIÇÃO ===== */}
         <div style={S.section}>
-          <table className="tb">
+          <div className="keep-together">
+            <table className="tb" style={{ marginBottom: 0 }}>
+              <tbody>
+                <tr>
+                  <td className="section-title" style={{ fontSize: '11pt', background: '#5B9BD5', color: '#fff', fontWeight: 700, textAlign: 'center', textTransform: 'uppercase' }}>
+                    Bloco III – Descrição das atividades mensal realizadas com os usuários/SEMAS
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{ fontWeight: 700, background: '#5B9BD5', color: '#fff', borderBottom: 'none' }}>H. Descrição das atividades</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <table className="tb" style={{ marginTop: 0, borderTop: 'none' }}>
             <tbody>
               <tr>
-                <td className="section-title" style={{ fontSize: '11pt', background: '#5B9BD5', color: '#fff', fontWeight: 700, textAlign: 'center', textTransform: 'uppercase' }}>
-                  Bloco III – Descrição das atividades mensal realizadas com os usuários/SEMAS
-                </td>
-              </tr>
-              <tr>
-                <td style={{ fontWeight: 700, background: '#5B9BD5', color: '#fff' }}>H. Descrição das atividades</td>
-              </tr>
-              <tr>
-                <td style={{ minHeight: 60, padding: '10px 8px', lineHeight: 1.6, textAlign: 'justify' }}>
+                <td style={{ minHeight: 60, padding: '10px 8px', lineHeight: 1.6, textAlign: 'justify', borderTop: 'none' }}>
                   <p style={{ marginBottom: 6, fontWeight: 600 }}>H.1. Descreva quais atividades os usuários realizaram durante o mês (convivência, socioeducativa, passeios, visitas a outros locais, atendimento médico, atividades da vida diária, para independência, de auto cuidado, cursos, etc)</p>
                   {d.blocoH?.descricao || 'N/A'}
                 </td>
